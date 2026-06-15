@@ -7,35 +7,33 @@
 <style>
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
 .header{background:#fff;padding:16px;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
-.logo{text-align:center;font-size:24px;font-weight:900}
+.logo{text-align:center;font-size:24px;font-weight:900;letter-spacing:-1px}
 .copy{text-align:center;font-size:12px;color:#666;margin-top:4px}
 .menu{display:grid;grid-template-columns:repeat(4,1fr);background:#111}
 .menu a{color:#fff;text-align:center;text-decoration:none;padding:12px 0;font-size:13px;font-weight:800}
-.notice{background:#fff;margin:14px;border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
-.notice strong{font-size:18px}
-.notice p{color:#555;line-height:1.6;margin:8px 0 0}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px}
-.daytabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px}
-.tab{background:#fff;border:1px solid #ddd;border-radius:999px;padding:11px;text-align:center;font-weight:900}
-.active{background:#111;color:#fff;border-color:#111}
 .section{margin:18px 14px}
 .section-title{font-size:18px;font-weight:900;margin-bottom:10px;border-left:5px solid #111;padding-left:10px}
-.day{background:#fff;border-radius:18px;margin-bottom:14px;overflow:hidden;box-shadow:0 5px 16px rgba(0,0,0,.05)}
-.day-head{background:#111;color:#fff;padding:12px 16px;font-weight:900}
-.place{padding:14px 16px;border-bottom:1px solid #eee}
-.place-name{font-weight:900;font-size:17px}
-.place-info{font-size:13px;color:#666;margin-top:5px;line-height:1.5}
-.race-card{background:#fff;border-radius:16px;padding:15px;margin-bottom:12px;border:1px solid #e5e5e5}
+.news{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.news-title{font-weight:900}
+.news-meta{font-size:12px;color:#777;margin-top:5px}
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.course{background:#fff;border-radius:16px;padding:16px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.05);border:1px solid #e5e5e5;text-decoration:none;color:#111}
+.course-name{font-size:18px;font-weight:900}
+.course-type{font-size:12px;color:#666;margin-top:6px}
+.live{display:inline-block;margin-top:8px;background:#111;color:#fff;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:900}
+.race-card{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 5px 16px rgba(0,0,0,.05);border:1px solid #e5e5e5}
 .race-top{display:flex;justify-content:space-between;align-items:center}
 .rno{font-weight:900;color:#555;font-size:13px}
 .badge{background:#111;color:#fff;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:900}
-.race-name{font-size:20px;font-weight:900;margin-top:8px}
+.race-name{font-size:21px;font-weight:900;margin-top:8px}
 .race-info{font-size:13px;color:#666;margin-top:6px;line-height:1.5}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .btn{text-align:center;text-decoration:none;padding:11px;border-radius:999px;font-weight:900;font-size:13px}
 .black{background:#111;color:#fff}
 .white{background:#fff;color:#111;border:1px solid #111}
-.hidden{display:none}
+.rank{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.rank-name{font-weight:900;font-size:17px}
+.rank-score{font-size:13px;color:#666;margin-top:5px}
 .nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
 .nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
 .footer-space{height:80px}
@@ -46,161 +44,146 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 
 <div class="header">
   <div class="logo">DARKHORSCORE</div>
-  <div class="copy">本当に当てる人を見つける場所</div>
+  <div class="copy">競馬ポータル × 予想家実績SNS</div>
 </div>
 
 <div class="menu">
-  <a href="index.html">レース</a>
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
   <a href="ranking.html">ランキング</a>
-  <a href="post.html">投稿</a>
-  <a href="races.html">GⅠ</a>
-</div>
-
-<div class="notice">
-  <strong>今後2週間の開催</strong>
-  <p>
-    中央競馬・地方競馬の開催をまとめて表示。<br>
-    レースごとに予想投稿・予想閲覧ができます。
-  </p>
-</div>
-
-<div class="daytabs">
-  <div class="tab active" onclick="setDay('all', this)">すべて</div>
-  <div class="tab" onclick="setDay('sat', this)">土</div>
-  <div class="tab" onclick="setDay('sun', this)">日</div>
-</div>
-
-<div class="tabs">
-  <div class="tab active" onclick="setType('all', this)">すべて</div>
-  <div class="tab" onclick="setType('central', this)">中央</div>
-  <div class="tab" onclick="setType('local', this)">地方</div>
+  <a href="#">マイページ</a>
 </div>
 
 <div class="section">
-  <div class="section-title">開催カレンダー</div>
+  <div class="section-title">注目ニュース</div>
 
-  <div class="day item" data-day="sat" data-type="local">
-    <div class="day-head">6月17日（土）</div>
-    <div class="place">
-      <div class="place-name">名古屋競馬</div>
-      <div class="place-info">地方競馬 / 1R〜12R / 平日・週末開催</div>
-    </div>
-    <div class="place">
-      <div class="place-name">大井競馬</div>
-      <div class="place-info">地方競馬 / ナイター開催</div>
-    </div>
+  <div class="news">
+    <div class="news-title">函館記念の出走想定が発表</div>
+    <div class="news-meta">レース情報 / 手動更新</div>
   </div>
 
-  <div class="day item" data-day="sun" data-type="local">
-    <div class="day-head">6月18日（日）</div>
-    <div class="place">
-      <div class="place-name">笠松競馬</div>
-      <div class="place-info">地方競馬 / 1R〜12R</div>
-    </div>
-    <div class="place">
-      <div class="place-name">園田競馬</div>
-      <div class="place-info">地方競馬 / 兵庫開催</div>
-    </div>
+  <div class="news">
+    <div class="news-title">地方競馬ナイター開催に注目</div>
+    <div class="news-meta">地方競馬 / 手動更新</div>
   </div>
 
-  <div class="day item" data-day="sat" data-type="central">
-    <div class="day-head">6月21日（土）</div>
-    <div class="place">
-      <div class="place-name">函館競馬</div>
-      <div class="place-info">中央競馬 / 芝・ダート開催</div>
-    </div>
-    <div class="place">
-      <div class="place-name">東京競馬</div>
-      <div class="place-info">中央競馬 / 1R〜12R</div>
-    </div>
-    <div class="place">
-      <div class="place-name">阪神競馬</div>
-      <div class="place-info">中央競馬 / 1R〜12R</div>
-    </div>
+  <div class="news">
+    <div class="news-title">今週の注目予想家ランキング更新</div>
+    <div class="news-meta">DARKHORSCORE</div>
   </div>
+</div>
 
-  <div class="day item" data-day="sun" data-type="central">
-    <div class="day-head">6月22日（日）</div>
-    <div class="place">
-      <div class="place-name">函館競馬</div>
-      <div class="place-info">中央競馬 / 1R〜12R</div>
-    </div>
-    <div class="place">
-      <div class="place-name">東京競馬</div>
-      <div class="place-info">中央競馬 / 1R〜12R</div>
-    </div>
-    <div class="place">
-      <div class="place-name">阪神競馬</div>
-      <div class="place-info">中央競馬 / 1R〜12R</div>
-    </div>
+<div class="section">
+  <div class="section-title">開催競馬場</div>
+
+  <div class="course-grid">
+    <a class="course" href="#">
+      <div class="course-name">函館</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="#">
+      <div class="course-name">福島</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="#">
+      <div class="course-name">小倉</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="#">
+      <div class="course-name">名古屋</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="#">
+      <div class="course-name">笠松</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="#">
+      <div class="course-name">大井</div>
+      <div class="course-type">地方</div>
+      <span class="live">ナイター</span>
+    </a>
+
+    <a class="course" href="#">
+      <div class="course-name">園田</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="#">
+      <div class="course-name">門別</div>
+      <div class="course-type">地方</div>
+      <span class="live">ナイター</span>
+    </a>
   </div>
 </div>
 
 <div class="section">
   <div class="section-title">注目レース</div>
 
-  <div class="race-card item" data-day="sat" data-type="central">
+  <div class="race-card">
     <div class="race-top">
       <div class="rno">函館11R</div>
       <div class="badge">重賞</div>
     </div>
     <div class="race-name">函館記念</div>
-    <div class="race-info">芝2000m / 16頭 / 発走 15:25</div>
+    <div class="race-info">芝2000m / 16頭 / 発走 15:25<br>予想数 128件</div>
     <div class="actions">
       <a class="btn black" href="post.html">予想する</a>
-      <a class="btn white" href="race.html">予想を見る</a>
+      <a class="btn white" href="#">予想を見る</a>
     </div>
   </div>
 
-  <div class="race-card item" data-day="sun" data-type="local">
+  <div class="race-card">
     <div class="race-top">
       <div class="rno">名古屋11R</div>
       <div class="badge">地方</div>
     </div>
     <div class="race-name">名古屋メイン</div>
-    <div class="race-info">ダート1500m / 発走時刻未定</div>
+    <div class="race-info">ダート1500m / 発走時刻未定<br>予想数 42件</div>
     <div class="actions">
       <a class="btn black" href="post.html">予想する</a>
-      <a class="btn white" href="race.html">予想を見る</a>
+      <a class="btn white" href="#">予想を見る</a>
     </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">予想家ランキング</div>
+
+  <div class="rank">
+    <div class="rank-name">🥇 ようよう</div>
+    <div class="rank-score">的中率 42.8% / 予想数 21</div>
+  </div>
+
+  <div class="rank">
+    <div class="rank-name">🥈 ウマ太郎</div>
+    <div class="rank-score">的中率 38.1% / 予想数 18</div>
+  </div>
+
+  <div class="rank">
+    <div class="rank-name">🥉 競馬博士</div>
+    <div class="rank-score">的中率 35.5% / 予想数 31</div>
   </div>
 </div>
 
 <div class="footer-space"></div>
 
 <div class="nav">
-  <a href="index.html">レース</a>
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
   <a href="ranking.html">ランキング</a>
-  <a href="races.html">GⅠ一覧</a>
-  <a href="post.html">投稿</a>
+  <a href="#">マイページ</a>
 </div>
-
-<script>
-let currentDay = "all";
-let currentType = "all";
-
-function setDay(day, el){
-  currentDay = day;
-  document.querySelectorAll(".daytabs .tab").forEach(t => t.classList.remove("active"));
-  el.classList.add("active");
-  filterItems();
-}
-
-function setType(type, el){
-  currentType = type;
-  document.querySelectorAll(".tabs .tab").forEach(t => t.classList.remove("active"));
-  el.classList.add("active");
-  filterItems();
-}
-
-function filterItems(){
-  document.querySelectorAll(".item").forEach(item => {
-    const dayMatch = currentDay === "all" || item.dataset.day === currentDay;
-    const typeMatch = currentType === "all" || item.dataset.type === currentType;
-    item.classList.toggle("hidden", !(dayMatch && typeMatch));
-  });
-}
-</script>
 
 </body>
 </html>
