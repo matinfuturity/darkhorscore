@@ -4,489 +4,272 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DARKHORSCORE</title>
+
 <style>
 body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background:#f4f4f4;
-  color:#111;
+margin:0;
+background:#f5f5f5;
+font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+color:#111;
 }
 
 .header{
-  background:#fff;
-  padding:18px 16px;
-  border-bottom:1px solid #ddd;
-  position:sticky;
-  top:0;
-  z-index:10;
+background:#111;
+color:white;
+padding:20px;
+text-align:center;
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .logo{
-  text-align:center;
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:-1px;
+font-size:28px;
+font-weight:900;
 }
 
-.copy{
-  text-align:center;
-  font-size:13px;
-  color:#666;
-  margin-top:5px;
+.sub{
+font-size:12px;
+color:#ccc;
+margin-top:5px;
 }
 
-.menu{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  background:#111;
-}
-
-.menu a{
-  color:#fff;
-  text-align:center;
-  text-decoration:none;
-  padding:12px 0;
-  font-size:13px;
-  font-weight:800;
-}
-
-.section{
-  margin:18px 14px;
+.container{
+padding:15px;
 }
 
 .section-title{
-  font-size:19px;
-  font-weight:900;
-  margin-bottom:12px;
-  border-left:5px solid #111;
-  padding-left:10px;
+font-size:20px;
+font-weight:900;
+margin:20px 0 12px;
+}
+
+.post{
+background:white;
+border-radius:20px;
+padding:16px;
+margin-bottom:14px;
+box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.user{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.name{
+font-size:18px;
+font-weight:900;
+}
+
+.rate{
+font-size:13px;
+color:#666;
+}
+
+.race{
+margin-top:10px;
+font-size:13px;
+color:#666;
+}
+
+.pick{
+font-size:26px;
+font-weight:900;
+margin-top:8px;
+}
+
+.comment{
+margin-top:10px;
+line-height:1.6;
+color:#444;
+}
+
+.rank-card{
+background:white;
+border-radius:20px;
+padding:16px;
+margin-bottom:10px;
+}
+
+.rank-user{
+display:flex;
+justify-content:space-between;
+font-weight:900;
 }
 
 .news{
-  background:#fff;
-  border-radius:16px;
-  padding:14px 16px;
-  margin-bottom:10px;
-  box-shadow:0 4px 14px rgba(0,0,0,.05);
-}
-
-.news-title{
-  font-weight:900;
-  line-height:1.5;
-}
-
-.news-meta{
-  font-size:12px;
-  color:#777;
-  margin-top:5px;
-}
-
-.course-grid{
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:12px;
-}
-
-.course{
-  background:#fff;
-  border-radius:18px;
-  padding:16px 10px;
-  text-align:center;
-  box-shadow:0 4px 14px rgba(0,0,0,.05);
-  border:1px solid #e5e5e5;
-  text-decoration:none;
-  color:#111;
-  display:block;
-  min-width:0;
-}
-
-.course-name{
-  font-size:22px;
-  font-weight:900;
-  line-height:1.2;
-}
-
-.course-type{
-  font-size:13px;
-  color:#666;
-  margin-top:6px;
-}
-
-.live{
-  display:inline-block;
-  margin-top:10px;
-  background:#111;
-  color:#fff;
-  border-radius:999px;
-  padding:5px 12px;
-  font-size:12px;
-  font-weight:900;
-}
-
-.race-card{
-  background:#fff;
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:12px;
-  box-shadow:0 5px 16px rgba(0,0,0,.05);
-  border:1px solid #e5e5e5;
-}
-
-.race-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.rno{
-  font-weight:900;
-  color:#555;
-  font-size:13px;
-}
-
-.badge{
-  background:#111;
-  color:#fff;
-  border-radius:999px;
-  padding:4px 9px;
-  font-size:11px;
-  font-weight:900;
-}
-
-.race-name{
-  font-size:21px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-.race-info{
-  font-size:13px;
-  color:#666;
-  margin-top:6px;
-  line-height:1.5;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:12px;
-}
-
-.btn{
-  text-align:center;
-  text-decoration:none;
-  padding:11px;
-  border-radius:999px;
-  font-weight:900;
-  font-size:13px;
-}
-
-.black{
-  background:#111;
-  color:#fff;
-}
-
-.white{
-  background:#fff;
-  color:#111;
-  border:1px solid #111;
-}
-
-.rank{
-  background:#fff;
-  border-radius:16px;
-  padding:14px 16px;
-  margin-bottom:10px;
-  box-shadow:0 4px 14px rgba(0,0,0,.05);
-}
-
-.rank-name{
-  font-weight:900;
-  font-size:17px;
-}
-
-.rank-score{
-  font-size:13px;
-  color:#666;
-  margin-top:5px;
+background:white;
+border-radius:20px;
+padding:16px;
+margin-bottom:10px;
 }
 
 .nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  border-top:1px solid #ccc;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:9px 0;
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+border-top:1px solid #ddd;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:10px 0;
 }
 
 .nav a{
-  text-align:center;
-  color:#111;
-  text-decoration:none;
-  font-size:12px;
-  font-weight:800;
+text-align:center;
+text-decoration:none;
+color:#111;
+font-size:12px;
+font-weight:900;
 }
 
-.footer-space{
-  height:80px;
+.space{
+height:80px;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="header">
-  <div class="logo">DARKHORSCORE</div>
-  <div class="copy">競馬ポータル × 予想家実績SNS</div>
+<div class="logo">DARKHORSCORE</div>
+<div class="sub">
+予想実績で評価される競馬SNS
+</div>
 </div>
 
-<div class="menu">
-  <a href="index.html">ホーム</a>
-  <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
-  <a href="mypage.html">マイページ</a>
+<div class="container">
+
+<div class="section-title">
+🔥 新着予想
 </div>
 
-<div class="section">
-  <div class="section-title">注目ニュース</div>
-
-  <div class="news">
-    <div class="news-title">函館記念の出走想定が発表</div>
-    <div class="news-meta">レース情報 / 手動更新</div>
-  </div>
-
-  <div class="news">
-    <div class="news-title">地方競馬ナイター開催に注目</div>
-    <div class="news-meta">地方競馬 / 手動更新</div>
-  </div>
-
-  <div class="news">
-    <div class="news-title">今週の注目予想家ランキング更新</div>
-    <div class="news-meta">DARKHORSCORE</div>
-  </div>
+<div class="post">
+<div class="user">
+<div class="name">ようよう</div>
+<div class="rate">的中率 42.8%</div>
 </div>
 
-<div class="section">
-  <div class="section-title">中央競馬場</div>
-
-  <div class="course-grid">
-
-    <a class="course" href="course.html?course=sapporo">
-      <div class="course-name">札幌</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=hakodate">
-      <div class="course-name">函館</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=fukushima">
-      <div class="course-name">福島</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=niigata">
-      <div class="course-name">新潟</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=tokyo">
-      <div class="course-name">東京</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=nakayama">
-      <div class="course-name">中山</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=chukyo">
-      <div class="course-name">中京</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=kyoto">
-      <div class="course-name">京都</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=hanshin">
-      <div class="course-name">阪神</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=kokura">
-      <div class="course-name">小倉</div>
-      <div class="course-type">中央</div>
-      <span class="live">開催</span>
-    </a>
-
-  </div>
+<div class="race">
+函館記念
 </div>
 
-<div class="section">
-  <div class="section-title">地方競馬場</div>
-
-  <div class="course-grid">
-
-    <a class="course" href="course.html?course=nagoya">
-      <div class="course-name">名古屋</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=kasamatsu">
-      <div class="course-name">笠松</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=oi">
-      <div class="course-name">大井</div>
-      <div class="course-type">地方</div>
-      <span class="live">ナイター</span>
-    </a>
-
-    <a class="course" href="course.html?course=kawasaki">
-      <div class="course-name">川崎</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=funabashi">
-      <div class="course-name">船橋</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=urawa">
-      <div class="course-name">浦和</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=sonoda">
-      <div class="course-name">園田</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=himeji">
-      <div class="course-name">姫路</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=monbetsu">
-      <div class="course-name">門別</div>
-      <div class="course-type">地方</div>
-      <span class="live">ナイター</span>
-    </a>
-
-    <a class="course" href="course.html?course=morioka">
-      <div class="course-name">盛岡</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=mizusawa">
-      <div class="course-name">水沢</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=kanazawa">
-      <div class="course-name">金沢</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-    <a class="course" href="course.html?course=kochi">
-      <div class="course-name">高知</div>
-      <div class="course-type">地方</div>
-      <span class="live">ナイター</span>
-    </a>
-
-    <a class="course" href="course.html?course=saga">
-      <div class="course-name">佐賀</div>
-      <div class="course-type">地方</div>
-      <span class="live">開催</span>
-    </a>
-
-  </div>
+<div class="pick">
+◎ ソールオリエンス
 </div>
 
-<div class="section">
-  <div class="section-title">注目レース</div>
-
-  <div class="race-card">
-    <div class="race-top">
-      <div class="rno">函館11R</div>
-      <div class="badge">重賞</div>
-    </div>
-    <div class="race-name">函館記念</div>
-    <div class="race-info">芝2000m / 16頭 / 発走 15:25<br>予想数 128件</div>
-    <div class="actions">
-      <a class="btn black" href="post.html">予想する</a>
-      <a class="btn white" href="race.html?race=hakodate11">予想を見る</a>
-    </div>
-  </div>
-
-  <div class="race-card">
-    <div class="race-top">
-      <div class="rno">名古屋11R</div>
-      <div class="badge">地方</div>
-    </div>
-    <div class="race-name">名古屋メイン</div>
-    <div class="race-info">ダート1500m / 発走時刻未定<br>予想数 42件</div>
-    <div class="actions">
-      <a class="btn black" href="post.html">予想する</a>
-      <a class="btn white" href="race.html?race=nagoya11">予想を見る</a>
-    </div>
-  </div>
+<div class="comment">
+前走内容を評価。距離延長もプラス。
+</div>
 </div>
 
-<div class="section">
-  <div class="section-title">予想家ランキング</div>
-
-  <div class="rank">
-    <div class="rank-name">🥇 ようよう</div>
-    <div class="rank-score">的中率 42.8% / 予想数 21</div>
-  </div>
-
-  <div class="rank">
-    <div class="rank-name">🥈 ウマ太郎</div>
-    <div class="rank-score">的中率 38.1% / 予想数 18</div>
-  </div>
-
-  <div class="rank">
-    <div class="rank-name">🥉 競馬博士</div>
-    <div class="rank-score">的中率 35.5% / 予想数 31</div>
-  </div>
+<div class="post">
+<div class="user">
+<div class="name">競馬博士</div>
+<div class="rate">的中率 38.1%</div>
 </div>
 
-<div class="footer-space"></div>
+<div class="race">
+CBC賞
+</div>
+
+<div class="pick">
+◎ ピューロマジック
+</div>
+
+<div class="comment">
+スピード能力を評価。
+</div>
+</div>
+
+<div class="post">
+<div class="user">
+<div class="name">ウマ太郎</div>
+<div class="rate">的中率 35.4%</div>
+</div>
+
+<div class="race">
+帝王賞
+</div>
+
+<div class="pick">
+◎ ミックファイア
+</div>
+
+<div class="comment">
+地方実績を評価。
+</div>
+</div>
+
+<div class="section-title">
+🏆 ランキング
+</div>
+
+<div class="rank-card">
+<div class="rank-user">
+<div>🥇 ようよう</div>
+<div>42.8%</div>
+</div>
+</div>
+
+<div class="rank-card">
+<div class="rank-user">
+<div>🥈 ウマ太郎</div>
+<div>38.1%</div>
+</div>
+</div>
+
+<div class="rank-card">
+<div class="rank-user">
+<div>🥉 競馬博士</div>
+<div>35.4%</div>
+</div>
+</div>
+
+<div class="section-title">
+🏇 注目レース
+</div>
+
+<div class="news">
+函館記念
+</div>
+
+<div class="news">
+CBC賞
+</div>
+
+<div class="news">
+札幌記念
+</div>
+
+<div class="section-title">
+📰 ニュース
+</div>
+
+<div class="news">
+武豊騎手復帰
+</div>
+
+<div class="news">
+函館記念の出走想定発表
+</div>
+
+<div class="news">
+JRA秋競馬日程公開
+</div>
+
+</div>
+
+<div class="space"></div>
 
 <div class="nav">
-  <a href="index.html">ホーム</a>
-  <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
-  <a href="mypage.html">マイページ</a>
+<a href="index.html">ホーム</a>
+<a href="post.html">投稿</a>
+<a href="ranking.html">順位</a>
+<a href="mypage.html">マイページ</a>
 </div>
 
 </body>
