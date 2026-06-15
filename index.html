@@ -7,27 +7,23 @@
 <style>
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f7f7f7;color:#111}
 .header{background:white;padding:18px 20px;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
-.logo{font-size:24px;font-weight:900;letter-spacing:-1px;text-align:center}
+.logo{font-size:24px;font-weight:900;text-align:center}
 .sub{text-align:center;color:#666;font-size:13px;margin-top:4px}
-.tabs,.courses{display:grid;gap:10px;padding:16px 18px;background:white}
-.tabs{grid-template-columns:1fr 1fr}
-.courses{grid-template-columns:1fr 1fr 1fr}
-.tab,.course{padding:13px;border:2px solid #111;border-radius:10px;text-align:center;font-weight:800;background:white}
-.active{background:#111;color:white}
-.section{padding:22px 18px}
-h2{text-align:center;margin:16px 0 22px;font-size:24px}
-.race{background:white;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 8px 22px rgba(0,0,0,.06);border:1px solid #eee}
+.hero{background:#111;color:white;margin:18px;border-radius:24px;padding:22px;line-height:1.7}
+.section{padding:0 18px 22px}
+.date-title{font-size:22px;font-weight:900;margin:26px 0 12px}
+.course{font-size:16px;font-weight:900;margin:18px 0 10px}
+.race{background:white;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 8px 22px rgba(0,0,0,.06);border:1px solid #eee}
 .race-top{display:flex;justify-content:space-between;align-items:center}
 .rno{font-size:14px;color:#777;font-weight:800}
-.grade{font-size:13px;font-weight:900;background:#111;color:white;padding:5px 10px;border-radius:999px}
-.name{font-size:23px;font-weight:900;margin-top:8px}
-.info{color:#777;margin-top:6px}
-.count{margin-top:12px;font-size:14px;color:#444}
-.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.btn{display:block;text-align:center;padding:13px;border-radius:999px;font-weight:900;text-decoration:none}
+.badge{background:#111;color:white;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900}
+.name{font-size:21px;font-weight:900;margin-top:8px}
+.info{color:#666;margin-top:6px;font-size:14px;line-height:1.6}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.btn{display:block;text-align:center;padding:12px;border-radius:999px;font-weight:900;text-decoration:none}
 .black{background:#111;color:white}
 .white{background:white;color:#111;border:1px solid #111}
-.note{background:#111;color:white;border-radius:22px;padding:20px;margin:8px 18px 22px;line-height:1.7}
+.update{font-size:13px;color:#777;text-align:center;margin:16px}
 .nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
 .nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
 .footer-space{height:80px}
@@ -40,33 +36,26 @@ h2{text-align:center;margin:16px 0 22px;font-size:24px}
   <div class="sub">本当に当てる人を見つける場所</div>
 </div>
 
-<div class="tabs">
-  <div class="tab active">土</div>
-  <div class="tab">日</div>
-</div>
-
-<div class="courses">
-  <div class="course active">函館</div>
-  <div class="course">東京</div>
-  <div class="course">阪神</div>
-</div>
-
-<div class="note">
+<div class="hero">
   予想ではなく、実績で語れ。<br>
-  レースごとの予想と、予想家の的中実績を見える化する競馬SNS。
+  今後2週間の中央競馬・地方競馬レースから予想を投稿できます。
 </div>
+
+<div class="update">毎週火曜日更新予定</div>
 
 <div class="section">
-  <h2>今週のレース情報</h2>
+
+  <div class="date-title">6月22日（土）</div>
+
+  <div class="course">中央競馬｜函館</div>
 
   <div class="race">
     <div class="race-top">
       <div class="rno">函館11R</div>
-      <div class="grade">GⅢ</div>
+      <div class="badge">重賞</div>
     </div>
     <div class="name">函館記念</div>
-    <div class="info">芝2000m / 16頭 / 発走 15:25</div>
-    <div class="count">予想数 12件</div>
+    <div class="info">芝2000m / 発走 15:25 / 16頭</div>
     <div class="buttons">
       <a class="btn black" href="post.html">予想する</a>
       <a class="btn white" href="race.html">予想を見る</a>
@@ -76,32 +65,78 @@ h2{text-align:center;margin:16px 0 22px;font-size:24px}
   <div class="race">
     <div class="race-top">
       <div class="rno">函館10R</div>
-      <div class="grade">特別</div>
+      <div class="badge">特別</div>
     </div>
     <div class="name">駒ヶ岳特別</div>
-    <div class="info">芝2600m / 10頭 / 発走 14:50</div>
-    <div class="count">予想数 5件</div>
+    <div class="info">芝2600m / 発走 14:50 / 10頭</div>
     <div class="buttons">
       <a class="btn black" href="post.html">予想する</a>
       <a class="btn white" href="race.html">予想を見る</a>
     </div>
   </div>
+
+  <div class="course">中央競馬｜東京</div>
 
   <div class="race">
     <div class="race-top">
-      <div class="rno">函館9R</div>
-      <div class="grade">特別</div>
+      <div class="rno">東京11R</div>
+      <div class="badge">OP</div>
     </div>
-    <div class="name">下北半島特別</div>
-    <div class="info">芝1200m / 14頭 / 発走 14:15</div>
-    <div class="count">予想数 8件</div>
+    <div class="name">メインレース</div>
+    <div class="info">芝1600m / 発走 15:45 / 出走頭数未定</div>
     <div class="buttons">
       <a class="btn black" href="post.html">予想する</a>
       <a class="btn white" href="race.html">予想を見る</a>
     </div>
   </div>
 
-  <a class="btn black" href="races.html">2026年GⅠ一覧を見る</a>
+  <div class="date-title">6月23日（日）</div>
+
+  <div class="course">地方競馬｜名古屋</div>
+
+  <div class="race">
+    <div class="race-top">
+      <div class="rno">名古屋10R</div>
+      <div class="badge">地方</div>
+    </div>
+    <div class="name">名古屋メイン</div>
+    <div class="info">ダート1500m / 発走時刻未定 / 出走頭数未定</div>
+    <div class="buttons">
+      <a class="btn black" href="post.html">予想する</a>
+      <a class="btn white" href="race.html">予想を見る</a>
+    </div>
+  </div>
+
+  <div class="course">地方競馬｜笠松</div>
+
+  <div class="race">
+    <div class="race-top">
+      <div class="rno">笠松11R</div>
+      <div class="badge">地方</div>
+    </div>
+    <div class="name">笠松メイン</div>
+    <div class="info">ダート1400m / 発走時刻未定 / 出走頭数未定</div>
+    <div class="buttons">
+      <a class="btn black" href="post.html">予想する</a>
+      <a class="btn white" href="race.html">予想を見る</a>
+    </div>
+  </div>
+
+  <div class="date-title">翌週分</div>
+
+  <div class="race">
+    <div class="race-top">
+      <div class="rno">中央・地方</div>
+      <div class="badge">更新予定</div>
+    </div>
+    <div class="name">来週のレース一覧</div>
+    <div class="info">毎週火曜日に2週間分へ更新</div>
+    <div class="buttons">
+      <a class="btn black" href="post.html">予想する</a>
+      <a class="btn white" href="races.html">GⅠ一覧</a>
+    </div>
+  </div>
+
 </div>
 
 <div class="footer-space"></div>
