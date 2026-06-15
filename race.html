@@ -4,197 +4,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>レース詳細 | DARKHORSCORE</title>
-
 <style>
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-background:#f5f5f5;
-color:#111;
-}
-
-.header{
-background:#fff;
-padding:16px;
-border-bottom:1px solid #ddd;
-position:sticky;
-top:0;
-z-index:10;
-}
-
-.logo{
-font-size:24px;
-font-weight:900;
-text-align:center;
-}
-
-.sub{
-text-align:center;
-font-size:12px;
-color:#666;
-margin-top:4px;
-}
-
-.container{
-padding:15px;
-}
-
-.hero{
-background:#111;
-color:white;
-padding:20px;
-border-radius:20px;
-margin-bottom:20px;
-}
-
-.hero h1{
-margin:0;
-font-size:26px;
-}
-
-.hero p{
-margin-top:8px;
-color:#ddd;
-}
-
-.card{
-background:white;
-padding:16px;
-border-radius:16px;
-margin-bottom:12px;
-box-shadow:0 4px 12px rgba(0,0,0,.06);
-}
-
-.section-title{
-font-size:20px;
-font-weight:900;
-margin:20px 0 12px;
-}
-
-.user{
-font-weight:900;
-font-size:15px;
-}
-
-.horse{
-font-size:22px;
-font-weight:900;
-margin-top:8px;
-}
-
-.comment{
-margin-top:10px;
-line-height:1.6;
-color:#555;
-}
-
-.btn{
-display:block;
-text-align:center;
-padding:15px;
-background:#111;
-color:white;
-text-decoration:none;
-border-radius:999px;
-font-weight:900;
-margin-top:20px;
-}
-
-.nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-border-top:1px solid #ddd;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-padding:10px 0;
-}
-
-.nav a{
-text-decoration:none;
-color:#111;
-font-size:12px;
-font-weight:800;
-text-align:center;
-}
-
-.space{
-height:80px;
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
+.header{background:#fff;padding:18px 16px;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
+.logo{text-align:center;font-size:28px;font-weight:900}
+.copy{text-align:center;font-size:13px;color:#666;margin-top:5px}
+.container{padding:18px 14px}
+.hero{background:#111;color:white;border-radius:22px;padding:22px;margin-bottom:22px}
+.hero h1{margin:0;font-size:28px}
+.hero p{color:#ddd;margin:10px 0 0;line-height:1.6}
+.title{font-size:22px;font-weight:900;margin:22px 0 12px}
+.card{background:white;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 5px 16px rgba(0,0,0,.05)}
+.user{font-weight:900;font-size:16px}
+.horse{font-size:24px;font-weight:900;margin-top:8px}
+.comment{color:#555;line-height:1.7;margin-top:10px}
+.btn{display:block;text-align:center;background:#111;color:white;text-decoration:none;border-radius:999px;padding:15px;font-weight:900;margin-top:20px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
+.nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
+.space{height:80px}
 </style>
-
 </head>
+
 <body>
 
 <div class="header">
-<div class="logo">DARKHORSCORE</div>
-<div class="sub">レース詳細</div>
+  <div class="logo">DARKHORSCORE</div>
+  <div class="copy">レース詳細</div>
 </div>
 
 <div class="container">
 
-<div class="hero">
-<h1>函館11R 函館記念</h1>
-<p>
-芝2000m / 発走15:25
-</p>
-</div>
+  <div class="hero">
+    <h1 id="raceTitle">レース詳細</h1>
+    <p id="raceInfo">読み込み中...</p>
+  </div>
 
-<div class="section-title">
-🏇 出走馬
-</div>
+  <div class="title">🏇 出走馬</div>
+  <div class="card" id="horses"></div>
 
-<div class="card">
-ソールオリエンス<br>
-ローシャムパーク<br>
-プラダリア<br>
-ベラジオオペラ
-</div>
+  <div class="title">🔥 みんなの予想</div>
+  <div id="predictions"></div>
 
-<div class="section-title">
-🔥 みんなの予想
-</div>
-
-<div class="card">
-<div class="user">ようよう</div>
-<div class="horse">◎ ソールオリエンス</div>
-<div class="comment">
-前走内容を評価。距離延長もプラス。
-</div>
-</div>
-
-<div class="card">
-<div class="user">競馬博士</div>
-<div class="horse">◎ ローシャムパーク</div>
-<div class="comment">
-函館適性が高く展開も向きそう。
-</div>
-</div>
-
-<div class="card">
-<div class="user">ウマ太郎</div>
-<div class="horse">◎ ベラジオオペラ</div>
-<div class="comment">
-能力上位。斤量も問題なし。
-</div>
-</div>
-
-<a href="post.html" class="btn">
-予想を投稿する
-</a>
+  <a href="post.html" class="btn">予想を投稿する</a>
 
 </div>
 
 <div class="space"></div>
 
 <div class="nav">
-<a href="index.html">ホーム</a>
-<a href="post.html">予想</a>
-<a href="ranking.html">ランキング</a>
-<a href="#">マイページ</a>
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a href="mypage.html">マイページ</a>
 </div>
+
+<script>
+const races = {
+  hakodate11: {
+    title: "函館11R 函館記念",
+    info: "芝2000m / 発走15:25",
+    horses: ["ソールオリエンス","ローシャムパーク","プラダリア","ベラジオオペラ"],
+    predictions: [
+      ["ようよう","ソールオリエンス","前走内容を評価。距離延長もプラス。"],
+      ["競馬博士","ローシャムパーク","函館適性が高く展開も向きそう。"]
+    ]
+  },
+  chukyo11: {
+    title: "中京11R CBC賞",
+    info: "芝1200m / 発走15:35",
+    horses: ["ピューロマジック","ジャスティンスカイ","ドロップオブライト","グランテスト"],
+    predictions: [
+      ["ようよう","ピューロマジック","スピード能力を評価。"],
+      ["ウマ太郎","ドロップオブライト","中京適性に期待。"]
+    ]
+  },
+  nagoya11: {
+    title: "名古屋11R 名古屋メイン",
+    info: "ダート1500m / 発走時刻未定",
+    horses: ["ミックファイア","セブンカラーズ","トミケンシャイリ","ブリーザフレスカ"],
+    predictions: [
+      ["ようよう","ミックファイア","地方ダートでの安定感を評価。"],
+      ["競馬博士","セブンカラーズ","名古屋コースへの適性を評価。"]
+    ]
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const raceId = params.get("race") || "hakodate11";
+const race = races[raceId] || races.hakodate11;
+
+document.getElementById("raceTitle").innerText = race.title;
+document.getElementById("raceInfo").innerText = race.info;
+
+document.getElementById("horses").innerHTML =
+  race.horses.map(h => `${h}<br>`).join("");
+
+document.getElementById("predictions").innerHTML =
+  race.predictions.map(p => `
+    <div class="card">
+      <div class="user">${p[0]}</div>
+      <div class="horse">◎ ${p[1]}</div>
+      <div class="comment">${p[2]}</div>
+    </div>
+  `).join("");
+</script>
 
 </body>
 </html>
