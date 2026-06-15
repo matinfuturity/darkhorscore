@@ -86,6 +86,12 @@ line-height:1.6;
 color:#444;
 }
 
+.date{
+font-size:12px;
+color:#888;
+margin-top:10px;
+}
+
 .rank-card{
 background:white;
 border-radius:20px;
@@ -147,62 +153,7 @@ height:80px;
 🔥 新着予想
 </div>
 
-<div class="post">
-<div class="user">
-<div class="name">ようよう</div>
-<div class="rate">的中率 42.8%</div>
-</div>
-
-<div class="race">
-函館記念
-</div>
-
-<div class="pick">
-◎ ソールオリエンス
-</div>
-
-<div class="comment">
-前走内容を評価。距離延長もプラス。
-</div>
-</div>
-
-<div class="post">
-<div class="user">
-<div class="name">競馬博士</div>
-<div class="rate">的中率 38.1%</div>
-</div>
-
-<div class="race">
-CBC賞
-</div>
-
-<div class="pick">
-◎ ピューロマジック
-</div>
-
-<div class="comment">
-スピード能力を評価。
-</div>
-</div>
-
-<div class="post">
-<div class="user">
-<div class="name">ウマ太郎</div>
-<div class="rate">的中率 35.4%</div>
-</div>
-
-<div class="race">
-帝王賞
-</div>
-
-<div class="pick">
-◎ ミックファイア
-</div>
-
-<div class="comment">
-地方実績を評価。
-</div>
-</div>
+<div id="feed"></div>
 
 <div class="section-title">
 🏆 ランキング
@@ -271,6 +222,51 @@ JRA秋競馬日程公開
 <a href="ranking.html">順位</a>
 <a href="mypage.html">マイページ</a>
 </div>
+
+<script>
+const feed = document.getElementById("feed");
+const picks = JSON.parse(localStorage.getItem("picks") || "[]");
+
+if(picks.length === 0){
+  feed.innerHTML = `
+    <div class="post">
+      <div class="user">
+        <div class="name">DARKHORSCORE</div>
+        <div class="rate">投稿待ち</div>
+      </div>
+
+      <div class="race">予想を投稿してみよう</div>
+
+      <div class="pick">◎ あなたの本命馬</div>
+
+      <div class="comment">
+        投稿ページから予想を投稿すると、ここに表示されます。
+      </div>
+    </div>
+  `;
+}else{
+  feed.innerHTML = picks.map(p => `
+    <div class="post">
+      <div class="user">
+        <div class="name">${p.user}</div>
+        <div class="rate">的中率 ${p.rate}</div>
+      </div>
+
+      <div class="race">${p.race}</div>
+
+      <div class="pick">◎ ${p.horse}</div>
+
+      <div class="comment">
+        ${p.reason || "理由なし"}
+      </div>
+
+      <div class="date">
+        ${p.date || ""}
+      </div>
+    </div>
+  `).join("");
+}
+</script>
 
 </body>
 </html>
