@@ -5,37 +5,92 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ランキング | DARKHORSCORE</title>
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#111;padding:24px}
-a{color:#111}
-h1{font-size:30px}
-.card{border:1px solid #eee;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
+.header{background:#fff;padding:16px;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
+.logo{text-align:center;font-size:24px;font-weight:900}
+.copy{text-align:center;font-size:12px;color:#666;margin-top:4px}
+.menu{display:grid;grid-template-columns:repeat(4,1fr);background:#111}
+.menu a{color:#fff;text-align:center;text-decoration:none;padding:12px 0;font-size:13px;font-weight:800}
+.section{margin:18px 14px}
+.section-title{font-size:20px;font-weight:900;margin-bottom:12px;border-left:5px solid #111;padding-left:10px}
+.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 5px 16px rgba(0,0,0,.05);border:1px solid #e5e5e5}
 .rank{font-size:24px;font-weight:900}
-.name{font-size:20px;font-weight:800;margin-top:8px}
-.score{color:#555;margin-top:6px}
+.name{font-size:20px;font-weight:900;margin-top:8px}
+.stats{font-size:13px;color:#666;line-height:1.7;margin-top:8px}
+.badge{display:inline-block;background:#111;color:#fff;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:900;margin-top:10px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
+.nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
+.space{height:80px}
 </style>
 </head>
+
 <body>
 
-<a href="index.html">← トップへ戻る</a>
-<h1>予想家ランキング</h1>
-<p>的中率・予想数・実績で評価。</p>
-
-<div class="card">
-  <div class="rank">🥇 1位</div>
-  <div class="name">ようよう</div>
-  <div class="score">的中率 42.8% / 予想数 21</div>
+<div class="header">
+  <div class="logo">DARKHORSCORE</div>
+  <div class="copy">予想家ランキング</div>
 </div>
 
-<div class="card">
-  <div class="rank">🥈 2位</div>
-  <div class="name">ウマ太郎</div>
-  <div class="score">的中率 38.1% / 予想数 18</div>
+<div class="menu">
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a href="#">マイページ</a>
 </div>
 
-<div class="card">
-  <div class="rank">🥉 3位</div>
-  <div class="name">競馬博士</div>
-  <div class="score">的中率 35.5% / 予想数 31</div>
+<div class="section">
+  <div class="section-title">総合ランキング</div>
+
+  <div class="card">
+    <div class="rank">🥇 1位</div>
+    <div class="name">ようよう</div>
+    <div class="stats">
+      的中率：42.8%<br>
+      予想数：21<br>
+      直近成績：○ ○ × ○ ○
+    </div>
+    <span class="badge">急上昇</span>
+  </div>
+
+  <div class="card">
+    <div class="rank">🥈 2位</div>
+    <div class="name">ウマ太郎</div>
+    <div class="stats">
+      的中率：38.1%<br>
+      予想数：18<br>
+      直近成績：○ × ○ ○ ×
+    </div>
+    <span class="badge">安定型</span>
+  </div>
+
+  <div class="card">
+    <div class="rank">🥉 3位</div>
+    <div class="name">競馬博士</div>
+    <div class="stats">
+      的中率：35.5%<br>
+      予想数：31<br>
+      直近成績：× ○ ○ × ○
+    </div>
+    <span class="badge">分析派</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">DARKHORSCOREとは</div>
+
+  <div class="card">
+    予想の人気ではなく、実績で予想家を評価するランキングです。<br><br>
+    正式版では、投稿した予想の的中結果を記録し、的中率・回収率・予想数を自動で反映します。
+  </div>
+</div>
+
+<div class="space"></div>
+
+<div class="nav">
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a href="#">マイページ</a>
 </div>
 
 </body>
