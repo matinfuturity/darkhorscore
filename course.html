@@ -4,142 +4,194 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>競馬場 | DARKHORSCORE</title>
-
 <style>
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-background:#f5f5f5;
-}
-
-.header{
-background:#111;
-color:white;
-padding:20px;
-text-align:center;
-}
-
-.container{
-padding:15px;
-}
-
-.card{
-background:white;
-padding:16px;
-border-radius:16px;
-margin-bottom:12px;
-box-shadow:0 4px 10px rgba(0,0,0,.08);
-}
-
-.race{
-font-size:20px;
-font-weight:900;
-}
-
-.info{
-color:#666;
-margin-top:6px;
-}
-
-.btn{
-display:block;
-margin-top:10px;
-background:#111;
-color:white;
-text-decoration:none;
-padding:12px;
-text-align:center;
-border-radius:999px;
-font-weight:900;
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
+.header{background:#111;color:white;padding:22px 16px;text-align:center}
+.header h1{margin:0;font-size:30px;font-weight:900}
+.sub{font-size:13px;color:#ddd;margin-top:6px}
+.container{padding:16px}
+.card{background:white;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 5px 16px rgba(0,0,0,.06)}
+.race{font-size:20px;font-weight:900}
+.info{font-size:13px;color:#666;margin-top:6px}
+.btn{display:block;margin-top:12px;background:#111;color:white;text-decoration:none;padding:12px;text-align:center;border-radius:999px;font-weight:900}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
+.nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
+.space{height:80px}
 </style>
-
 </head>
+
 <body>
 
 <div class="header">
-<h1 id="courseTitle">
-競馬場
-</h1>
+  <h1 id="courseTitle">競馬場</h1>
+  <div class="sub" id="courseSub">開催情報</div>
 </div>
 
 <div class="container">
-
-<div class="card">
-<div class="race">11R メインレース</div>
-<div class="info">予想を見る</div>
-<a class="btn" href="race.html">
-レース詳細
-</a>
+  <div id="raceList"></div>
 </div>
 
-<div class="card">
-<div class="race">10R 特別レース</div>
+<div class="space"></div>
+
+<div class="nav">
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a href="mypage.html">マイページ</a>
 </div>
 
-<div class="card">
-<div class="race">9R 一般レース</div>
-</div>
 <script>
+const params = new URLSearchParams(window.location.search);
+const course = params.get("course") || "hakodate";
 
-const params =
-new URLSearchParams(window.location.search);
+const title = document.getElementById("courseTitle");
+const sub = document.getElementById("courseSub");
+const raceList = document.getElementById("raceList");
 
-const course =
-params.get("course");
+const courses = {
+  sapporo: {
+    name: "札幌競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "札幌メイン", "芝1800m / 発走15:25", "sapporo11"],
+      ["10R", "特別レース", "芝1500m / 発走14:50", "sapporo10"],
+      ["9R", "一般レース", "ダート1700m / 発走14:15", "sapporo9"]
+    ]
+  },
+  hakodate: {
+    name: "函館競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "函館記念", "芝2000m / 発走15:25", "hakodate11"],
+      ["10R", "駒ヶ岳特別", "芝2600m / 発走14:50", "hakodate10"],
+      ["9R", "下北半島特別", "芝1200m / 発走14:15", "hakodate9"]
+    ]
+  },
+  fukushima: {
+    name: "福島競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "福島メイン", "芝1800m / 発走15:45", "fukushima11"],
+      ["10R", "特別レース", "芝2000m / 発走15:10", "fukushima10"],
+      ["9R", "一般レース", "ダート1700m / 発走14:35", "fukushima9"]
+    ]
+  },
+  niigata: {
+    name: "新潟競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "新潟メイン", "芝1600m / 発走15:45", "niigata11"],
+      ["10R", "特別レース", "芝2000m / 発走15:10", "niigata10"],
+      ["9R", "一般レース", "ダート1800m / 発走14:35", "niigata9"]
+    ]
+  },
+  tokyo: {
+    name: "東京競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "東京メイン", "芝1600m / 発走15:45", "tokyo11"],
+      ["10R", "特別レース", "ダート1600m / 発走15:10", "tokyo10"],
+      ["9R", "一般レース", "芝2400m / 発走14:35", "tokyo9"]
+    ]
+  },
+  nakayama: {
+    name: "中山競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "中山メイン", "芝2000m / 発走15:45", "nakayama11"],
+      ["10R", "特別レース", "芝1600m / 発走15:10", "nakayama10"],
+      ["9R", "一般レース", "ダート1800m / 発走14:35", "nakayama9"]
+    ]
+  },
+  chukyo: {
+    name: "中京競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "CBC賞", "芝1200m / 発走15:35", "chukyo11"],
+      ["10R", "豊明ステークス", "芝1400m / 発走15:00", "chukyo10"],
+      ["9R", "御在所特別", "芝2000m / 発走14:25", "chukyo9"]
+    ]
+  },
+  kyoto: {
+    name: "京都競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "京都メイン", "芝1600m / 発走15:35", "kyoto11"],
+      ["10R", "特別レース", "芝2200m / 発走15:00", "kyoto10"],
+      ["9R", "一般レース", "ダート1800m / 発走14:25", "kyoto9"]
+    ]
+  },
+  hanshin: {
+    name: "阪神競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "阪神メイン", "芝1800m / 発走15:35", "hanshin11"],
+      ["10R", "特別レース", "ダート1800m / 発走15:00", "hanshin10"],
+      ["9R", "一般レース", "芝1400m / 発走14:25", "hanshin9"]
+    ]
+  },
+  kokura: {
+    name: "小倉競馬場",
+    type: "中央競馬",
+    races: [
+      ["11R", "小倉メイン", "芝1200m / 発走15:25", "kokura11"],
+      ["10R", "特別レース", "ダート1700m / 発走14:50", "kokura10"],
+      ["9R", "一般レース", "芝2000m / 発走14:15", "kokura9"]
+    ]
+  },
+  nagoya: {
+    name: "名古屋競馬場",
+    type: "地方競馬",
+    races: [
+      ["11R", "名古屋メイン", "ダート1500m / 発走時刻未定", "nagoya11"],
+      ["10R", "アベリア特別", "ダート1700m / 発走時刻未定", "nagoya10"],
+      ["9R", "ペガサス賞", "ダート1500m / 発走時刻未定", "nagoya9"]
+    ]
+  },
+  kasamatsu: {
+    name: "笠松競馬場",
+    type: "地方競馬",
+    races: [
+      ["11R", "笠松メイン", "ダート1400m / 発走時刻未定", "kasamatsu11"],
+      ["10R", "特別レース", "ダート1600m / 発走時刻未定", "kasamatsu10"],
+      ["9R", "一般レース", "ダート1400m / 発走時刻未定", "kasamatsu9"]
+    ]
+  },
+  oi: {
+    name: "大井競馬場",
+    type: "地方競馬 / ナイター",
+    races: [
+      ["11R", "大井メイン", "ダート1800m / 発走時刻未定", "oi11"],
+      ["10R", "特別レース", "ダート1600m / 発走時刻未定", "oi10"],
+      ["9R", "一般レース", "ダート1200m / 発走時刻未定", "oi9"]
+    ]
+  },
+  kawasaki: {name:"川崎競馬場",type:"地方競馬",races:[["11R","川崎メイン","ダート1600m","kawasaki11"],["10R","特別レース","ダート1500m","kawasaki10"],["9R","一般レース","ダート1400m","kawasaki9"]]},
+  funabashi: {name:"船橋競馬場",type:"地方競馬",races:[["11R","船橋メイン","ダート1600m","funabashi11"],["10R","特別レース","ダート1500m","funabashi10"],["9R","一般レース","ダート1200m","funabashi9"]]},
+  urawa: {name:"浦和競馬場",type:"地方競馬",races:[["11R","浦和メイン","ダート1500m","urawa11"],["10R","特別レース","ダート1400m","urawa10"],["9R","一般レース","ダート1400m","urawa9"]]},
+  sonoda: {name:"園田競馬場",type:"地方競馬",races:[["11R","園田メイン","ダート1400m","sonoda11"],["10R","特別レース","ダート1700m","sonoda10"],["9R","一般レース","ダート1400m","sonoda9"]]},
+  himeji: {name:"姫路競馬場",type:"地方競馬",races:[["11R","姫路メイン","ダート1400m","himeji11"],["10R","特別レース","ダート1500m","himeji10"],["9R","一般レース","ダート1400m","himeji9"]]},
+  monbetsu: {name:"門別競馬場",type:"地方競馬 / ナイター",races:[["11R","門別メイン","ダート1200m","monbetsu11"],["10R","特別レース","ダート1700m","monbetsu10"],["9R","一般レース","ダート1000m","monbetsu9"]]},
+  morioka: {name:"盛岡競馬場",type:"地方競馬",races:[["11R","盛岡メイン","ダート1600m","morioka11"],["10R","特別レース","ダート1400m","morioka10"],["9R","一般レース","芝1600m","morioka9"]]},
+  mizusawa: {name:"水沢競馬場",type:"地方競馬",races:[["11R","水沢メイン","ダート1600m","mizusawa11"],["10R","特別レース","ダート1400m","mizusawa10"],["9R","一般レース","ダート1300m","mizusawa9"]]},
+  kanazawa: {name:"金沢競馬場",type:"地方競馬",races:[["11R","金沢メイン","ダート1500m","kanazawa11"],["10R","特別レース","ダート1700m","kanazawa10"],["9R","一般レース","ダート1400m","kanazawa9"]]},
+  kochi: {name:"高知競馬場",type:"地方競馬 / ナイター",races:[["11R","高知メイン","ダート1400m","kochi11"],["10R","特別レース","ダート1600m","kochi10"],["9R","一般レース","ダート1300m","kochi9"]]},
+  saga: {name:"佐賀競馬場",type:"地方競馬",races:[["11R","佐賀メイン","ダート1400m","saga11"],["10R","特別レース","ダート1750m","saga10"],["9R","一般レース","ダート1300m","saga9"]]}
+};
 
-const title =
-document.getElementById("courseTitle");
+const data = courses[course] || courses.hakodate;
 
-if(course==="hakodate"){
-title.innerText="函館競馬場";
-}
+title.innerText = data.name;
+sub.innerText = data.type;
 
-if(course==="chukyo"){
-title.innerText="中京競馬場";
-}
-
-if(course==="hanshin"){
-title.innerText="阪神競馬場";
-}
-
-if(course==="kyoto"){
-title.innerText="京都競馬場";
-}
-
-if(course==="tokyo"){
-title.innerText="東京競馬場";
-}
-
-if(course==="nakayama"){
-title.innerText="中山競馬場";
-}
-
-if(course==="niigata"){
-title.innerText="新潟競馬場";
-}
-
-if(course==="sapporo"){
-title.innerText="札幌競馬場";
-}
-
-if(course==="nagoya"){
-title.innerText="名古屋競馬場";
-}
-
-if(course==="kasamatsu"){
-title.innerText="笠松競馬場";
-}
-
-if(course==="oi"){
-title.innerText="大井競馬場";
-}
-
+raceList.innerHTML = data.races.map(r => `
+  <div class="card">
+    <div class="race">${r[0]} ${r[1]}</div>
+    <div class="info">${r[2]}</div>
+    <a class="btn" href="race.html?race=${r[3]}">レース詳細</a>
+  </div>
+`).join("");
 </script>
-</div>
-
-<script>
-
 
 </body>
 </html>
