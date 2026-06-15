@@ -3,118 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>予想投稿 | DARKHORSCORE</title>
+<title>投稿 | DARKHORSCORE</title>
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f6f6f6;color:#111;padding:24px}
-a{color:#111;font-weight:800;text-decoration:none}
-.logo{font-size:30px;font-weight:900;margin-top:28px}
-.copy{margin-top:10px;color:#555}
-.card{background:white;border-radius:24px;padding:22px;margin-top:24px;box-shadow:0 8px 24px rgba(0,0,0,.06);border:1px solid #eee}
-label{display:block;margin-top:18px;margin-bottom:8px;font-weight:800}
-input,textarea,select{width:100%;box-sizing:border-box;padding:15px;border-radius:14px;border:1px solid #ddd;font-size:16px;background:#fff}
+body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111}
+.header{background:#111;color:white;padding:20px;text-align:center}
+.logo{font-size:28px;font-weight:900}
+.sub{font-size:12px;color:#ccc;margin-top:5px}
+.container{padding:15px}
+.card{background:white;border-radius:20px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+label{display:block;font-weight:900;margin-top:16px}
+input,textarea{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px}
 textarea{min-height:120px}
-button{width:100%;margin-top:24px;padding:16px;border:none;border-radius:999px;background:#111;color:white;font-size:16px;font-weight:900}
-.prediction{background:white;border-radius:20px;padding:18px;margin-top:14px;border:1px solid #eee;box-shadow:0 6px 18px rgba(0,0,0,.04)}
-.race{font-size:13px;color:#777}
-.horse{font-size:22px;font-weight:900;margin-top:6px}
-.reason{color:#444;line-height:1.7;margin-top:10px}
-.empty{color:#777;margin-top:20px}
+button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;background:#111;color:white;font-size:16px;font-weight:900}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
+.nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
+.space{height:80px}
 </style>
 </head>
-
 <body>
 
-<a href="index.html">← トップへ戻る</a>
-
-<div class="logo">DARKHORSCORE</div>
-<div class="copy">予想ではなく、実績で語れ。</div>
-
-<div class="card">
-  <h1>🏇 予想を投稿する</h1>
-
-  <label>レース名</label>
-
-<input
-id="race"
-type="text"
-placeholder="例：函館11R 函館記念"
-style="
-width:100%;
-padding:14px;
-border:1px solid #ddd;
-border-radius:12px;
-font-size:16px;
-box-sizing:border-box;
-">
-  </select>
-
-  <label>本命馬</label>
-  <input id="horse" type="text" placeholder="例：ドウデュース">
-
-  <label>予想理由</label>
-  <textarea id="reason" placeholder="例：前走内容が良く、距離適性も高いと感じたため。"></textarea>
-
-  <button onclick="submitPrediction()">投稿する</button>
+<div class="header">
+  <div class="logo">DARKHORSCORE</div>
+  <div class="sub">予想を投稿する</div>
 </div>
 
-<h2>みんなの本命</h2>
-<div id="timeline"></div>
+<div class="container">
+  <div class="card">
+    <label>ユーザー名</label>
+    <input id="user" placeholder="例：ようよう">
+
+    <label>レース名</label>
+    <input id="race" placeholder="例：函館記念">
+
+    <label>本命馬</label>
+    <input id="horse" placeholder="例：ソールオリエンス">
+
+    <label>予想理由</label>
+    <textarea id="reason" placeholder="例：前走内容を評価。距離延長もプラス。"></textarea>
+
+    <button onclick="submitPick()">投稿する</button>
+  </div>
+</div>
+
+<div class="space"></div>
+
+<div class="nav">
+  <a href="index.html">ホーム</a>
+  <a href="post.html">投稿</a>
+  <a href="ranking.html">順位</a>
+  <a href="mypage.html">マイページ</a>
+</div>
 
 <script>
-function getPredictions(){
-  return JSON.parse(localStorage.getItem("predictions") || "[]");
-}
-
-function savePredictions(predictions){
-  localStorage.setItem("predictions", JSON.stringify(predictions));
-}
-
-function submitPrediction(){
-  const race = document.getElementById("race").value;
+function submitPick(){
+  const user = document.getElementById("user").value.trim() || "匿名ユーザー";
+  const race = document.getElementById("race").value.trim();
   const horse = document.getElementById("horse").value.trim();
   const reason = document.getElementById("reason").value.trim();
 
-  if(!horse){
-    alert("本命馬を入力して！");
+  if(!race || !horse){
+    alert("レース名と本命馬を入力して！");
     return;
   }
 
-  const predictions = getPredictions();
+  const picks = JSON.parse(localStorage.getItem("picks") || "[]");
 
-  predictions.unshift({
+  picks.unshift({
+    user,
     race,
     horse,
     reason,
-    createdAt: new Date().toLocaleString("ja-JP")
+    rate:"未集計",
+    date:new Date().toLocaleString("ja-JP")
   });
 
-  savePredictions(predictions);
+  localStorage.setItem("picks", JSON.stringify(picks));
 
-  document.getElementById("horse").value = "";
-  document.getElementById("reason").value = "";
-
-  renderTimeline();
+  alert("投稿した！");
+  location.href = "index.html";
 }
-
-function renderTimeline(){
-  const timeline = document.getElementById("timeline");
-  const predictions = getPredictions();
-
-  if(predictions.length === 0){
-    timeline.innerHTML = '<p class="empty">まだ予想がありません。</p>';
-    return;
-  }
-
-  timeline.innerHTML = predictions.map(p => `
-    <div class="prediction">
-      <div class="race">${p.race} / ${p.createdAt}</div>
-      <div class="horse">◎ ${p.horse}</div>
-      <div class="reason">${p.reason || "理由なし"}</div>
-    </div>
-  `).join("");
-}
-
-renderTimeline();
 </script>
 
 </body>
