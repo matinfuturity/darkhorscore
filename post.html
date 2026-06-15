@@ -1,7 +1,112 @@
-宝塚記念
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>予想投稿 | DARKHORSCORE</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a;
+      color: white;
+      padding: 24px;
+    }
 
-◎ ドウデュース
+    a {
+      color: #22c55e;
+      text-decoration: none;
+    }
 
-ようよう
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      margin-top: 24px;
+    }
 
-理由...
+    .tagline {
+      color: #cbd5e1;
+      margin: 8px 0 28px;
+    }
+
+    .card {
+      background: #1e293b;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      background: #334155;
+      color: white;
+    }
+
+    textarea {
+      min-height: 120px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: #22c55e;
+      color: #052e16;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .note {
+      color: #94a3b8;
+      font-size: 13px;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html">← トップへ戻る</a>
+
+  <div class="logo">DARKHORSCORE</div>
+  <div class="tagline">予想ではなく、実績で語れ。</div>
+
+  <div class="card">
+    <h2>🏇 予想を投稿する</h2>
+
+    <label>レース名</label>
+    <select>
+      <option>宝塚記念</option>
+      <option>函館記念</option>
+      <option>CBC賞</option>
+    </select>
+
+    <label>本命馬</label>
+    <input type="text" placeholder="例：ドウデュース" />
+
+    <label>予想理由</label>
+    <textarea placeholder="例：前走内容が良く、距離適性も高いと感じたため。"></textarea>
+
+    <button>投稿する</button>
+
+    <p class="note">
+      ※ 現在はデザイン確認用です。正式版では投稿後に予想が記録され、的中率に反映されます。
+    </p>
+  </div>
+</body>
+</html>
