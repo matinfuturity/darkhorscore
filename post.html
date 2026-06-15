@@ -5,70 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>予想投稿 | DARKHORSCORE</title>
 <style>
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background:#f6f6f6;
-  color:#111;
-  padding:24px;
-}
-a{
-  color:#111;
-  font-weight:800;
-  text-decoration:none;
-}
-.logo{
-  font-size:30px;
-  font-weight:900;
-  margin-top:28px;
-}
-.copy{
-  margin-top:10px;
-  color:#555;
-}
-.card{
-  background:white;
-  border-radius:24px;
-  padding:22px;
-  margin-top:24px;
-  box-shadow:0 8px 24px rgba(0,0,0,.06);
-  border:1px solid #eee;
-}
-label{
-  display:block;
-  margin-top:18px;
-  margin-bottom:8px;
-  font-weight:800;
-}
-input,textarea,select{
-  width:100%;
-  box-sizing:border-box;
-  padding:15px;
-  border-radius:14px;
-  border:1px solid #ddd;
-  font-size:16px;
-  background:#fff;
-}
-textarea{
-  min-height:130px;
-}
-button{
-  width:100%;
-  margin-top:24px;
-  padding:16px;
-  border:none;
-  border-radius:999px;
-  background:#111;
-  color:white;
-  font-size:16px;
-  font-weight:900;
-}
-.note{
-  color:#777;
-  font-size:13px;
-  line-height:1.7;
-  margin-top:16px;
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f6f6f6;color:#111;padding:24px}
+a{color:#111;font-weight:800;text-decoration:none}
+.logo{font-size:30px;font-weight:900;margin-top:28px}
+.copy{margin-top:10px;color:#555}
+.card{background:white;border-radius:24px;padding:22px;margin-top:24px;box-shadow:0 8px 24px rgba(0,0,0,.06);border:1px solid #eee}
+label{display:block;margin-top:18px;margin-bottom:8px;font-weight:800}
+input,textarea,select{width:100%;box-sizing:border-box;padding:15px;border-radius:14px;border:1px solid #ddd;font-size:16px;background:#fff}
+textarea{min-height:120px}
+button{width:100%;margin-top:24px;padding:16px;border:none;border-radius:999px;background:#111;color:white;font-size:16px;font-weight:900}
+.prediction{background:white;border-radius:20px;padding:18px;margin-top:14px;border:1px solid #eee;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+.race{font-size:13px;color:#777}
+.horse{font-size:22px;font-weight:900;margin-top:6px}
+.reason{color:#444;line-height:1.7;margin-top:10px}
+.empty{color:#777;margin-top:20px}
 </style>
 </head>
 
@@ -83,7 +33,7 @@ button{
   <h1>🏇 予想を投稿する</h1>
 
   <label>レース名</label>
-  <select>
+  <select id="race">
     <option>宝塚記念</option>
     <option>スプリンターズステークス</option>
     <option>秋華賞</option>
@@ -94,17 +44,73 @@ button{
   </select>
 
   <label>本命馬</label>
-  <input type="text" placeholder="例：ドウデュース">
+  <input id="horse" type="text" placeholder="例：ドウデュース">
 
   <label>予想理由</label>
-  <textarea placeholder="例：前走内容が良く、距離適性も高いと感じたため。"></textarea>
+  <textarea id="reason" placeholder="例：前走内容が良く、距離適性も高いと感じたため。"></textarea>
 
-  <button>投稿する</button>
-
-  <p class="note">
-    ※ 現在はデザイン確認用です。正式版では投稿後に予想が記録され、的中率やランキングに反映されます。
-  </p>
+  <button onclick="submitPrediction()">投稿する</button>
 </div>
+
+<h2>みんなの本命</h2>
+<div id="timeline"></div>
+
+<script>
+function getPredictions(){
+  return JSON.parse(localStorage.getItem("predictions") || "[]");
+}
+
+function savePredictions(predictions){
+  localStorage.setItem("predictions", JSON.stringify(predictions));
+}
+
+function submitPrediction(){
+  const race = document.getElementById("race").value;
+  const horse = document.getElementById("horse").value.trim();
+  const reason = document.getElementById("reason").value.trim();
+
+  if(!horse){
+    alert("本命馬を入力して！");
+    return;
+  }
+
+  const predictions = getPredictions();
+
+  predictions.unshift({
+    race,
+    horse,
+    reason,
+    createdAt: new Date().toLocaleString("ja-JP")
+  });
+
+  savePredictions(predictions);
+
+  document.getElementById("horse").value = "";
+  document.getElementById("reason").value = "";
+
+  renderTimeline();
+}
+
+function renderTimeline(){
+  const timeline = document.getElementById("timeline");
+  const predictions = getPredictions();
+
+  if(predictions.length === 0){
+    timeline.innerHTML = '<p class="empty">まだ予想がありません。</p>';
+    return;
+  }
+
+  timeline.innerHTML = predictions.map(p => `
+    <div class="prediction">
+      <div class="race">${p.race} / ${p.createdAt}</div>
+      <div class="horse">◎ ${p.horse}</div>
+      <div class="reason">${p.reason || "理由なし"}</div>
+    </div>
+  `).join("");
+}
+
+renderTimeline();
+</script>
 
 </body>
 </html>
