@@ -10,13 +10,15 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 .logo{text-align:center;font-size:28px;font-weight:900}
 .copy{text-align:center;font-size:13px;color:#666;margin-top:5px}
 .container{padding:18px 14px}
-.hero{background:#111;color:white;border-radius:22px;padding:22px;margin-bottom:22px}
-.hero h1{margin:0;font-size:28px}
+.hero{background:#111;color:white;border-radius:22px;padding:22px;margin-bottom:18px}
+.hero h1{margin:0;font-size:27px}
 .hero p{color:#ddd;margin:10px 0 0;line-height:1.6}
-.title{font-size:22px;font-weight:900;margin:22px 0 12px}
+.title{font-size:21px;font-weight:900;margin:22px 0 12px;border-left:5px solid #111;padding-left:10px}
 .card{background:white;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 5px 16px rgba(0,0,0,.05)}
+.horse{padding:10px 0;border-bottom:1px solid #eee;font-weight:800}
+.horse:last-child{border-bottom:none}
 .user{font-weight:900;font-size:16px}
-.horse{font-size:24px;font-weight:900;margin-top:8px}
+.pick{font-size:23px;font-weight:900;margin-top:8px}
 .comment{color:#555;line-height:1.7;margin-top:10px}
 .btn{display:block;text-align:center;background:#111;color:white;text-decoration:none;border-radius:999px;padding:15px;font-weight:900;margin-top:20px}
 .nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
@@ -33,7 +35,6 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 </div>
 
 <div class="container">
-
   <div class="hero">
     <h1 id="raceTitle">レース詳細</h1>
     <p id="raceInfo">読み込み中...</p>
@@ -46,7 +47,6 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
   <div id="predictions"></div>
 
   <a href="post.html" class="btn">予想を投稿する</a>
-
 </div>
 
 <div class="space"></div>
@@ -61,49 +61,86 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 <script>
 const races = {
   hakodate11: {
-    title: "函館11R 函館記念",
-    info: "芝2000m / 発走15:25",
-    horses: ["ソールオリエンス","ローシャムパーク","プラダリア","ベラジオオペラ"],
-    predictions: [
+    title:"函館11R 函館記念",
+    info:"芝2000m / 発走15:25 / 函館競馬場",
+    horses:["ソールオリエンス","ローシャムパーク","プラダリア","ベラジオオペラ"],
+    predictions:[
       ["ようよう","ソールオリエンス","前走内容を評価。距離延長もプラス。"],
       ["競馬博士","ローシャムパーク","函館適性が高く展開も向きそう。"]
     ]
   },
+  hakodate10: {
+    title:"函館10R 駒ヶ岳特別",
+    info:"芝2600m / 発走14:50 / 函館競馬場",
+    horses:["サトノシャローム","メイショウブレゲ","ダノンジャッカル"],
+    predictions:[
+      ["ウマ太郎","メイショウブレゲ","長距離適性を評価。"]
+    ]
+  },
   chukyo11: {
-    title: "中京11R CBC賞",
-    info: "芝1200m / 発走15:35",
-    horses: ["ピューロマジック","ジャスティンスカイ","ドロップオブライト","グランテスト"],
-    predictions: [
+    title:"中京11R CBC賞",
+    info:"芝1200m / 発走15:35 / 中京競馬場",
+    horses:["ピューロマジック","ジャスティンスカイ","ドロップオブライト","グランテスト"],
+    predictions:[
       ["ようよう","ピューロマジック","スピード能力を評価。"],
       ["ウマ太郎","ドロップオブライト","中京適性に期待。"]
     ]
   },
+  chukyo10: {
+    title:"中京10R 豊明ステークス",
+    info:"芝1400m / 発走15:00 / 中京競馬場",
+    horses:["ロードフォンス","サトノペルセウス","アルーリングビュー"],
+    predictions:[
+      ["競馬博士","アルーリングビュー","展開が向きそう。"]
+    ]
+  },
   nagoya11: {
-    title: "名古屋11R 名古屋メイン",
-    info: "ダート1500m / 発走時刻未定",
-    horses: ["ミックファイア","セブンカラーズ","トミケンシャイリ","ブリーザフレスカ"],
-    predictions: [
+    title:"名古屋11R 名古屋メイン",
+    info:"ダート1500m / 発走時刻未定 / 名古屋競馬場",
+    horses:["ミックファイア","セブンカラーズ","トミケンシャイリ","ブリーザフレスカ"],
+    predictions:[
       ["ようよう","ミックファイア","地方ダートでの安定感を評価。"],
       ["競馬博士","セブンカラーズ","名古屋コースへの適性を評価。"]
+    ]
+  },
+  kasamatsu11: {
+    title:"笠松11R 笠松メイン",
+    info:"ダート1400m / 発走時刻未定 / 笠松競馬場",
+    horses:["笠松ホースA","笠松ホースB","笠松ホースC"],
+    predictions:[
+      ["ようよう","笠松ホースA","前走内容を評価。"]
+    ]
+  },
+  oi11: {
+    title:"大井11R 大井メイン",
+    info:"ダート1800m / 発走時刻未定 / 大井競馬場",
+    horses:["大井ホースA","大井ホースB","大井ホースC"],
+    predictions:[
+      ["ウマ太郎","大井ホースB","ナイター適性を評価。"]
     ]
   }
 };
 
 const params = new URLSearchParams(window.location.search);
 const raceId = params.get("race") || "hakodate11";
-const race = races[raceId] || races.hakodate11;
+const race = races[raceId] || {
+  title:"レース情報未登録",
+  info:"このレースはまだ登録されていません。",
+  horses:["出走馬データ準備中"],
+  predictions:[["DARKHORSCORE","準備中","このレースの予想はまだありません。"]]
+};
 
 document.getElementById("raceTitle").innerText = race.title;
 document.getElementById("raceInfo").innerText = race.info;
 
 document.getElementById("horses").innerHTML =
-  race.horses.map(h => `${h}<br>`).join("");
+  race.horses.map(h => `<div class="horse">${h}</div>`).join("");
 
 document.getElementById("predictions").innerHTML =
   race.predictions.map(p => `
     <div class="card">
       <div class="user">${p[0]}</div>
-      <div class="horse">◎ ${p[1]}</div>
+      <div class="pick">◎ ${p[1]}</div>
       <div class="comment">${p[2]}</div>
     </div>
   `).join("");
