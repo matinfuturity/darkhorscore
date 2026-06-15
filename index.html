@@ -1,63 +1,49 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DarkHorseScore</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f172a;
-      color: white;
-      padding: 24px;
-    }
-    .logo {
-      font-size: 32px;
-      font-weight: 800;
-      margin-top: 40px;
-    }
-    .tagline {
-      color: #cbd5e1;
-      margin-top: 12px;
-      font-size: 18px;
-    }
-    .card {
-      background: #1e293b;
-      border-radius: 18px;
-      padding: 20px;
-      margin-top: 24px;
-    }
-    .button {
-      display: block;
-      background: #22c55e;
-      color: #052e16;
-      text-align: center;
-      padding: 16px;
-      border-radius: 14px;
-      font-weight: bold;
-      margin-top: 24px;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DARKHORSCORE</title>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#111}
+.hero{padding:56px 24px;border-bottom:1px solid #eee}
+.logo{font-size:34px;font-weight:900;letter-spacing:-1px}
+.tagline{font-size:22px;font-weight:800;margin-top:12px}
+.sub{color:#555;line-height:1.7;margin-top:16px}
+.buttons{display:grid;gap:12px;margin-top:30px}
+.btn{padding:16px;border-radius:999px;text-align:center;text-decoration:none;font-weight:900}
+.black{background:#111;color:#fff}
+.white{background:#fff;color:#111;border:1px solid #111}
+.section{padding:28px 24px}
+.card{border:1px solid #eee;border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+.footer{text-align:center;color:#777;padding:32px}
+</style>
 </head>
 <body>
+
+<div class="hero">
   <div class="logo">DARKHORSCORE</div>
   <div class="tagline">予想ではなく、実績で語れ。</div>
+  <p class="sub">
+    競馬予想家の予想履歴・的中率・実績を可視化するSNS。<br>
+    まだ見つかっていない“本当に上手い予想家”を発掘する場所。
+  </p>
 
-  <div class="card">
-    <h2>競馬予想家の実力を可視化するSNS</h2>
-    <p>投稿した予想は記録され、的中率・成績・実績としてプロフィールに残ります。</p>
+  <div class="buttons">
+    <a class="btn black" href="ranking.html">ランキングを見る</a>
+    <a class="btn white" href="post.html">予想を投稿する</a>
   </div>
+</div>
 
-  <div class="card">
-    <h3>今後の機能</h3>
-    <p>・本命馬投稿</p>
-    <p>・レース別タイムライン</p>
-    <p>・的中率ランキング</p>
-    <p>・予想家プロフィール</p>
-  </div>
-<a class="button" href="post.html">予想を投稿する</a>  
-  
+<div class="section">
+  <h2>今後のGⅠレース</h2>
+  <div class="card">宝塚記念</div>
+  <div class="card">スプリンターズステークス</div>
+  <div class="card">秋華賞</div>
+  <a class="btn black" href="races.html">2026年GⅠ一覧を見る</a>
+</div>
+
+<div class="footer">DARKHORSCORE © 2026</div>
+
 </body>
 </html>
