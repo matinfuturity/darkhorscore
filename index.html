@@ -5,38 +5,236 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DARKHORSCORE</title>
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
-.header{background:#fff;padding:16px;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
-.logo{text-align:center;font-size:24px;font-weight:900;letter-spacing:-1px}
-.copy{text-align:center;font-size:12px;color:#666;margin-top:4px}
-.menu{display:grid;grid-template-columns:repeat(4,1fr);background:#111}
-.menu a{color:#fff;text-align:center;text-decoration:none;padding:12px 0;font-size:13px;font-weight:800}
-.section{margin:18px 14px}
-.section-title{font-size:18px;font-weight:900;margin-bottom:10px;border-left:5px solid #111;padding-left:10px}
-.news{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
-.news-title{font-weight:900}
-.news-meta{font-size:12px;color:#777;margin-top:5px}
-.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.course{background:#fff;border-radius:16px;padding:16px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.05);border:1px solid #e5e5e5;text-decoration:none;color:#111}
-.course-name{font-size:18px;font-weight:900}
-.course-type{font-size:12px;color:#666;margin-top:6px}
-.live{display:inline-block;margin-top:8px;background:#111;color:#fff;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:900}
-.race-card{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 5px 16px rgba(0,0,0,.05);border:1px solid #e5e5e5}
-.race-top{display:flex;justify-content:space-between;align-items:center}
-.rno{font-weight:900;color:#555;font-size:13px}
-.badge{background:#111;color:#fff;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:900}
-.race-name{font-size:21px;font-weight:900;margin-top:8px}
-.race-info{font-size:13px;color:#666;margin-top:6px;line-height:1.5}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.btn{text-align:center;text-decoration:none;padding:11px;border-radius:999px;font-weight:900;font-size:13px}
-.black{background:#111;color:#fff}
-.white{background:#fff;color:#111;border:1px solid #111}
-.rank{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
-.rank-name{font-weight:900;font-size:17px}
-.rank-score{font-size:13px;color:#666;margin-top:5px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
-.nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
-.footer-space{height:80px}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:#f4f4f4;
+  color:#111;
+}
+
+.header{
+  background:#fff;
+  padding:18px 16px;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.copy{
+  text-align:center;
+  font-size:13px;
+  color:#666;
+  margin-top:5px;
+}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#111;
+}
+
+.menu a{
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  padding:12px 0;
+  font-size:13px;
+  font-weight:800;
+}
+
+.section{
+  margin:18px 14px;
+}
+
+.section-title{
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:12px;
+  border-left:5px solid #111;
+  padding-left:10px;
+}
+
+.news{
+  background:#fff;
+  border-radius:16px;
+  padding:14px 16px;
+  margin-bottom:10px;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+}
+
+.news-title{
+  font-weight:900;
+  line-height:1.5;
+}
+
+.news-meta{
+  font-size:12px;
+  color:#777;
+  margin-top:5px;
+}
+
+.course-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
+}
+
+.course{
+  background:#fff;
+  border-radius:18px;
+  padding:16px 10px;
+  text-align:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+  border:1px solid #e5e5e5;
+  text-decoration:none;
+  color:#111;
+  display:block;
+  min-width:0;
+}
+
+.course-name{
+  font-size:22px;
+  font-weight:900;
+  line-height:1.2;
+}
+
+.course-type{
+  font-size:13px;
+  color:#666;
+  margin-top:6px;
+}
+
+.live{
+  display:inline-block;
+  margin-top:10px;
+  background:#111;
+  color:#fff;
+  border-radius:999px;
+  padding:5px 12px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.race-card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 5px 16px rgba(0,0,0,.05);
+  border:1px solid #e5e5e5;
+}
+
+.race-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.rno{
+  font-weight:900;
+  color:#555;
+  font-size:13px;
+}
+
+.badge{
+  background:#111;
+  color:#fff;
+  border-radius:999px;
+  padding:4px 9px;
+  font-size:11px;
+  font-weight:900;
+}
+
+.race-name{
+  font-size:21px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+.race-info{
+  font-size:13px;
+  color:#666;
+  margin-top:6px;
+  line-height:1.5;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:12px;
+}
+
+.btn{
+  text-align:center;
+  text-decoration:none;
+  padding:11px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:13px;
+}
+
+.black{
+  background:#111;
+  color:#fff;
+}
+
+.white{
+  background:#fff;
+  color:#111;
+  border:1px solid #111;
+}
+
+.rank{
+  background:#fff;
+  border-radius:16px;
+  padding:14px 16px;
+  margin-bottom:10px;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+}
+
+.rank-name{
+  font-weight:900;
+  font-size:17px;
+}
+
+.rank-score{
+  font-size:13px;
+  color:#666;
+  margin-top:5px;
+}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  border-top:1px solid #ccc;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:9px 0;
+}
+
+.nav a{
+  text-align:center;
+  color:#111;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:800;
+}
+
+.footer-space{
+  height:80px;
+}
 </style>
 </head>
 
@@ -51,7 +249,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
   <a href="index.html">ホーム</a>
   <a href="post.html">予想</a>
   <a href="ranking.html">ランキング</a>
-  <a href="#">マイページ</a>
+  <a href="mypage.html">マイページ</a>
 </div>
 
 <div class="section">
@@ -74,149 +272,164 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 </div>
 
 <div class="section">
-  <div class="section-title">開催競馬場</div>
+  <div class="section-title">中央競馬場</div>
 
-  <a class="course" href="course.html?course=sapporo">
-<div class="course-name">札幌</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+  <div class="course-grid">
 
-<a class="course" href="course.html?course=hakodate">
-<div class="course-name">函館</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=sapporo">
+      <div class="course-name">札幌</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=fukushima">
-<div class="course-name">福島</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=hakodate">
+      <div class="course-name">函館</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=niigata">
-<div class="course-name">新潟</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=fukushima">
+      <div class="course-name">福島</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=tokyo">
-<div class="course-name">東京</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=niigata">
+      <div class="course-name">新潟</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=nakayama">
-<div class="course-name">中山</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=tokyo">
+      <div class="course-name">東京</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=chukyo">
-<div class="course-name">中京</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=nakayama">
+      <div class="course-name">中山</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=kyoto">
-<div class="course-name">京都</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=chukyo">
+      <div class="course-name">中京</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=hanshin">
-<div class="course-name">阪神</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=kyoto">
+      <div class="course-name">京都</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=kokura">
-<div class="course-name">小倉</div>
-<div class="course-type">中央</div>
-<span class="live">開催</span>
-</a>  <a class="course" href="course.html?course=nagoya">
-<div class="course-name">名古屋</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=hanshin">
+      <div class="course-name">阪神</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=kasamatsu">
-<div class="course-name">笠松</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=kokura">
+      <div class="course-name">小倉</div>
+      <div class="course-type">中央</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=oi">
-<div class="course-name">大井</div>
-<div class="course-type">地方</div>
-<span class="live">ナイター</span>
-</a>
+  </div>
+</div>
 
-<a class="course" href="course.html?course=kawasaki">
-<div class="course-name">川崎</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+<div class="section">
+  <div class="section-title">地方競馬場</div>
 
-<a class="course" href="course.html?course=funabashi">
-<div class="course-name">船橋</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+  <div class="course-grid">
 
-<a class="course" href="course.html?course=urawa">
-<div class="course-name">浦和</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=nagoya">
+      <div class="course-name">名古屋</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=sonoda">
-<div class="course-name">園田</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=kasamatsu">
+      <div class="course-name">笠松</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=himeji">
-<div class="course-name">姫路</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=oi">
+      <div class="course-name">大井</div>
+      <div class="course-type">地方</div>
+      <span class="live">ナイター</span>
+    </a>
 
-<a class="course" href="course.html?course=monbetsu">
-<div class="course-name">門別</div>
-<div class="course-type">地方</div>
-<span class="live">ナイター</span>
-</a>
+    <a class="course" href="course.html?course=kawasaki">
+      <div class="course-name">川崎</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=morioka">
-<div class="course-name">盛岡</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=funabashi">
+      <div class="course-name">船橋</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=mizusawa">
-<div class="course-name">水沢</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=urawa">
+      <div class="course-name">浦和</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=kanazawa">
-<div class="course-name">金沢</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=sonoda">
+      <div class="course-name">園田</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=kochi">
-<div class="course-name">高知</div>
-<div class="course-type">地方</div>
-<span class="live">ナイター</span>
-</a>
+    <a class="course" href="course.html?course=himeji">
+      <div class="course-name">姫路</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
 
-<a class="course" href="course.html?course=saga">
-<div class="course-name">佐賀</div>
-<div class="course-type">地方</div>
-<span class="live">開催</span>
-</a>
+    <a class="course" href="course.html?course=monbetsu">
+      <div class="course-name">門別</div>
+      <div class="course-type">地方</div>
+      <span class="live">ナイター</span>
+    </a>
+
+    <a class="course" href="course.html?course=morioka">
+      <div class="course-name">盛岡</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="course.html?course=mizusawa">
+      <div class="course-name">水沢</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="course.html?course=kanazawa">
+      <div class="course-name">金沢</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
+
+    <a class="course" href="course.html?course=kochi">
+      <div class="course-name">高知</div>
+      <div class="course-type">地方</div>
+      <span class="live">ナイター</span>
+    </a>
+
+    <a class="course" href="course.html?course=saga">
+      <div class="course-name">佐賀</div>
+      <div class="course-type">地方</div>
+      <span class="live">開催</span>
+    </a>
+
+  </div>
+</div>
 
 <div class="section">
   <div class="section-title">注目レース</div>
@@ -230,7 +443,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
     <div class="race-info">芝2000m / 16頭 / 発走 15:25<br>予想数 128件</div>
     <div class="actions">
       <a class="btn black" href="post.html">予想する</a>
-      <a class="btn white" href="#">予想を見る</a>
+      <a class="btn white" href="race.html?race=hakodate11">予想を見る</a>
     </div>
   </div>
 
@@ -243,7 +456,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
     <div class="race-info">ダート1500m / 発走時刻未定<br>予想数 42件</div>
     <div class="actions">
       <a class="btn black" href="post.html">予想する</a>
-      <a class="btn white" href="#">予想を見る</a>
+      <a class="btn white" href="race.html?race=nagoya11">予想を見る</a>
     </div>
   </div>
 </div>
@@ -273,7 +486,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
   <a href="index.html">ホーム</a>
   <a href="post.html">予想</a>
   <a href="ranking.html">ランキング</a>
-  <a href="#">マイページ</a>
+  <a href="mypage.html">マイページ</a>
 </div>
 
 </body>
