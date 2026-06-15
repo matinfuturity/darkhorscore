@@ -4,46 +4,284 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DARKHORSCORE</title>
+
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#111}
-.hero{padding:56px 24px;border-bottom:1px solid #eee}
-.logo{font-size:34px;font-weight:900;letter-spacing:-1px}
-.tagline{font-size:22px;font-weight:800;margin-top:12px}
-.sub{color:#555;line-height:1.7;margin-top:16px}
-.buttons{display:grid;gap:12px;margin-top:30px}
-.btn{padding:16px;border-radius:999px;text-align:center;text-decoration:none;font-weight:900}
-.black{background:#111;color:#fff}
-.white{background:#fff;color:#111;border:1px solid #111}
-.section{padding:28px 24px}
-.card{border:1px solid #eee;border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,.04)}
-.footer{text-align:center;color:#777;padding:32px}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:#f6f6f6;
+  color:#111;
+}
+
+.hero{
+  background:#111;
+  color:white;
+  padding:54px 24px 38px;
+  border-radius:0 0 32px 32px;
+}
+
+.logo{
+  font-size:36px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+}
+
+.copy{
+  margin-top:18px;
+  font-size:27px;
+  font-weight:900;
+  line-height:1.35;
+}
+
+.sub{
+  margin-top:16px;
+  color:#d1d5db;
+  line-height:1.8;
+  font-size:15px;
+}
+
+.buttons{
+  display:grid;
+  gap:12px;
+  margin-top:30px;
+}
+
+.btn{
+  display:block;
+  text-align:center;
+  padding:16px;
+  border-radius:999px;
+  font-weight:900;
+  text-decoration:none;
+}
+
+.white{
+  background:white;
+  color:#111;
+}
+
+.black{
+  background:#111;
+  color:white;
+  border:1px solid #111;
+}
+
+.outline{
+  background:transparent;
+  color:white;
+  border:1px solid #555;
+}
+
+.section{
+  padding:28px 22px;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.section-title h2{
+  margin:0;
+  font-size:22px;
+}
+
+.more{
+  color:#555;
+  font-size:13px;
+  text-decoration:none;
+}
+
+.card{
+  background:white;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+  border:1px solid #eee;
+}
+
+.rank{
+  font-size:14px;
+  color:#555;
+}
+
+.name{
+  font-size:21px;
+  font-weight:900;
+  margin-top:6px;
+}
+
+.stats{
+  margin-top:8px;
+  color:#555;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.race-name{
+  font-size:24px;
+  font-weight:900;
+}
+
+.race-info{
+  margin-top:8px;
+  color:#555;
+  line-height:1.7;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:12px;
+  background:#111;
+  color:white;
+  padding:5px 11px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.mini{
+  background:white;
+  border-radius:18px;
+  padding:15px;
+  font-weight:800;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+  border:1px solid #eee;
+}
+
+.concept{
+  background:white;
+  border-radius:26px;
+  padding:24px;
+  line-height:1.8;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+
+.footer{
+  padding:34px 20px;
+  text-align:center;
+  color:#777;
+  font-size:13px;
+}
 </style>
 </head>
+
 <body>
 
 <div class="hero">
   <div class="logo">DARKHORSCORE</div>
-  <div class="tagline">予想ではなく、実績で語れ。</div>
+
+  <div class="copy">
+    予想ではなく、<br>
+    実績で語れ。
+  </div>
+
   <p class="sub">
     競馬予想家の予想履歴・的中率・実績を可視化するSNS。<br>
     まだ見つかっていない“本当に上手い予想家”を発掘する場所。
   </p>
 
   <div class="buttons">
-    <a class="btn black" href="ranking.html">ランキングを見る</a>
-    <a class="btn white" href="post.html">予想を投稿する</a>
+    <a class="btn white" href="ranking.html">ランキングを見る</a>
+    <a class="btn outline" href="post.html">予想を投稿する</a>
   </div>
 </div>
 
 <div class="section">
-  <h2>今後のGⅠレース</h2>
-  <div class="card">宝塚記念</div>
-  <div class="card">スプリンターズステークス</div>
-  <div class="card">秋華賞</div>
+  <div class="section-title">
+    <h2>急上昇予想家</h2>
+    <a class="more" href="ranking.html">もっと見る →</a>
+  </div>
+
+  <div class="card">
+    <div class="rank">🥇 1位</div>
+    <div class="name">ようよう</div>
+    <div class="stats">
+      的中率 42.8% / 予想数 21<br>
+      直近成績：○ ○ × ○ ○
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="rank">🥈 2位</div>
+    <div class="name">ウマ太郎</div>
+    <div class="stats">
+      的中率 38.1% / 予想数 18<br>
+      直近成績：○ × ○ ○ ×
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="rank">🥉 3位</div>
+    <div class="name">競馬博士</div>
+    <div class="stats">
+      的中率 35.5% / 予想数 31<br>
+      直近成績：× ○ ○ × ○
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">
+    <h2>次のGⅠ</h2>
+    <a class="more" href="races.html">GⅠ一覧 →</a>
+  </div>
+
+  <div class="card">
+    <div class="race-name">宝塚記念</div>
+    <div class="race-info">
+      6月14日 / 阪神・芝2200m<br>
+      上半期の総決算。実力馬たちが集まる注目レース。
+    </div>
+    <span class="badge">GⅠ</span>
+  </div>
+
+  <a class="btn black" href="post.html">このレースの予想を投稿する</a>
+</div>
+
+<div class="section">
+  <div class="section-title">
+    <h2>注目レース</h2>
+  </div>
+
+  <div class="grid">
+    <div class="mini">日本ダービー</div>
+    <div class="mini">有馬記念</div>
+    <div class="mini">ジャパンC</div>
+    <div class="mini">天皇賞・秋</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="concept">
+    <h2>なぜDARKHORSCOREなのか</h2>
+    <p>
+      Xでは、当たった予想だけが目立ち、外れた予想は流れていく。<br>
+      DARKHORSCOREは、予想の履歴を残し、的中率や実績で予想家を評価する場所です。
+    </p>
+    <p>
+      有名かどうかではなく、実際に当てているか。<br>
+      まだ見つかっていない“ダークホース予想家”を発掘します。
+    </p>
+  </div>
+</div>
+
+<div class="section">
   <a class="btn black" href="races.html">2026年GⅠ一覧を見る</a>
 </div>
 
-<div class="footer">DARKHORSCORE © 2026</div>
+<div class="footer">
+  DARKHORSCORE © 2026
+</div>
 
 </body>
 </html>
