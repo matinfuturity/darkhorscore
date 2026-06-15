@@ -4,283 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DARKHORSCORE</title>
-
 <style>
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background:#f6f6f6;
-  color:#111;
-}
-
-.hero{
-  background:#111;
-  color:white;
-  padding:54px 24px 38px;
-  border-radius:0 0 32px 32px;
-}
-
-.logo{
-  font-size:36px;
-  font-weight:900;
-  letter-spacing:-1.5px;
-}
-
-.copy{
-  margin-top:18px;
-  font-size:27px;
-  font-weight:900;
-  line-height:1.35;
-}
-
-.sub{
-  margin-top:16px;
-  color:#d1d5db;
-  line-height:1.8;
-  font-size:15px;
-}
-
-.buttons{
-  display:grid;
-  gap:12px;
-  margin-top:30px;
-}
-
-.btn{
-  display:block;
-  text-align:center;
-  padding:16px;
-  border-radius:999px;
-  font-weight:900;
-  text-decoration:none;
-}
-
-.white{
-  background:white;
-  color:#111;
-}
-
-.black{
-  background:#111;
-  color:white;
-  border:1px solid #111;
-}
-
-.outline{
-  background:transparent;
-  color:white;
-  border:1px solid #555;
-}
-
-.section{
-  padding:28px 22px;
-}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:14px;
-}
-
-.section-title h2{
-  margin:0;
-  font-size:22px;
-}
-
-.more{
-  color:#555;
-  font-size:13px;
-  text-decoration:none;
-}
-
-.card{
-  background:white;
-  border-radius:22px;
-  padding:18px;
-  margin-bottom:14px;
-  box-shadow:0 8px 24px rgba(0,0,0,.06);
-  border:1px solid #eee;
-}
-
-.rank{
-  font-size:14px;
-  color:#555;
-}
-
-.name{
-  font-size:21px;
-  font-weight:900;
-  margin-top:6px;
-}
-
-.stats{
-  margin-top:8px;
-  color:#555;
-  font-size:14px;
-  line-height:1.6;
-}
-
-.race-name{
-  font-size:24px;
-  font-weight:900;
-}
-
-.race-info{
-  margin-top:8px;
-  color:#555;
-  line-height:1.7;
-}
-
-.badge{
-  display:inline-block;
-  margin-top:12px;
-  background:#111;
-  color:white;
-  padding:5px 11px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:800;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.mini{
-  background:white;
-  border-radius:18px;
-  padding:15px;
-  font-weight:800;
-  box-shadow:0 6px 18px rgba(0,0,0,.05);
-  border:1px solid #eee;
-}
-
-.concept{
-  background:white;
-  border-radius:26px;
-  padding:24px;
-  line-height:1.8;
-  box-shadow:0 8px 24px rgba(0,0,0,.06);
-}
-
-.footer{
-  padding:34px 20px;
-  text-align:center;
-  color:#777;
-  font-size:13px;
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f7f7f7;color:#111}
+.header{background:white;padding:18px 20px;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
+.logo{font-size:24px;font-weight:900;letter-spacing:-1px;text-align:center}
+.sub{text-align:center;color:#666;font-size:13px;margin-top:4px}
+.tabs,.courses{display:grid;gap:10px;padding:16px 18px;background:white}
+.tabs{grid-template-columns:1fr 1fr}
+.courses{grid-template-columns:1fr 1fr 1fr}
+.tab,.course{padding:13px;border:2px solid #111;border-radius:10px;text-align:center;font-weight:800;background:white}
+.active{background:#111;color:white}
+.section{padding:22px 18px}
+h2{text-align:center;margin:16px 0 22px;font-size:24px}
+.race{background:white;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 8px 22px rgba(0,0,0,.06);border:1px solid #eee}
+.race-top{display:flex;justify-content:space-between;align-items:center}
+.rno{font-size:14px;color:#777;font-weight:800}
+.place{font-size:14px;font-weight:900;color:#555}
+.name{font-size:23px;font-weight:900;margin-top:8px}
+.info{color:#777;margin-top:6px}
+.count{margin-top:12px;font-size:14px;color:#444}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.btn{display:block;text-align:center;padding:13px;border-radius:999px;font-weight:900;text-decoration:none}
+.black{background:#111;color:white}
+.white{background:white;color:#111;border:1px solid #111}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
+.nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
+.footer-space{height:80px}
 </style>
 </head>
-
 <body>
 
-<div class="hero">
+<div class="header">
   <div class="logo">DARKHORSCORE</div>
+  <div class="sub">本当に当てる人を見つける場所</div>
+</div>
 
-  <div class="copy">
-    予想ではなく、<br>
-    実績で語れ。
-  </div>
+<div class="tabs">
+  <div class="tab active">土</div>
+  <div class="tab">日</div>
+</div>
 
-  <p class="sub">
-    競馬予想家の予想履歴・的中率・実績を可視化するSNS。<br>
-    まだ見つかっていない“本当に上手い予想家”を発掘する場所。
-  </p>
-
-  <div class="buttons">
-    <a class="btn white" href="ranking.html">ランキングを見る</a>
-    <a class="btn outline" href="post.html">予想を投稿する</a>
-  </div>
+<div class="courses">
+  <div class="course active">函館</div>
+  <div class="course">東京</div>
+  <div class="course">阪神</div>
 </div>
 
 <div class="section">
-  <div class="section-title">
-    <h2>急上昇予想家</h2>
-    <a class="more" href="ranking.html">もっと見る →</a>
-  </div>
+  <h2>今週のレース情報</h2>
 
-  <div class="card">
-    <div class="rank">🥇 1位</div>
-    <div class="name">ようよう</div>
-    <div class="stats">
-      的中率 42.8% / 予想数 21<br>
-      直近成績：○ ○ × ○ ○
+  <div class="race">
+    <div class="race-top">
+      <div class="rno">函館11R</div>
+      <div class="place">GⅢ</div>
+    </div>
+    <div class="name">函館記念</div>
+    <div class="info">芝2000m / 16頭</div>
+    <div class="count">予想数 12件</div>
+    <div class="buttons">
+      <a class="btn black" href="post.html">予想する</a>
+      <a class="btn white" href="race.html">予想を見る</a>
     </div>
   </div>
 
-  <div class="card">
-    <div class="rank">🥈 2位</div>
-    <div class="name">ウマ太郎</div>
-    <div class="stats">
-      的中率 38.1% / 予想数 18<br>
-      直近成績：○ × ○ ○ ×
+  <div class="race">
+    <div class="race-top">
+      <div class="rno">函館10R</div>
+      <div class="place">特別</div>
+    </div>
+    <div class="name">駒ヶ岳特別</div>
+    <div class="info">芝2600m / 10頭</div>
+    <div class="count">予想数 5件</div>
+    <div class="buttons">
+      <a class="btn black" href="post.html">予想する</a>
+      <a class="btn white" href="race.html">予想を見る</a>
     </div>
   </div>
 
-  <div class="card">
-    <div class="rank">🥉 3位</div>
-    <div class="name">競馬博士</div>
-    <div class="stats">
-      的中率 35.5% / 予想数 31<br>
-      直近成績：× ○ ○ × ○
+  <div class="race">
+    <div class="race-top">
+      <div class="rno">函館9R</div>
+      <div class="place">特別</div>
+    </div>
+    <div class="name">下北半島特別</div>
+    <div class="info">芝1200m / 14頭</div>
+    <div class="count">予想数 8件</div>
+    <div class="buttons">
+      <a class="btn black" href="post.html">予想する</a>
+      <a class="btn white" href="race.html">予想を見る</a>
     </div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">
-    <h2>次のGⅠ</h2>
-    <a class="more" href="races.html">GⅠ一覧 →</a>
-  </div>
+<div class="footer-space"></div>
 
-  <div class="card">
-    <div class="race-name">宝塚記念</div>
-    <div class="race-info">
-      6月14日 / 阪神・芝2200m<br>
-      上半期の総決算。実力馬たちが集まる注目レース。
-    </div>
-    <span class="badge">GⅠ</span>
-  </div>
-
-  <a class="btn black" href="post.html">このレースの予想を投稿する</a>
-</div>
-
-<div class="section">
-  <div class="section-title">
-    <h2>注目レース</h2>
-  </div>
-
-  <div class="grid">
-    <div class="mini">日本ダービー</div>
-    <div class="mini">有馬記念</div>
-    <div class="mini">ジャパンC</div>
-    <div class="mini">天皇賞・秋</div>
-  </div>
-</div>
-
-<div class="section">
-  <div class="concept">
-    <h2>なぜDARKHORSCOREなのか</h2>
-    <p>
-      Xでは、当たった予想だけが目立ち、外れた予想は流れていく。<br>
-      DARKHORSCOREは、予想の履歴を残し、的中率や実績で予想家を評価する場所です。
-    </p>
-    <p>
-      有名かどうかではなく、実際に当てているか。<br>
-      まだ見つかっていない“ダークホース予想家”を発掘します。
-    </p>
-  </div>
-</div>
-
-<div class="section">
-  <a class="btn black" href="races.html">2026年GⅠ一覧を見る</a>
-</div>
-
-<div class="footer">
-  DARKHORSCORE © 2026
+<div class="nav">
+  <a href="index.html">レース</a>
+  <a href="ranking.html">ランキング</a>
+  <a href="races.html">GⅠ一覧</a>
+  <a href="post.html">投稿</a>
 </div>
 
 </body>
