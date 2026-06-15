@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>競馬場 | DARKHORSCORE</title>
+
+<style>
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:#f5f5f5;
+}
+
+.header{
+background:#111;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+padding:15px;
+}
+
+.card{
+background:white;
+padding:16px;
+border-radius:16px;
+margin-bottom:12px;
+box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.race{
+font-size:20px;
+font-weight:900;
+}
+
+.info{
+color:#666;
+margin-top:6px;
+}
+
+.btn{
+display:block;
+margin-top:10px;
+background:#111;
+color:white;
+text-decoration:none;
+padding:12px;
+text-align:center;
+border-radius:999px;
+font-weight:900;
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+<h1 id="courseTitle">
+競馬場
+</h1>
+</div>
+
+<div class="container">
+
+<div class="card">
+<div class="race">11R メインレース</div>
+<div class="info">予想を見る</div>
+<a class="btn" href="race.html">
+レース詳細
+</a>
+</div>
+
+<div class="card">
+<div class="race">10R 特別レース</div>
+</div>
+
+<div class="card">
+<div class="race">9R 一般レース</div>
+</div>
+
+</div>
+
+<script>
+
+const params =
+new URLSearchParams(window.location.search);
+
+const course =
+params.get("course");
+
+const title =
+document.getElementById("courseTitle");
+
+if(course==="hakodate"){
+title.innerText="函館競馬場";
+}
+
+if(course==="chukyo"){
+title.innerText="中京競馬場";
+}
+
+if(course==="nagoya"){
+title.innerText="名古屋競馬場";
+}
+
+if(course==="kasamatsu"){
+title.innerText="笠松競馬場";
+}
+
+if(course==="oi"){
+title.innerText="大井競馬場";
+}
+
+</script>
+
+</body>
+</html>
