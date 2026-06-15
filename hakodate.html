@@ -4,108 +4,274 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>函館競馬場 | DARKHORSCORE</title>
-<style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
-.header{background:#fff;padding:16px;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
-.logo{text-align:center;font-size:24px;font-weight:900}
-.copy{text-align:center;font-size:12px;color:#666;margin-top:4px}
-.menu{display:grid;grid-template-columns:repeat(4,1fr);background:#111}
-.menu a{color:#fff;text-align:center;text-decoration:none;padding:12px 0;font-size:13px;font-weight:800}
-.section{margin:18px 14px}
-.title{font-size:26px;font-weight:900;margin-bottom:6px}
-.info{color:#666;font-size:13px;line-height:1.6}
-.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 5px 16px rgba(0,0,0,.05);border:1px solid #e5e5e5}
-.section-title{font-size:18px;font-weight:900;margin-bottom:10px;border-left:5px solid #111;padding-left:10px}
-.race-top{display:flex;justify-content:space-between;align-items:center}
-.rno{font-weight:900;color:#555;font-size:13px}
-.badge{background:#111;color:#fff;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:900}
-.race-name{font-size:20px;font-weight:900;margin-top:8px}
-.race-info{font-size:13px;color:#666;margin-top:6px;line-height:1.5}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.btn{text-align:center;text-decoration:none;padding:11px;border-radius:999px;font-weight:900;font-size:13px}
-.black{background:#111;color:#fff}
-.white{background:#fff;color:#111;border:1px solid #111}
-.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
-.nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
-.footer-space{height:80px}
-</style>
-</head>
 
+<style>
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+background:#f5f5f5;
+color:#111;
+}
+
+.header{
+background:#fff;
+padding:16px;
+border-bottom:1px solid #ddd;
+position:sticky;
+top:0;
+z-index:10;
+}
+
+.logo{
+text-align:center;
+font-size:24px;
+font-weight:900;
+}
+
+.sub{
+text-align:center;
+font-size:12px;
+color:#666;
+margin-top:4px;
+}
+
+.container{
+padding:15px;
+}
+
+.hero{
+background:#111;
+color:#fff;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.hero h1{
+margin:0;
+font-size:28px;
+}
+
+.hero p{
+margin:8px 0 0;
+color:#ddd;
+}
+
+.section-title{
+font-size:20px;
+font-weight:900;
+margin:20px 0 12px;
+}
+
+.race{
+background:white;
+padding:16px;
+border-radius:16px;
+margin-bottom:12px;
+box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.race-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.rno{
+font-weight:900;
+}
+
+.badge{
+background:#111;
+color:white;
+padding:4px 10px;
+border-radius:999px;
+font-size:12px;
+}
+
+.race-name{
+font-size:20px;
+font-weight:900;
+margin-top:8px;
+}
+
+.race-info{
+color:#666;
+font-size:13px;
+margin-top:6px;
+}
+
+.buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-top:12px;
+}
+
+.btn{
+padding:12px;
+border-radius:999px;
+text-align:center;
+text-decoration:none;
+font-weight:900;
+}
+
+.black{
+background:#111;
+color:white;
+}
+
+.white{
+background:white;
+border:1px solid #111;
+color:#111;
+}
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+border-top:1px solid #ddd;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:10px 0;
+}
+
+.nav a{
+text-decoration:none;
+color:#111;
+font-size:12px;
+font-weight:800;
+text-align:center;
+}
+
+.space{
+height:80px;
+}
+</style>
+
+</head>
 <body>
 
 <div class="header">
-  <div class="logo">DARKHORSCORE</div>
-  <div class="copy">函館競馬場</div>
+<div class="logo">DARKHORSCORE</div>
+<div class="sub">函館競馬場</div>
 </div>
 
-<div class="menu">
-  <a href="index.html">ホーム</a>
-  <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
-  <a href="#">マイページ</a>
+<div class="container">
+
+<div class="hero">
+<h1>函館競馬場</h1>
+<p>
+中央競馬開催中<br>
+天候：晴　馬場：良
+</p>
 </div>
 
-<div class="section">
-  <div class="title">函館競馬場</div>
-  <div class="info">
-    中央競馬 / 芝・ダート開催<br>
-    天候：晴 / 馬場状態：良
-  </div>
+<div class="section-title">
+🔥 注目レース
 </div>
 
-<div class="section">
-  <div class="section-title">注目レース</div>
-
-  <div class="card">
-    <div class="race-top">
-      <div class="rno">11R</div>
-      <div class="badge">重賞</div>
-    </div>
-    <div class="race-name">函館記念</div>
-    <div class="race-info">芝2000m / 16頭 / 発走 15:25<br>予想数 128件</div>
-    <div class="actions">
-      <a class="btn black" href="post.html">予想する</a>
-      <a class="btn white" href="race.html?id=hakodate11">予想を見る</a>
-    </div>
-  </div>
+<div class="race">
+<div class="race-top">
+<div class="rno">11R</div>
+<div class="badge">重賞</div>
 </div>
 
-<div class="section">
-  <div class="section-title">全レース</div>
+<div class="race-name">
+函館記念
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">1R</div><div class="badge">未勝利</div></div><div class="race-name">2歳未勝利</div><div class="race-info">芝1200m / 発走 9:50</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate1">予想を見る</a></div></div>
+<div class="race-info">
+芝2000m / 発走15:25
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">2R</div><div class="badge">未勝利</div></div><div class="race-name">3歳未勝利</div><div class="race-info">ダート1700m / 発走 10:20</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate2">予想を見る</a></div></div>
+<div class="buttons">
+<a class="btn black" href="post.html">
+予想する
+</a>
 
-  <div class="card"><div class="race-top"><div class="rno">3R</div><div class="badge">未勝利</div></div><div class="race-name">3歳未勝利</div><div class="race-info">芝1800m / 発走 10:50</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate3">予想を見る</a></div></div>
+<a class="btn white" href="race.html">
+予想を見る
+</a>
+</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">4R</div><div class="badge">未勝利</div></div><div class="race-name">3歳未勝利</div><div class="race-info">ダート1000m / 発走 11:20</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate4">予想を見る</a></div></div>
+<div class="section-title">
+🏇 全レース
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">5R</div><div class="badge">新馬</div></div><div class="race-name">2歳新馬</div><div class="race-info">芝1200m / 発走 12:10</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate5">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">1R</div>
+<div class="race-info">2歳未勝利</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">6R</div><div class="badge">1勝</div></div><div class="race-name">3歳以上1勝クラス</div><div class="race-info">ダート1700m / 発走 12:40</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate6">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">2R</div>
+<div class="race-info">3歳未勝利</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">7R</div><div class="badge">1勝</div></div><div class="race-name">3歳以上1勝クラス</div><div class="race-info">芝2000m / 発走 13:10</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate7">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">3R</div>
+<div class="race-info">3歳未勝利</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">8R</div><div class="badge">1勝</div></div><div class="race-name">3歳以上1勝クラス</div><div class="race-info">芝1200m / 発走 13:40</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate8">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">4R</div>
+<div class="race-info">3歳未勝利</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">9R</div><div class="badge">特別</div></div><div class="race-name">下北半島特別</div><div class="race-info">芝1200m / 発走 14:15</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate9">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">5R</div>
+<div class="race-info">2歳新馬</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">10R</div><div class="badge">特別</div></div><div class="race-name">駒ヶ岳特別</div><div class="race-info">芝2600m / 発走 14:50</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate10">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">6R</div>
+<div class="race-info">1勝クラス</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">11R</div><div class="badge">重賞</div></div><div class="race-name">函館記念</div><div class="race-info">芝2000m / 発走 15:25</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate11">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">7R</div>
+<div class="race-info">1勝クラス</div>
+</div>
 
-  <div class="card"><div class="race-top"><div class="rno">12R</div><div class="badge">2勝</div></div><div class="race-name">3歳以上2勝クラス</div><div class="race-info">ダート1700m / 発走 16:05</div><div class="actions"><a class="btn black" href="post.html">予想する</a><a class="btn white" href="race.html?id=hakodate12">予想を見る</a></div></div>
+<div class="race">
+<div class="race-name">8R</div>
+<div class="race-info">1勝クラス</div>
+</div>
+
+<div class="race">
+<div class="race-name">9R</div>
+<div class="race-info">下北半島特別</div>
+</div>
+
+<div class="race">
+<div class="race-name">10R</div>
+<div class="race-info">駒ヶ岳特別</div>
+</div>
+
+<div class="race">
+<div class="race-name">11R</div>
+<div class="race-info">函館記念</div>
+</div>
+
+<div class="race">
+<div class="race-name">12R</div>
+<div class="race-info">2勝クラス</div>
+</div>
 
 </div>
 
-<div class="footer-space"></div>
+<div class="space"></div>
 
 <div class="nav">
-  <a href="index.html">ホーム</a>
-  <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
-  <a href="#">マイページ</a>
+<a href="index.html">ホーム</a>
+<a href="post.html">予想</a>
+<a href="ranking.html">ランキング</a>
+<a href="#">マイページ</a>
 </div>
 
 </body>
