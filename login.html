@@ -102,10 +102,22 @@ async function signup(){
       email: email
     });
 
-  if(userError){
-    alert(userError.message);
-    return;
+ if(error){
+
+  if(error.message.includes("users_email_key")){
+    alert("このメールアドレスは既に登録されています。");
   }
+
+  else if(error.message.includes("users_username_key")){
+    alert("この表示名は既に使用されています。");
+  }
+
+  else{
+    alert("登録に失敗しました。入力内容をご確認ください。");
+  }
+
+  return;
+}
 
   alert("確認メールを送信しました。メールをご確認ください。");
 }
