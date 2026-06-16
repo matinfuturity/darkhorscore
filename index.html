@@ -88,40 +88,29 @@ const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
 const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const feed = document.getElementById("feed");
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
-const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
 async function loadFeed(){
-
   const feed = document.getElementById("feed");
 
-  const { data:picks, error } = await supabaseClient
+  const { data: picks, error } = await supabaseClient
     .from("picks")
     .select("*")
-    .order("created_at",{ ascending:false });
+    .order("created_at", { ascending:false });
 
- if(error){
-  feed.innerHTML = `
-    <div class="post">
-      ${error.message}
-    </div>
-  `;
-  return;
-}
+  if(error){
+    feed.innerHTML = `<div class="post">投稿の取得に失敗しました。</div>`;
+    return;
+  }
 
   if(!picks || picks.length === 0){
     feed.innerHTML = `
       <div class="post">
-        まだ予想がありません
+        <div class="user">
+          <div class="name">DARKHORSCORE</div>
+          <div class="rate">投稿待ち</div>
+        </div>
+        <div class="race">予想を投稿してみよう</div>
+        <div class="pick">◎ あなたの本命馬</div>
+        <div class="comment">投稿ページから予想を投稿すると、ここに表示されます。</div>
       </div>
     `;
     return;
@@ -129,57 +118,14 @@ async function loadFeed(){
 
   feed.innerHTML = picks.map(p => `
     <div class="post">
-
       <div class="user">
         <div class="name">${p.username}</div>
         <div class="rate">未集計</div>
       </div>
-
-      <div class="race">${p.race}</div>
-
-      <div class="pick">
-        ◎ ${p.horse}
-      </div>
-
-      <div class="comment">
-        ${p.reason || ""}
-      </div>
-
-      <div class="date">
-        ${new Date(p.created_at).toLocaleString("ja-JP")}
-      </div>
-
-    </div>
-  `).join("");
-
-}
-
-loadFeed();
-</script>
-
-if(picks.length === 0){
-  feed.innerHTML = `
-    <div class="post">
-      <div class="user">
-        <div class="name">DARKHORSCORE</div>
-        <div class="rate">投稿待ち</div>
-      </div>
-      <div class="race">予想を投稿してみよう</div>
-      <div class="pick">◎ あなたの本命馬</div>
-      <div class="comment">投稿ページから予想を投稿すると、ここに表示されます。</div>
-    </div>
-  `;
-}else{
-  feed.innerHTML = picks.map(p => `
-    <div class="post">
-      <div class="user">
-        <div class="name">${p.user}</div>
-        <div class="rate">的中率 ${p.rate}</div>
-      </div>
       <div class="race">${p.race}</div>
       <div class="pick">◎ ${p.horse}</div>
       <div class="comment">${p.reason || "理由なし"}</div>
-      <div class="date">${p.date || ""}</div>
+      <div class="date">${new Date(p.created_at).toLocaleString("ja-JP")}</div>
     </div>
   `).join("");
 }
@@ -197,6 +143,7 @@ async function updateNav(){
   }
 }
 
+loadFeed();
 updateNav();
 </script>
 
