@@ -4,29 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>マイページ | DARKHORSCORE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
-.header{background:#fff;padding:16px;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
-.logo{text-align:center;font-size:24px;font-weight:900}
-.copy{text-align:center;font-size:12px;color:#666;margin-top:4px}
-.menu{display:grid;grid-template-columns:repeat(4,1fr);background:#111}
-.menu a{color:#fff;text-align:center;text-decoration:none;padding:12px 0;font-size:13px;font-weight:800}
-.section{margin:18px 14px}
-.profile{background:#111;color:white;border-radius:22px;padding:22px}
-.username{font-size:28px;font-weight:900}
-.bio{color:#ddd;margin-top:8px;line-height:1.6}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
-.stat{background:white;color:#111;border-radius:16px;padding:14px;text-align:center}
-.num{font-size:22px;font-weight:900}
-.label{font-size:12px;color:#666;margin-top:4px}
-.title{font-size:20px;font-weight:900;margin:22px 0 12px;border-left:5px solid #111;padding-left:10px}
-.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 5px 16px rgba(0,0,0,.05);border:1px solid #e5e5e5}
-.race{font-size:13px;color:#777}
-.horse{font-size:21px;font-weight:900;margin-top:6px}
-.comment{color:#555;line-height:1.6;margin-top:8px}
-.badge{display:inline-block;background:#111;color:white;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;margin:4px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
-.nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
+body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111}
+.header{background:#111;color:white;padding:24px;text-align:center}
+.logo{font-size:28px;font-weight:900}
+.sub{font-size:13px;color:#ccc;margin-top:6px}
+.container{padding:16px}
+.card{background:white;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.name{font-size:28px;font-weight:900}
+.info{font-size:14px;color:#666;margin-top:8px}
+.title{font-size:20px;font-weight:900;margin:24px 0 12px}
+.pick{font-size:22px;font-weight:900;margin-top:8px}
+.reason{color:#555;margin-top:8px;line-height:1.6}
+button{width:100%;padding:14px;border:none;border-radius:999px;background:#111;color:white;font-weight:900;font-size:15px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
+.bottom-nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
 .space{height:80px}
 </style>
 </head>
@@ -35,81 +29,95 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 
 <div class="header">
   <div class="logo">DARKHORSCORE</div>
-  <div class="copy">マイページ</div>
+  <div class="sub">マイページ</div>
 </div>
 
-<div class="bottom-nav">
-  <a href="index.html">ホーム</a>
-  <a href="post.html">投稿</a>
-  <a href="ranking.html">順位</a>
-  <a href="mypage.html">マイページ</a>
-</div>
+<div class="container">
 
-<div class="section">
-  <div class="profile">
-    <div class="username">ようよう</div>
-    <div class="bio">
-      競馬予想家 / 中央・地方どちらも予想中。<br>
-      実績で語れる予想家を目指す。
-    </div>
-
-    <div class="stats">
-      <div class="stat">
-        <div class="num">53</div>
-        <div class="label">予想数</div>
-      </div>
-      <div class="stat">
-        <div class="num">41.5%</div>
-        <div class="label">的中率</div>
-      </div>
-      <div class="stat">
-        <div class="num">118%</div>
-        <div class="label">回収率</div>
-      </div>
-    </div>
+  <div class="card">
+    <div class="name" id="username">読み込み中...</div>
+    <div class="info">好きな馬：未設定</div>
+    <div class="info" id="postCount">投稿数：0件</div>
   </div>
-</div>
 
-<div class="section">
   <div class="title">最近の予想</div>
+  <div id="myPicks"></div>
 
-  <div class="card">
-    <div class="race">函館11R / 函館記念</div>
-    <div class="horse">◎ ソールオリエンス</div>
-    <div class="comment">前走内容を評価。距離延長もプラス。</div>
-  </div>
+  <button onclick="logout()">ログアウト</button>
 
-  <div class="card">
-    <div class="race">名古屋11R / 名古屋メイン</div>
-    <div class="horse">◎ ミックファイア</div>
-    <div class="comment">地方ダートでの安定感を評価。</div>
-  </div>
-
-  <div class="card">
-    <div class="race">中京11R / CBC賞</div>
-    <div class="horse">◎ ピューロマジック</div>
-    <div class="comment">スピード能力と展開面を評価。</div>
-  </div>
-</div>
-
-<div class="section">
-  <div class="title">獲得バッジ</div>
-
-  <div class="card">
-    <span class="badge">🏆 的中率40%超</span>
-    <span class="badge">🔥 50予想達成</span>
-    <span class="badge">🐎 地方競馬予想家</span>
-  </div>
 </div>
 
 <div class="space"></div>
 
-<div class="nav">
+<div class="bottom-nav">
   <a href="index.html">ホーム</a>
   <a href="post.html">予想</a>
   <a href="ranking.html">ランキング</a>
   <a href="mypage.html">マイページ</a>
 </div>
+
+<script>
+const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
+const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function init(){
+  const { data } = await supabaseClient.auth.getUser();
+  const user = data.user;
+
+  if(!user){
+    location.href = "login.html";
+    return;
+  }
+
+  const { data: profile } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  const username = profile?.username || user.email;
+
+  document.getElementById("username").textContent = username;
+
+  const { data: picks, error } = await supabaseClient
+    .from("picks")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending:false });
+
+  if(error){
+    document.getElementById("myPicks").innerHTML =
+      `<div class="card">予想の取得に失敗しました。</div>`;
+    return;
+  }
+
+  document.getElementById("postCount").textContent =
+    "投稿数：" + picks.length + "件";
+
+  if(picks.length === 0){
+    document.getElementById("myPicks").innerHTML =
+      `<div class="card">まだ予想がありません。</div>`;
+    return;
+  }
+
+  document.getElementById("myPicks").innerHTML = picks.map(p => `
+    <div class="card">
+      <div class="info">${p.race}</div>
+      <div class="pick">◎ ${p.horse}</div>
+      <div class="reason">${p.reason || "理由なし"}</div>
+    </div>
+  `).join("");
+}
+
+async function logout(){
+  await supabaseClient.auth.signOut();
+  alert("ログアウトしました。");
+  location.href = "index.html";
+}
+
+init();
+</script>
 
 </body>
 </html>
