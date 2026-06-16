@@ -16,9 +16,11 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
 .name{font-size:28px;font-weight:900}
 .info{font-size:14px;color:#666;margin-top:8px}
 .title{font-size:20px;font-weight:900;margin:24px 0 12px}
+label{display:block;font-weight:900;margin-top:14px}
+input{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px}
+button{width:100%;padding:14px;border:none;border-radius:999px;background:#111;color:white;font-weight:900;font-size:15px;margin-top:14px}
 .pick{font-size:22px;font-weight:900;margin-top:8px}
 .reason{color:#555;margin-top:8px;line-height:1.6}
-button{width:100%;padding:14px;border:none;border-radius:999px;background:#111;color:white;font-weight:900;font-size:15px}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
 .bottom-nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
 .space{height:80px}
@@ -35,9 +37,21 @@ button{width:100%;padding:14px;border:none;border-radius:999px;background:#111;c
 <div class="container">
 
   <div class="card">
-    <div class="name" id="username">読み込み中...</div>
-    <div class="info">好きな馬：未設定</div>
+    <div class="name" id="displayName">読み込み中...</div>
+    <div class="info" id="favoriteText">好きな馬：未設定</div>
     <div class="info" id="postCount">投稿数：0件</div>
+  </div>
+
+  <div class="card">
+    <div class="title">プロフィール編集</div>
+
+    <label>表示名</label>
+    <input id="usernameInput" placeholder="例：ようよう">
+
+    <label>好きな馬</label>
+    <input id="favoriteInput" placeholder="例：ソールオリエンス">
+
+    <button onclick="saveProfile()">保存する</button>
   </div>
 
   <div class="title">最近の予想</div>
@@ -61,34 +75,89 @@ const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
 const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+let currentUser = null;
+let currentProfile = null;
+
 async function init(){
   const { data } = await supabaseClient.auth.getUser();
-  const user = data.user;
+  currentUser = data.user;
 
-  if(!user){
+  if(!currentUser){
     location.href = "login.html";
     return;
   }
 
+  await loadProfile();
+  await loadMyPicks();
+}
+
+async function loadProfile(){
   const { data: profile } = await supabaseClient
     .from("users")
     .select("*")
-    .eq("id", user.id)
+    .eq("id", currentUser.id)
     .single();
 
-  const username = profile?.username || user.email;
+  currentProfile = profile;
 
-  document.getElementById("username").textContent = username;
+  const username = profile?.username || currentUser.email;
+  const favoriteHorse = profile?.favorite_horse || "";
 
+  document.getElementById("displayName").textContent = username;
+  document.getElementById("favoriteText").textContent =
+    "好きな馬：" + (favoriteHorse || "未設定");
+
+  document.getElementById("usernameInput").value =
+    profile?.username || "";
+
+  document.getElementById("favoriteInput").value =
+    favoriteHorse;
+}
+
+async function saveProfile(){
+  const username = document.getElementById("usernameInput").value.trim();
+  const favoriteHorse = document.getElementById("favoriteInput").value.trim();
+
+  if(!username){
+    alert("表示名をご入力ください。");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("users")
+    .upsert({
+      id: currentUser.id,
+      username: username,
+      email: currentUser.email,
+      favorite_horse: favoriteHorse
+    });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  await supabaseClient
+    .from("picks")
+    .update({ username: username })
+    .eq("user_id", currentUser.id);
+
+  alert("プロフィールを保存しました。");
+  await loadProfile();
+  await loadMyPicks();
+}
+
+async function loadMyPicks(){
   const { data: picks, error } = await supabaseClient
     .from("picks")
     .select("*")
-    .eq("user_id", user.id)
+    .eq("user_id", currentUser.id)
     .order("created_at", { ascending:false });
 
+  const box = document.getElementById("myPicks");
+
   if(error){
-    document.getElementById("myPicks").innerHTML =
-      `<div class="card">予想の取得に失敗しました。</div>`;
+    box.innerHTML = `<div class="card">予想の取得に失敗しました。</div>`;
     return;
   }
 
@@ -96,12 +165,11 @@ async function init(){
     "投稿数：" + picks.length + "件";
 
   if(picks.length === 0){
-    document.getElementById("myPicks").innerHTML =
-      `<div class="card">まだ予想がありません。</div>`;
+    box.innerHTML = `<div class="card">まだ予想がありません。</div>`;
     return;
   }
 
-  document.getElementById("myPicks").innerHTML = picks.map(p => `
+  box.innerHTML = picks.map(p => `
     <div class="card">
       <div class="info">${p.race}</div>
       <div class="pick">◎ ${p.horse}</div>
