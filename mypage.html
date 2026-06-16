@@ -114,9 +114,38 @@ async function loadProfile(){
     favoriteHorse;
 }
 
-async function saveProfile(){
+  async function saveProfile(){
   const username = document.getElementById("usernameInput").value.trim();
   const favoriteHorse = document.getElementById("favoriteInput").value.trim();
+
+  if(!username){
+    alert("表示名をご入力ください。");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("users")
+    .update({
+      username: username,
+      favorite_horse: favoriteHorse
+    })
+    .eq("email", currentUser.email);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  await supabaseClient
+    .from("picks")
+    .update({ username: username })
+    .eq("user_id", currentUser.id);
+
+  alert("プロフィールを保存しました。");
+
+  await loadProfile();
+  await loadMyPicks();
+}
 
   if(!username){
     alert("表示名をご入力ください。");
