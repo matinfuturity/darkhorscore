@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>投稿 | DARKHORSCORE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111}
 .header{background:#111;color:white;padding:20px;text-align:center}
@@ -11,15 +13,17 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
 .sub{font-size:12px;color:#ccc;margin-top:5px}
 .container{padding:15px}
 .card{background:white;border-radius:20px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.login-user{font-size:14px;color:#666;margin-bottom:10px}
 label{display:block;font-weight:900;margin-top:16px}
 input,textarea{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px}
 textarea{min-height:120px}
 button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;background:#111;color:white;font-size:16px;font-weight:900}
-.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
-.nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
+.bottom-nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
 .space{height:80px}
 </style>
 </head>
+
 <body>
 
 <div class="header">
@@ -29,8 +33,7 @@ button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;b
 
 <div class="container">
   <div class="card">
-    <label>ユーザー名</label>
-    <input id="user" placeholder="例：ようよう">
+    <div class="login-user" id="loginUser">ログイン確認中...</div>
 
     <label>レース名</label>
     <input id="race" placeholder="例：函館記念">
@@ -47,41 +50,94 @@ button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;b
 
 <div class="space"></div>
 
-<div class="nav">
+<div class="bottom-nav">
   <a href="index.html">ホーム</a>
-  <a href="post.html">投稿</a>
-  <a href="ranking.html">順位</a>
-  <a href="mypage.html">マイページ</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a id="mypageLink" href="login.html">ログイン</a>
 </div>
 
 <script>
-function submitPick(){
-  const user = document.getElementById("user").value.trim() || "匿名ユーザー";
+const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
+const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentUser = null;
+let currentProfile = null;
+
+async function init(){
+  const { data } = await supabaseClient.auth.getUser();
+  currentUser = data.user;
+
+  const navLink = document.getElementById("mypageLink");
+  const loginUser = document.getElementById("loginUser");
+
+  if(!currentUser){
+    navLink.textContent = "ログイン";
+    navLink.href = "login.html";
+    loginUser.textContent = "予想を投稿するにはログインしてください。";
+    return;
+  }
+
+  navLink.textContent = "マイページ";
+  navLink.href = "mypage.html";
+
+  const { data: profile } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("id", currentUser.id)
+    .single();
+
+  currentProfile = profile;
+
+  if(currentProfile){
+    loginUser.textContent = "ログイン中：" + currentProfile.username;
+  }else{
+    loginUser.textContent = "ログイン中：" + currentUser.email;
+  }
+}
+
+async function submitPick(){
+  if(!currentUser){
+    alert("予想を投稿するにはログインが必要です。");
+    location.href = "login.html";
+    return;
+  }
+
   const race = document.getElementById("race").value.trim();
   const horse = document.getElementById("horse").value.trim();
   const reason = document.getElementById("reason").value.trim();
 
-  if(!race || !horse){
-    alert("レース名と本命馬を入力して！");
+  if(!race){
+    alert("レース名をご入力ください。");
     return;
   }
+
+  if(!horse){
+    alert("本命馬をご入力ください。");
+    return;
+  }
+
+  const username = currentProfile?.username || currentUser.email;
 
   const picks = JSON.parse(localStorage.getItem("picks") || "[]");
 
   picks.unshift({
-    user,
+    user: username,
     race,
     horse,
     reason,
-    rate:"未集計",
-    date:new Date().toLocaleString("ja-JP")
+    rate: "未集計",
+    date: new Date().toLocaleString("ja-JP")
   });
 
   localStorage.setItem("picks", JSON.stringify(picks));
 
-  alert("投稿した！");
+  alert("予想を投稿しました。");
   location.href = "index.html";
 }
+
+init();
 </script>
 
 </body>
