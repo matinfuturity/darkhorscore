@@ -4,213 +4,73 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DARKHORSCORE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{
-margin:0;
-background:#f5f5f5;
-font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-color:#111;
-}
-
-.header{
-background:#111;
-color:white;
-padding:20px;
-text-align:center;
-position:sticky;
-top:0;
-z-index:100;
-}
-
-.logo{
-font-size:28px;
-font-weight:900;
-}
-
-.sub{
-font-size:12px;
-color:#ccc;
-margin-top:5px;
-}
-
-.container{
-padding:15px;
-}
-
-.section-title{
-font-size:20px;
-font-weight:900;
-margin:20px 0 12px;
-}
-
-.post{
-background:white;
-border-radius:20px;
-padding:16px;
-margin-bottom:14px;
-box-shadow:0 4px 12px rgba(0,0,0,.06);
-}
-
-.user{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.name{
-font-size:18px;
-font-weight:900;
-}
-
-.rate{
-font-size:13px;
-color:#666;
-}
-
-.race{
-margin-top:10px;
-font-size:13px;
-color:#666;
-}
-
-.pick{
-font-size:26px;
-font-weight:900;
-margin-top:8px;
-}
-
-.comment{
-margin-top:10px;
-line-height:1.6;
-color:#444;
-}
-
-.date{
-font-size:12px;
-color:#888;
-margin-top:10px;
-}
-
-.rank-card{
-background:white;
-border-radius:20px;
-padding:16px;
-margin-bottom:10px;
-}
-
-.rank-user{
-display:flex;
-justify-content:space-between;
-font-weight:900;
-}
-
-.news{
-background:white;
-border-radius:20px;
-padding:16px;
-margin-bottom:10px;
-}
-
-.nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-border-top:1px solid #ddd;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-padding:10px 0;
-}
-
-.nav a{
-text-align:center;
-text-decoration:none;
-color:#111;
-font-size:12px;
-font-weight:900;
-}
-
-.space{
-height:80px;
-}
+body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111}
+.header{background:#111;color:white;padding:20px;text-align:center;position:sticky;top:0;z-index:100}
+.logo{font-size:28px;font-weight:900}
+.sub{font-size:12px;color:#ccc;margin-top:5px}
+.container{padding:15px}
+.section-title{font-size:20px;font-weight:900;margin:20px 0 12px}
+.post,.rank-card,.news{background:white;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.user,.rank-user{display:flex;justify-content:space-between;align-items:center}
+.name{font-size:18px;font-weight:900}
+.rate,.race,.date{font-size:13px;color:#666}
+.race{margin-top:10px}
+.pick{font-size:26px;font-weight:900;margin-top:8px}
+.comment{margin-top:10px;line-height:1.6;color:#444}
+.date{margin-top:10px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
+.bottom-nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
+.space{height:80px}
 </style>
-
 </head>
+
 <body>
 
 <div class="header">
-<div class="logo">DARKHORSCORE</div>
-<div class="sub">
-予想実績で評価される競馬SNS
-</div>
+  <div class="logo">DARKHORSCORE</div>
+  <div class="sub">予想実績で評価される競馬SNS</div>
 </div>
 
 <div class="container">
 
-<div class="section-title">
-🔥 新着予想
-</div>
+  <div class="section-title">🔥 新着予想</div>
+  <div id="feed"></div>
 
-<div id="feed"></div>
+  <div class="section-title">🏆 ランキング</div>
 
-<div class="section-title">
-🏆 ランキング
-</div>
+  <div class="rank-card">
+    <div class="rank-user">
+      <div>🥇 ようよう</div>
+      <div>42.8%</div>
+    </div>
+  </div>
 
-<div class="rank-card">
-<div class="rank-user">
-<div>🥇 ようよう</div>
-<div>42.8%</div>
-</div>
-</div>
+  <div class="rank-card">
+    <div class="rank-user">
+      <div>🥈 ウマ太郎</div>
+      <div>38.1%</div>
+    </div>
+  </div>
 
-<div class="rank-card">
-<div class="rank-user">
-<div>🥈 ウマ太郎</div>
-<div>38.1%</div>
-</div>
-</div>
+  <div class="rank-card">
+    <div class="rank-user">
+      <div>🥉 競馬博士</div>
+      <div>35.4%</div>
+    </div>
+  </div>
 
-<div class="rank-card">
-<div class="rank-user">
-<div>🥉 競馬博士</div>
-<div>35.4%</div>
-</div>
-</div>
+  <div class="section-title">🏇 注目レース</div>
+  <div class="news">函館記念</div>
+  <div class="news">CBC賞</div>
+  <div class="news">札幌記念</div>
 
-<div class="section-title">
-🏇 注目レース
-</div>
-
-<div class="news">
-函館記念
-</div>
-
-<div class="news">
-CBC賞
-</div>
-
-<div class="news">
-札幌記念
-</div>
-
-<div class="section-title">
-📰 ニュース
-</div>
-
-<div class="news">
-武豊騎手復帰
-</div>
-
-<div class="news">
-函館記念の出走想定発表
-</div>
-
-<div class="news">
-JRA秋競馬日程公開
-</div>
+  <div class="section-title">📰 ニュース</div>
+  <div class="news">武豊騎手復帰</div>
+  <div class="news">函館記念の出走想定発表</div>
+  <div class="news">JRA秋競馬日程公開</div>
 
 </div>
 
@@ -220,10 +80,14 @@ JRA秋競馬日程公開
   <a href="index.html">ホーム</a>
   <a href="post.html">予想</a>
   <a href="ranking.html">ランキング</a>
-  <a href="mypage.html">マイページ</a>
+  <a id="mypageLink" href="login.html">ログイン</a>
 </div>
 
 <script>
+const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
+const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const feed = document.getElementById("feed");
 const picks = JSON.parse(localStorage.getItem("picks") || "[]");
 
@@ -234,14 +98,9 @@ if(picks.length === 0){
         <div class="name">DARKHORSCORE</div>
         <div class="rate">投稿待ち</div>
       </div>
-
       <div class="race">予想を投稿してみよう</div>
-
       <div class="pick">◎ あなたの本命馬</div>
-
-      <div class="comment">
-        投稿ページから予想を投稿すると、ここに表示されます。
-      </div>
+      <div class="comment">投稿ページから予想を投稿すると、ここに表示されます。</div>
     </div>
   `;
 }else{
@@ -251,21 +110,28 @@ if(picks.length === 0){
         <div class="name">${p.user}</div>
         <div class="rate">的中率 ${p.rate}</div>
       </div>
-
       <div class="race">${p.race}</div>
-
       <div class="pick">◎ ${p.horse}</div>
-
-      <div class="comment">
-        ${p.reason || "理由なし"}
-      </div>
-
-      <div class="date">
-        ${p.date || ""}
-      </div>
+      <div class="comment">${p.reason || "理由なし"}</div>
+      <div class="date">${p.date || ""}</div>
     </div>
   `).join("");
 }
+
+async function updateNav(){
+  const { data } = await supabaseClient.auth.getUser();
+  const link = document.getElementById("mypageLink");
+
+  if(data.user){
+    link.textContent = "マイページ";
+    link.href = "mypage.html";
+  }else{
+    link.textContent = "ログイン";
+    link.href = "login.html";
+  }
+}
+
+updateNav();
 </script>
 
 </body>
