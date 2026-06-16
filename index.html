@@ -109,14 +109,14 @@ async function loadFeed(){
     .select("*")
     .order("created_at",{ ascending:false });
 
-  if(error){
-    feed.innerHTML = `
-      <div class="post">
-        投稿の取得に失敗しました
-      </div>
-    `;
-    return;
-  }
+ if(error){
+  feed.innerHTML = `
+    <div class="post">
+      ${error.message}
+    </div>
+  `;
+  return;
+}
 
   if(!picks || picks.length === 0){
     feed.innerHTML = `
