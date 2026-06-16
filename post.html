@@ -130,11 +130,11 @@ async function submitPick(){
       reason: reason
     });
 
-  if(error){
-    alert("投稿に失敗しました。時間をおいて再度お試しください。");
-    console.log(error);
-    return;
-  }
+ if(error){
+  alert(error.message);
+  console.log(error);
+  return;
+}
 
   alert("予想を投稿しました。");
   location.href = "index.html";
