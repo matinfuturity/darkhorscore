@@ -49,19 +49,38 @@ const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function signup(){
-  const email = document.getElementById("email").value;
+
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
-  const { error } = await supabaseClient.auth.signUp({
+  const { data, error } =
+  await supabaseClient.auth.signUp({
     email,
     password
   });
 
   if(error){
     alert(error.message);
-  }else{
-    alert("確認メールを送った！メールを開いて認証して！");
+    return;
   }
+
+  const { error:userError } =
+  await supabaseClient
+  .from("users")
+  .insert({
+    id:data.user.id,
+    username:username,
+    email:email
+  });
+
+  if(userError){
+    alert(userError.message);
+    return;
+  }
+
+  alert("確認メールを送りました！メールでの確認をお願いします。");
+}
 }
 
 async function login(){
