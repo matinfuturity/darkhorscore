@@ -92,11 +92,19 @@ async function init(){
 }
 
 async function loadProfile(){
-  const { data: profile } = await supabaseClient
+  const { data: profile, error } = await supabaseClient
     .from("users")
     .select("*")
-    .eq("id", currentUser.id)
+    .eq("email", currentUser.email)
     .single();
+
+  if(error){
+    document.getElementById("displayName").textContent = currentUser.email;
+    document.getElementById("favoriteText").textContent = "好きな馬：未設定";
+    document.getElementById("usernameInput").value = "";
+    document.getElementById("favoriteInput").value = "";
+    return;
+  }
 
   currentProfile = profile;
 
@@ -107,14 +115,11 @@ async function loadProfile(){
   document.getElementById("favoriteText").textContent =
     "好きな馬：" + (favoriteHorse || "未設定");
 
-  document.getElementById("usernameInput").value =
-    profile?.username || "";
-
-  document.getElementById("favoriteInput").value =
-    favoriteHorse;
+  document.getElementById("usernameInput").value = profile?.username || "";
+  document.getElementById("favoriteInput").value = favoriteHorse;
 }
 
-  async function saveProfile(){
+async function saveProfile(){
   const username = document.getElementById("usernameInput").value.trim();
   const favoriteHorse = document.getElementById("favoriteInput").value.trim();
 
@@ -143,35 +148,6 @@ async function loadProfile(){
 
   alert("プロフィールを保存しました。");
 
-  await loadProfile();
-  await loadMyPicks();
-}
-
-  if(!username){
-    alert("表示名をご入力ください。");
-    return;
-  }
-
-  const { error } = await supabaseClient
-    .from("users")
-    .upsert({
-      id: currentUser.id,
-      username: username,
-      email: currentUser.email,
-      favorite_horse: favoriteHorse
-    });
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  await supabaseClient
-    .from("picks")
-    .update({ username: username })
-    .eq("user_id", currentUser.id);
-
-  alert("プロフィールを保存しました。");
   await loadProfile();
   await loadMyPicks();
 }
