@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>パスワード再設定 | DARKHORSCORE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+  margin:0;
+  background:#f5f5f5;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  color:#111;
+}
+.header{
+  background:#111;
+  color:white;
+  padding:30px;
+  text-align:center;
+}
+.logo{
+  font-size:30px;
+  font-weight:900;
+}
+.container{
+  padding:18px;
+}
+.card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+label{
+  display:block;
+  font-weight:900;
+  margin-top:16px;
+}
+input{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:16px;
+  margin-top:8px;
+}
+button{
+  width:100%;
+  margin-top:20px;
+  padding:16px;
+  border:none;
+  border-radius:999px;
+  background:#111;
+  color:white;
+  font-size:16px;
+  font-weight:900;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">DARKHORSCORE</div>
+  <div>パスワード再設定</div>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <label>新しいパスワード</label>
+    <input
+      id="newPassword"
+      type="password"
+      placeholder="新しいパスワード">
+
+    <button onclick="updatePassword()">
+      パスワードを変更する
+    </button>
+
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL =
+"https://fnhhthhaspogymniuust.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function updatePassword(){
+
+  const password =
+  document.getElementById("newPassword").value;
+
+  if(password.length < 6){
+    alert("6文字以上で入力してください。");
+    return;
+  }
+
+  const { error } =
+  await supabaseClient.auth.updateUser({
+    password: password
+  });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("パスワードを変更しました。");
+
+  location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
