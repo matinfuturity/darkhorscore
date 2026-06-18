@@ -15,7 +15,7 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
 .card{background:white;border-radius:20px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
 .login-user{font-size:14px;color:#666;margin-bottom:10px}
 label{display:block;font-weight:900;margin-top:16px}
-input,textarea{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px}
+input,select,textarea{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px;background:white}
 textarea{min-height:120px}
 button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;background:#111;color:white;font-size:16px;font-weight:900}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
@@ -34,6 +34,30 @@ button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;b
 <div class="container">
   <div class="card">
     <div class="login-user" id="loginUser">ログイン確認中...</div>
+
+    <label>競馬場</label>
+    <select id="racecourse">
+      <option value="">競馬場を選択してください</option>
+      <option value="札幌">札幌</option>
+      <option value="函館">函館</option>
+      <option value="福島">福島</option>
+      <option value="新潟">新潟</option>
+      <option value="東京">東京</option>
+      <option value="中山">中山</option>
+      <option value="中京">中京</option>
+      <option value="京都">京都</option>
+      <option value="阪神">阪神</option>
+      <option value="小倉">小倉</option>
+      <option value="大井">大井</option>
+      <option value="川崎">川崎</option>
+      <option value="船橋">船橋</option>
+      <option value="浦和">浦和</option>
+      <option value="名古屋">名古屋</option>
+      <option value="笠松">笠松</option>
+      <option value="園田">園田</option>
+      <option value="高知">高知</option>
+      <option value="佐賀">佐賀</option>
+    </select>
 
     <label>レース名</label>
     <input id="race" placeholder="例：函館記念">
@@ -82,19 +106,19 @@ async function init(){
   navLink.textContent = "マイページ";
   navLink.href = "mypage.html";
 
-  const { data: profile, error } = await supabaseClient
+  const { data: profile } = await supabaseClient
     .from("users")
     .select("*")
-    .eq("id", currentUser.id)
+    .eq("email", currentUser.email)
     .single();
 
-  if(error){
-    loginUser.textContent = "ログイン中：" + currentUser.email;
-    return;
-  }
-
   currentProfile = profile;
-  loginUser.textContent = "ログイン中：" + currentProfile.username;
+
+  if(currentProfile && currentProfile.username){
+    loginUser.textContent = "ログイン中：" + currentProfile.username;
+  }else{
+    loginUser.textContent = "ログイン中：" + currentUser.email;
+  }
 }
 
 async function submitPick(){
@@ -104,9 +128,15 @@ async function submitPick(){
     return;
   }
 
+  const racecourse = document.getElementById("racecourse").value;
   const race = document.getElementById("race").value.trim();
   const horse = document.getElementById("horse").value.trim();
   const reason = document.getElementById("reason").value.trim();
+
+  if(!racecourse){
+    alert("競馬場を選択してください。");
+    return;
+  }
 
   if(!race){
     alert("レース名をご入力ください。");
@@ -118,23 +148,26 @@ async function submitPick(){
     return;
   }
 
-  const username = currentProfile?.username || currentUser.email;
+  const username =
+    currentProfile?.username ||
+    currentUser.email;
 
   const { error } = await supabaseClient
     .from("picks")
     .insert({
       user_id: currentUser.id,
       username: username,
+      racecourse: racecourse,
       race: race,
       horse: horse,
       reason: reason
     });
 
- if(error){
-  alert(error.message);
-  console.log(error);
-  return;
-}
+  if(error){
+    alert(error.message);
+    console.log(error);
+    return;
+  }
 
   alert("予想を投稿しました。");
   location.href = "index.html";
