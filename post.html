@@ -126,9 +126,13 @@ async function loadRaces(){
   select.innerHTML = '<option value="">レースを選択してください</option>';
 
   races.forEach(r => {
+    const deadlineText = r.deadline
+      ? " / 締切 " + new Date(r.deadline).toLocaleString("ja-JP")
+      : "";
+
     select.innerHTML += `
       <option value="${r.id}">
-        ${r.racecourse}｜${r.race}
+        ${r.racecourse}｜${r.race}${deadlineText}
       </option>
     `;
   });
@@ -162,9 +166,17 @@ async function submitPick(){
     return;
   }
 
-  const username =
-    currentProfile?.username ||
-    currentUser.email;
+  if(selectedRace.deadline){
+    const now = new Date();
+    const deadline = new Date(selectedRace.deadline);
+
+    if(now > deadline){
+      alert("このレースの予想受付は終了しました。");
+      return;
+    }
+  }
+
+  const username = currentProfile?.username || currentUser.email;
 
   const { error } = await supabaseClient
     .from("picks")
