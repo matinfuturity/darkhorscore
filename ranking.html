@@ -33,38 +33,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 
 <div class="section">
   <div class="section-title">総合ランキング</div>
-
-  <div class="card">
-    <div class="rank">🥇 1位</div>
-    <div class="name">ようよう</div>
-    <div class="stats">
-      的中率：42.8%<br>
-      予想数：21<br>
-      直近成績：○ ○ × ○ ○
-    </div>
-    <span class="badge">急上昇</span>
-  </div>
-
-  <div class="card">
-    <div class="rank">🥈 2位</div>
-    <div class="name">ウマ太郎</div>
-    <div class="stats">
-      的中率：38.1%<br>
-      予想数：18<br>
-      直近成績：○ × ○ ○ ×
-    </div>
-    <span class="badge">安定型</span>
-  </div>
-
-  <div class="card">
-    <div class="rank">🥉 3位</div>
-    <div class="name">競馬博士</div>
-    <div class="stats">
-      的中率：35.5%<br>
-      予想数：31<br>
-      直近成績：× ○ ○ × ○
-    </div>
-    <span class="badge">分析派</span>
+  <div id="rankingBox">
+    <div class="card">ランキングを読み込み中...</div>
   </div>
 </div>
 
@@ -73,7 +43,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 
   <div class="card">
     予想の人気ではなく、実績で予想家を評価するランキングです。<br><br>
-    正式版では、投稿した予想の的中結果を記録し、的中率・回収率・予想数を自動で反映します。
+    現在は、投稿した本命馬がレース結果で1着だった場合に「的中」として集計しています。
   </div>
 </div>
 
@@ -91,6 +61,89 @@ const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
 const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+async function loadRanking(){
+  const rankingBox = document.getElementById("rankingBox");
+
+  const { data: picks, error: picksError } = await supabaseClient
+    .from("picks")
+    .select("*");
+
+  const { data: results, error: resultsError } = await supabaseClient
+    .from("results")
+    .select("*");
+
+  if(picksError || resultsError){
+    rankingBox.innerHTML = `<div class="card">ランキングの取得に失敗しました。</div>`;
+    return;
+  }
+
+  if(!picks || picks.length === 0){
+    rankingBox.innerHTML = `<div class="card">まだ予想がありません。</div>`;
+    return;
+  }
+
+  const users = {};
+
+  picks.forEach(pick => {
+    const username = pick.username || "名無しの予想家";
+
+    if(!users[username]){
+      users[username] = {
+        username: username,
+        total: 0,
+        hit: 0
+      };
+    }
+
+    users[username].total++;
+
+    const matchedResult = results.find(result =>
+      result.race === pick.race &&
+      result.horse === pick.horse &&
+      Number(result.result) === 1
+    );
+
+    if(matchedResult){
+      users[username].hit++;
+    }
+  });
+
+  const ranking = Object.values(users)
+    .map(user => {
+      const rate = user.total === 0 ? 0 : (user.hit / user.total) * 100;
+      return {
+        ...user,
+        rate: rate
+      };
+    })
+    .sort((a,b) => b.rate - a.rate || b.hit - a.hit || b.total - a.total);
+
+  rankingBox.innerHTML = ranking.map((user, index) => {
+    const medal =
+      index === 0 ? "🥇" :
+      index === 1 ? "🥈" :
+      index === 2 ? "🥉" : "🏇";
+
+    const badge =
+      user.total < 3 ? "集計中" :
+      user.rate >= 50 ? "高的中率" :
+      user.hit > 0 ? "的中あり" : "挑戦中";
+
+    return `
+      <div class="card">
+        <div class="rank">${medal} ${index + 1}位</div>
+        <div class="name">${user.username}</div>
+        <div class="stats">
+          的中率：${user.rate.toFixed(1)}%<br>
+          的中数：${user.hit}<br>
+          予想数：${user.total}
+        </div>
+        <span class="badge">${badge}</span>
+      </div>
+    `;
+  }).join("");
+}
+
 async function updateNav(){
   const { data } = await supabaseClient.auth.getUser();
   const link = document.getElementById("mypageLink");
@@ -104,6 +157,7 @@ async function updateNav(){
   }
 }
 
+loadRanking();
 updateNav();
 </script>
 
