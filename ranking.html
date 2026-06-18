@@ -72,10 +72,17 @@ async function loadRanking(){
     .from("results")
     .select("*");
 
-  if(picksError || resultsError){
-    rankingBox.innerHTML = `<div class="card">ランキングの取得に失敗しました。</div>`;
-    return;
-  }
+ if(picksError){
+  rankingBox.innerHTML =
+  `<div class="card">${picksError.message}</div>`;
+  return;
+}
+
+if(resultsError){
+  rankingBox.innerHTML =
+  `<div class="card">${resultsError.message}</div>`;
+  return;
+}
 
   if(!picks || picks.length === 0){
     rankingBox.innerHTML = `<div class="card">まだ予想がありません。</div>`;
