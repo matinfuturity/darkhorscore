@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>予想家一覧 | DARKHORSCORE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{
+  --gold:#d4af37;
+}
+
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+}
+
+.header{
+  background:linear-gradient(180deg,#050505,#151515);
+  padding:24px;
+  text-align:center;
+  border-bottom:1px solid rgba(212,175,55,.25);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+}
+
+.sub{
+  color:var(--gold);
+  margin-top:6px;
+}
+
+.container{
+  padding:16px;
+}
+
+.hero{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-radius:24px;
+  padding:22px;
+  border:1px solid rgba(255,255,255,.08);
+  margin-bottom:18px;
+}
+
+.hero-title{
+  font-size:28px;
+  font-weight:900;
+}
+
+.hero-sub{
+  color:#bbb;
+  margin-top:8px;
+}
+
+.player-card{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-left:5px solid var(--gold);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:12px;
+  cursor:pointer;
+}
+
+.player-rank{
+  color:#aaa;
+  font-size:13px;
+}
+
+.player-name{
+  font-size:22px;
+  font-weight:900;
+  margin-top:6px;
+}
+
+.player-rate{
+  color:var(--gold);
+  font-size:38px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+.player-stats{
+  color:#bbb;
+  margin-top:8px;
+  font-size:13px;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#070707;
+  border-top:1px solid rgba(212,175,55,.25);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:10px 0;
+}
+
+.bottom-nav a{
+  text-align:center;
+  text-decoration:none;
+  color:#ddd;
+  font-size:12px;
+  font-weight:900;
+}
+
+.space{
+  height:90px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+  <div class="logo">
+    DARKHORSCORE
+  </div>
+
+  <div class="sub">
+    予想家一覧
+  </div>
+
+</div>
+
+<div class="container">
+
+  <div class="hero">
+
+    <div class="hero-title">
+      🏆 予想家ランキング
+    </div>
+
+    <div class="hero-sub">
+      実績で評価される予想家たち
+    </div>
+
+  </div>
+
+  <div id="playersBox">
+
+    読み込み中...
+
+  </div>
+
+</div>
+
+<div class="space"></div>
+
+<div class="bottom-nav">
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a href="mypage.html">マイページ</a>
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://fnhhthhaspogymniuust.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function loadPlayers(){
+
+  const playersBox =
+    document.getElementById("playersBox");
+
+  const { data:picks } =
+    await supabaseClient
+      .from("picks")
+      .select("*");
+
+  const { data:results } =
+    await supabaseClient
+      .from("results")
+      .select("*");
+
+  if(!picks || picks.length === 0){
+
+    playersBox.innerHTML =
+      `<div class="player-card">
+        まだ予想家がいません。
+      </div>`;
+
+    return;
+  }
+
+  const users = {};
+
+  picks.forEach(pick => {
+
+    const username =
+      pick.username ||
+      "名無しの予想家";
+
+    if(!users[username]){
+      users[username] = {
+        username,
+        total:0,
+        hit:0
+      };
+    }
+
+    users[username].total++;
+
+    const hit =
+      results.find(result =>
+        result.race === pick.race &&
+        result.horse === pick.horse &&
+        Number(result.result) === 1
+      );
+
+    if(hit){
+      users[username].hit++;
+    }
+
+  });
+
+  const ranking =
+    Object.values(users)
+      .map(user => ({
+        ...user,
+        rate:
+          user.total === 0
+          ? 0
+          : (user.hit / user.total) * 100
+      }))
+      .sort(
+        (a,b) =>
+          b.rate - a.rate ||
+          b.hit - a.hit ||
+          b.total - a.total
+      );
+
+  playersBox.innerHTML =
+    ranking.map((user,index) => {
+
+      const medal =
+        index === 0 ? "🥇" :
+        index === 1 ? "🥈" :
+        index === 2 ? "🥉" : "🏇";
+
+      return `
+
+      <div
+        class="player-card"
+        onclick="
+        location.href=
+        'player.html?user=' +
+        encodeURIComponent('${user.username}')
+        ">
+
+        <div class="player-rank">
+          ${medal} ${index + 1}位
+        </div>
+
+        <div class="player-name">
+          ${user.username}
+        </div>
+
+        <div class="player-rate">
+          ${user.rate.toFixed(1)}%
+        </div>
+
+        <div class="player-stats">
+          的中 ${user.hit}
+          ／
+          投稿 ${user.total}
+        </div>
+
+      </div>
+
+      `;
+
+    }).join("");
+
+}
+
+loadPlayers();
+
+</script>
+
+</body>
+</html>
