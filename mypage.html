@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -7,23 +7,191 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111}
-.header{background:#111;color:white;padding:24px;text-align:center}
-.logo{font-size:28px;font-weight:900}
-.sub{font-size:13px;color:#ccc;margin-top:6px}
-.container{padding:16px}
-.card{background:white;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.name{font-size:28px;font-weight:900}
-.info{font-size:14px;color:#666;margin-top:8px}
-.title{font-size:20px;font-weight:900;margin:24px 0 12px}
-label{display:block;font-weight:900;margin-top:14px}
-input{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px}
-button{width:100%;padding:14px;border:none;border-radius:999px;background:#111;color:white;font-weight:900;font-size:15px;margin-top:14px}
-.pick{font-size:22px;font-weight:900;margin-top:8px}
-.reason{color:#555;margin-top:8px;line-height:1.6}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
-.bottom-nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
-.space{height:80px}
+
+:root{
+  --gold:#d4af37;
+}
+
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+}
+
+.header{
+  background:linear-gradient(180deg,#050505,#151515);
+  padding:24px;
+  text-align:center;
+  border-bottom:1px solid rgba(212,175,55,.25);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+}
+
+.sub{
+  color:var(--gold);
+  margin-top:6px;
+}
+
+.container{
+  padding:16px;
+}
+
+.hero-card{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-radius:24px;
+  padding:24px;
+  border:1px solid rgba(255,255,255,.08);
+  margin-bottom:16px;
+}
+
+.name{
+  font-size:32px;
+  font-weight:900;
+}
+
+.favorite{
+  color:#bbb;
+  margin-top:8px;
+}
+
+.rate{
+  font-size:64px;
+  font-weight:900;
+  color:var(--gold);
+  margin-top:18px;
+}
+
+.rate-label{
+  color:#aaa;
+  font-size:13px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.stat{
+  background:#070707;
+  border-radius:16px;
+  padding:12px;
+  text-align:center;
+}
+
+.stat-num{
+  font-size:24px;
+  font-weight:900;
+  color:var(--gold);
+}
+
+.stat-label{
+  color:#aaa;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.card{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-radius:22px;
+  padding:18px;
+  border:1px solid rgba(255,255,255,.08);
+  margin-bottom:14px;
+}
+
+.title{
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+label{
+  display:block;
+  font-weight:900;
+  margin-top:14px;
+}
+
+input{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#070707;
+  color:white;
+  margin-top:8px;
+}
+
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#f4d36b,#b58a22);
+  color:#111;
+  font-weight:900;
+  font-size:16px;
+  margin-top:14px;
+}
+
+.pick-card{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-left:5px solid var(--gold);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.pick-race{
+  color:#aaa;
+  font-size:13px;
+}
+
+.pick-horse{
+  font-size:24px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+.pick-reason{
+  color:#bbb;
+  margin-top:8px;
+  line-height:1.6;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#070707;
+  border-top:1px solid rgba(212,175,55,.25);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:10px 0;
+}
+
+.bottom-nav a{
+  text-align:center;
+  text-decoration:none;
+  color:#ddd;
+  font-size:12px;
+  font-weight:900;
+}
+
+.bottom-nav a:nth-child(4){
+  color:var(--gold);
+}
+
+.space{
+  height:90px;
+}
+
 </style>
 </head>
 
@@ -36,28 +204,84 @@ button{width:100%;padding:14px;border:none;border-radius:999px;background:#111;c
 
 <div class="container">
 
-  <div class="card">
-    <div class="name" id="displayName">読み込み中...</div>
-    <div class="info" id="favoriteText">好きな馬：未設定</div>
-    <div class="info" id="postCount">投稿数：0件</div>
+  <div class="hero-card">
+
+    <div class="name" id="displayName">
+      読み込み中...
+    </div>
+
+    <div class="favorite" id="favoriteText">
+      好きな馬：未設定
+    </div>
+
+    <div class="rate" id="hitRate">
+      -
+    </div>
+
+    <div class="rate-label">
+      的中率
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-num" id="hitCount">
+          0
+        </div>
+        <div class="stat-label">
+          的中数
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-num" id="postCount">
+          0
+        </div>
+        <div class="stat-label">
+          投稿数
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-num" id="rankNumber">
+          -
+        </div>
+        <div class="stat-label">
+          順位
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
   <div class="card">
-    <div class="title">プロフィール編集</div>
+
+    <div class="title">
+      プロフィール編集
+    </div>
 
     <label>表示名</label>
-    <input id="usernameInput" placeholder="例：ようよう">
+    <input id="usernameInput">
 
     <label>好きな馬</label>
-    <input id="favoriteInput" placeholder="例：ソールオリエンス">
+    <input id="favoriteInput">
 
-    <button onclick="saveProfile()">保存する</button>
+    <button onclick="saveProfile()">
+      保存する
+    </button>
+
   </div>
 
-  <div class="title">最近の予想</div>
+  <div class="title">
+    最近の予想
+  </div>
+
   <div id="myPicks"></div>
 
-  <button onclick="logout()">ログアウト</button>
+  <button onclick="logout()">
+    ログアウト
+  </button>
 
 </div>
 
@@ -71,15 +295,27 @@ button{width:100%;padding:14px;border:none;border-radius:999px;background:#111;c
 </div>
 
 <script>
-const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
-const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const SUPABASE_URL =
+"https://fnhhthhaspogymniuust.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 let currentUser = null;
 let currentProfile = null;
 
 async function init(){
-  const { data } = await supabaseClient.auth.getUser();
+
+  const { data } =
+    await supabaseClient.auth.getUser();
+
   currentUser = data.user;
 
   if(!currentUser){
@@ -88,53 +324,163 @@ async function init(){
   }
 
   await loadProfile();
+  await loadStats();
   await loadMyPicks();
+
 }
 
 async function loadProfile(){
-  const { data: profile, error } = await supabaseClient
-    .from("users")
-    .select("*")
-    .eq("email", currentUser.email)
-    .single();
 
-  if(error){
-    document.getElementById("displayName").textContent = currentUser.email;
-    document.getElementById("favoriteText").textContent = "好きな馬：未設定";
-    document.getElementById("usernameInput").value = "";
-    document.getElementById("favoriteInput").value = "";
-    return;
-  }
+  const { data:profile } =
+    await supabaseClient
+      .from("users")
+      .select("*")
+      .eq("email", currentUser.email)
+      .single();
 
   currentProfile = profile;
 
-  const username = profile?.username || currentUser.email;
-  const favoriteHorse = profile?.favorite_horse || "";
+  const username =
+    profile?.username ||
+    currentUser.email;
 
-  document.getElementById("displayName").textContent = username;
-  document.getElementById("favoriteText").textContent =
-    "好きな馬：" + (favoriteHorse || "未設定");
+  const favoriteHorse =
+    profile?.favorite_horse ||
+    "未設定";
 
-  document.getElementById("usernameInput").value = profile?.username || "";
-  document.getElementById("favoriteInput").value = favoriteHorse;
+  document.getElementById("displayName")
+    .textContent = username;
+
+  document.getElementById("favoriteText")
+    .textContent =
+      "好きな馬： " + favoriteHorse;
+
+  document.getElementById("usernameInput")
+    .value = profile?.username || "";
+
+  document.getElementById("favoriteInput")
+    .value = profile?.favorite_horse || "";
+
+}
+
+async function loadStats(){
+
+  const { data:picks } =
+    await supabaseClient
+      .from("picks")
+      .select("*");
+
+  const { data:results } =
+    await supabaseClient
+      .from("results")
+      .select("*");
+
+  const users = {};
+
+  picks.forEach(pick => {
+
+    const username =
+      pick.username ||
+      "名無しの予想家";
+
+    if(!users[username]){
+      users[username] = {
+        username,
+        total:0,
+        hit:0
+      };
+    }
+
+    users[username].total++;
+
+    const hit =
+      results.find(result =>
+        result.race === pick.race &&
+        result.horse === pick.horse &&
+        Number(result.result) === 1
+      );
+
+    if(hit){
+      users[username].hit++;
+    }
+
+  });
+
+  const ranking =
+    Object.values(users)
+      .map(user => ({
+        ...user,
+        rate:
+          user.total === 0
+          ? 0
+          : (user.hit / user.total) * 100
+      }))
+      .sort(
+        (a,b)=>
+          b.rate - a.rate ||
+          b.hit - a.hit ||
+          b.total - a.total
+      );
+
+  const myName =
+    currentProfile?.username ||
+    currentUser.email;
+
+  const myRank =
+    ranking.findIndex(
+      u => u.username === myName
+    );
+
+  const me =
+    ranking.find(
+      u => u.username === myName
+    );
+
+  if(me){
+
+    document.getElementById("hitRate")
+      .textContent =
+        me.rate.toFixed(1) + "%";
+
+    document.getElementById("hitCount")
+      .textContent =
+        me.hit;
+
+    document.getElementById("postCount")
+      .textContent =
+        me.total;
+
+    document.getElementById("rankNumber")
+      .textContent =
+        "#" + (myRank + 1);
+
+  }
+
 }
 
 async function saveProfile(){
-  const username = document.getElementById("usernameInput").value.trim();
-  const favoriteHorse = document.getElementById("favoriteInput").value.trim();
+
+  const username =
+    document.getElementById("usernameInput")
+    .value.trim();
+
+  const favoriteHorse =
+    document.getElementById("favoriteInput")
+    .value.trim();
 
   if(!username){
     alert("表示名をご入力ください。");
     return;
   }
 
-  const { error } = await supabaseClient
-    .from("users")
-    .update({
-      username: username,
-      favorite_horse: favoriteHorse
-    })
-    .eq("email", currentUser.email);
+  const { error } =
+    await supabaseClient
+      .from("users")
+      .update({
+        username,
+        favorite_horse:favoriteHorse
+      })
+      .eq("email", currentUser.email);
 
   if(error){
     alert(error.message);
@@ -143,53 +489,79 @@ async function saveProfile(){
 
   await supabaseClient
     .from("picks")
-    .update({ username: username })
+    .update({
+      username
+    })
     .eq("user_id", currentUser.id);
 
-  alert("プロフィールを保存しました。");
+  alert("保存しました。");
 
   await loadProfile();
-  await loadMyPicks();
+  await loadStats();
+
 }
 
 async function loadMyPicks(){
-  const { data: picks, error } = await supabaseClient
-    .from("picks")
-    .select("*")
-    .eq("user_id", currentUser.id)
-    .order("created_at", { ascending:false });
 
-  const box = document.getElementById("myPicks");
+  const box =
+    document.getElementById("myPicks");
 
-  if(error){
-    box.innerHTML = `<div class="card">予想の取得に失敗しました。</div>`;
+  const { data:picks } =
+    await supabaseClient
+      .from("picks")
+      .select("*")
+      .eq("user_id", currentUser.id)
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+  if(!picks || picks.length === 0){
+
+    box.innerHTML =
+      `<div class="card">
+        まだ予想がありません。
+      </div>`;
+
     return;
   }
 
-  document.getElementById("postCount").textContent =
-    "投稿数：" + picks.length + "件";
+  box.innerHTML =
+    picks.map(p => `
 
-  if(picks.length === 0){
-    box.innerHTML = `<div class="card">まだ予想がありません。</div>`;
-    return;
-  }
+      <div class="pick-card">
 
-  box.innerHTML = picks.map(p => `
-    <div class="card">
-      <div class="info">${p.race}</div>
-      <div class="pick">◎ ${p.horse}</div>
-      <div class="reason">${p.reason || "理由なし"}</div>
-    </div>
-  `).join("");
+        <div class="pick-race">
+          ${p.race}
+        </div>
+
+        <div class="pick-horse">
+          ◎ ${p.horse}
+        </div>
+
+        <div class="pick-reason">
+          ${p.reason || "理由なし"}
+        </div>
+
+      </div>
+
+    `).join("");
+
 }
 
 async function logout(){
+
   await supabaseClient.auth.signOut();
+
   alert("ログアウトしました。");
-  location.href = "index.html";
+
+  location.href =
+    "index.html";
+
 }
 
 init();
+
 </script>
 
 </body>
