@@ -24,6 +24,8 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
 .hit{color:#0a8f3c;font-weight:900}
 .miss{color:#c0392b;font-weight:900}
 .wait{color:#777;font-weight:900}
+.legal{text-align:center;padding:25px 0 90px;font-size:12px;color:#666}
+.legal a{color:#666;text-decoration:none}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
 .bottom-nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
 .space{height:80px}
@@ -56,24 +58,12 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
   <div class="news">CBC賞</div>
   <div class="news">札幌記念</div>
 
-</div>
-
-  <div class="space"></div>
-
-<div class="bottom-nav">
-
-  <a href="index.html">ホーム</a>
-
-  <a href="post.html">予想</a>
-
-  <a href="ranking.html">ランキング</a>
-
-  <a id="mypageLink" href="login.html">ログイン</a>
+  <div class="legal">
+    <a href="legal.html">利用規約・プライバシーポリシー</a>
+  </div>
 
 </div>
 
-
-  
 <div class="space"></div>
 
 <div class="bottom-nav">
@@ -125,7 +115,6 @@ async function loadFeed(){
       if(p.race_id && r.race_id){
         return Number(r.race_id) === Number(p.race_id);
       }
-
       return r.racecourse === p.racecourse && r.race === p.race;
     });
 
@@ -154,17 +143,13 @@ async function loadFeed(){
           <div class="rate ${statusClass}">${statusText}</div>
         </div>
 
-        <div class="race">
-          ${p.racecourse || ""} ${p.race || ""}
-        </div>
+        <div class="race">${p.racecourse || ""} ${p.race || ""}</div>
 
         <div class="pick">◎ ${p.horse}</div>
 
         <div class="comment">${p.reason || "理由なし"}</div>
 
-        <div class="date">
-          ${new Date(p.created_at).toLocaleString("ja-JP")}
-        </div>
+        <div class="date">${new Date(p.created_at).toLocaleString("ja-JP")}</div>
       </div>
     `;
   }).join("");
