@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>予想家 | DARKHORSCORE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{
+  --gold:#d4af37;
+}
+
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+}
+
+.header{
+  background:linear-gradient(180deg,#050505,#151515);
+  padding:24px;
+  text-align:center;
+  border-bottom:1px solid rgba(212,175,55,.25);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+}
+
+.sub{
+  color:var(--gold);
+  margin-top:6px;
+}
+
+.container{
+  padding:16px;
+}
+
+.hero{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-radius:24px;
+  padding:24px;
+  border:1px solid rgba(255,255,255,.08);
+  margin-bottom:18px;
+}
+
+.username{
+  font-size:32px;
+  font-weight:900;
+}
+
+.rate{
+  font-size:64px;
+  font-weight:900;
+  color:var(--gold);
+  margin-top:16px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.stat{
+  background:#070707;
+  border-radius:16px;
+  padding:12px;
+  text-align:center;
+}
+
+.stat-num{
+  font-size:24px;
+  font-weight:900;
+  color:var(--gold);
+}
+
+.stat-label{
+  color:#aaa;
+  font-size:12px;
+}
+
+.title{
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:14px;
+}
+
+.pick-card{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-left:5px solid var(--gold);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.hit{
+  background:#1e7f4f;
+}
+
+.miss{
+  background:#b84432;
+}
+
+.wait{
+  background:#8a6818;
+}
+
+.pick-race{
+  color:#aaa;
+  font-size:13px;
+}
+
+.pick-horse{
+  font-size:24px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+.pick-reason{
+  color:#bbb;
+  margin-top:8px;
+  line-height:1.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+  <div class="logo">
+    DARKHORSCORE
+  </div>
+
+  <div class="sub">
+    予想家プロフィール
+  </div>
+
+</div>
+
+<div class="container">
+
+  <div class="hero">
+
+    <div
+      class="username"
+      id="username">
+      読み込み中...
+    </div>
+
+    <div
+      class="rate"
+      id="rate">
+      -
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-num" id="hitCount">0</div>
+        <div class="stat-label">的中数</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-num" id="postCount">0</div>
+        <div class="stat-label">投稿数</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-num" id="rankNumber">-</div>
+        <div class="stat-label">順位</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="title">
+    最近の予想
+  </div>
+
+  <div id="pickList">
+    読み込み中...
+  </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://fnhhthhaspogymniuust.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const targetUser =
+params.get("user");
+
+async function loadPlayer(){
+
+  if(!targetUser){
+    document.getElementById("username")
+      .textContent = "ユーザーが指定されていません";
+    return;
+  }
+
+  document.getElementById("username")
+    .textContent = targetUser;
+
+  const { data:picks } =
+    await supabaseClient
+      .from("picks")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+  const { data:results } =
+    await supabaseClient
+      .from("results")
+      .select("*");
+
+  const users = {};
+
+  picks.forEach(pick => {
+
+    const username =
+      pick.username ||
+      "名無しの予想家";
+
+    if(!users[username]){
+      users[username] = {
+        username,
+        total:0,
+        hit:0
+      };
+    }
+
+    users[username].total++;
+
+    const hit =
+      results.find(result =>
+        result.race === pick.race &&
+        result.horse === pick.horse &&
+        Number(result.result) === 1
+      );
+
+    if(hit){
+      users[username].hit++;
+    }
+
+  });
+
+  const ranking =
+    Object.values(users)
+      .map(user => ({
+        ...user,
+        rate:
+          user.total === 0
+          ? 0
+          : (user.hit / user.total) * 100
+      }))
+      .sort(
+        (a,b)=>
+          b.rate - a.rate ||
+          b.hit - a.hit ||
+          b.total - a.total
+      );
+
+  const me =
+    ranking.find(
+      user => user.username === targetUser
+    );
+
+  const rankIndex =
+    ranking.findIndex(
+      user => user.username === targetUser
+    );
+
+  if(me){
+
+    document.getElementById("rate")
+      .textContent =
+        me.rate.toFixed(1) + "%";
+
+    document.getElementById("hitCount")
+      .textContent =
+        me.hit;
+
+    document.getElementById("postCount")
+      .textContent =
+        me.total;
+
+    document.getElementById("rankNumber")
+      .textContent =
+        "#" + (rankIndex + 1);
+
+  }
+
+  const userPicks =
+    picks.filter(
+      pick => pick.username === targetUser
+    );
+
+  const box =
+    document.getElementById("pickList");
+
+  if(userPicks.length === 0){
+
+    box.innerHTML =
+      `<div class="pick-card">
+        この予想家の投稿はまだありません。
+      </div>`;
+
+    return;
+  }
+
+  box.innerHTML =
+    userPicks.map(p => {
+
+      const raceResults =
+        results.filter(result => {
+
+          if(p.race_id && result.race_id){
+            return Number(p.race_id) === Number(result.race_id);
+          }
+
+          return result.race === p.race;
+
+        });
+
+      let badgeText = "集計待ち";
+      let badgeClass = "wait";
+
+      if(raceResults.length > 0){
+
+        const hit =
+          raceResults.find(result =>
+            result.horse === p.horse &&
+            Number(result.result) === 1
+          );
+
+        if(hit){
+          badgeText = "的中";
+          badgeClass = "hit";
+        }else{
+          badgeText = "不的中";
+          badgeClass = "miss";
+        }
+
+      }
+
+      return `
+
+        <div class="pick-card">
+
+          <span class="badge ${badgeClass}">
+            ${badgeText}
+          </span>
+
+          <div class="pick-race">
+            ${p.racecourse || ""}｜${p.race || ""}
+          </div>
+
+          <div class="pick-horse">
+            ◎ ${p.horse}
+          </div>
+
+          <div class="pick-reason">
+            ${p.reason || "理由なし"}
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+loadPlayer();
+
+</script>
+
+</body>
+</html>
