@@ -21,6 +21,9 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
 .pick{font-size:26px;font-weight:900;margin-top:8px}
 .comment{margin-top:10px;line-height:1.6;color:#444}
 .date{margin-top:10px}
+.hit{color:#0a8f3c;font-weight:900}
+.miss{color:#c0392b;font-weight:900}
+.wait{color:#777;font-weight:900}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 0}
 .bottom-nav a{text-align:center;text-decoration:none;color:#111;font-size:12px;font-weight:900}
 .space{height:80px}
@@ -43,22 +46,8 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
 
   <div class="rank-card">
     <div class="rank-user">
-      <div>🥇 ようよう</div>
-      <div>42.8%</div>
-    </div>
-  </div>
-
-  <div class="rank-card">
-    <div class="rank-user">
-      <div>🥈 ウマ太郎</div>
-      <div>38.1%</div>
-    </div>
-  </div>
-
-  <div class="rank-card">
-    <div class="rank-user">
-      <div>🥉 競馬博士</div>
-      <div>35.4%</div>
+      <div>ランキングは自動集計中</div>
+      <div>β版</div>
     </div>
   </div>
 
@@ -66,11 +55,6 @@ body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"H
   <div class="news">函館記念</div>
   <div class="news">CBC賞</div>
   <div class="news">札幌記念</div>
-
-  <div class="section-title">📰 ニュース</div>
-  <div class="news">武豊騎手復帰</div>
-  <div class="news">函館記念の出走想定発表</div>
-  <div class="news">JRA秋競馬日程公開</div>
 
 </div>
 
@@ -91,12 +75,16 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 async function loadFeed(){
   const feed = document.getElementById("feed");
 
-  const { data: picks, error } = await supabaseClient
+  const { data: picks, error: picksError } = await supabaseClient
     .from("picks")
     .select("*")
     .order("created_at", { ascending:false });
 
-  if(error){
+  const { data: results, error: resultsError } = await supabaseClient
+    .from("results")
+    .select("*");
+
+  if(picksError || resultsError){
     feed.innerHTML = `<div class="post">投稿の取得に失敗しました。</div>`;
     return;
   }
@@ -116,18 +104,54 @@ async function loadFeed(){
     return;
   }
 
-  feed.innerHTML = picks.map(p => `
-    <div class="post">
-      <div class="user">
-        <div class="name">${p.username}</div>
-        <div class="rate">未集計</div>
+  feed.innerHTML = picks.map(p => {
+    const sameRaceResults = results.filter(r => {
+      if(p.race_id && r.race_id){
+        return Number(r.race_id) === Number(p.race_id);
+      }
+
+      return r.racecourse === p.racecourse && r.race === p.race;
+    });
+
+    let statusText = "⏳ 集計待ち";
+    let statusClass = "wait";
+
+    if(sameRaceResults.length > 0){
+      const hit = sameRaceResults.find(r =>
+        r.horse === p.horse &&
+        Number(r.result) === 1
+      );
+
+      if(hit){
+        statusText = "🎯 的中";
+        statusClass = "hit";
+      }else{
+        statusText = "❌ 不的中";
+        statusClass = "miss";
+      }
+    }
+
+    return `
+      <div class="post">
+        <div class="user">
+          <div class="name">${p.username || "名無しの予想家"}</div>
+          <div class="rate ${statusClass}">${statusText}</div>
+        </div>
+
+        <div class="race">
+          ${p.racecourse || ""} ${p.race || ""}
+        </div>
+
+        <div class="pick">◎ ${p.horse}</div>
+
+        <div class="comment">${p.reason || "理由なし"}</div>
+
+        <div class="date">
+          ${new Date(p.created_at).toLocaleString("ja-JP")}
+        </div>
       </div>
-      <div class="race">${p.race}</div>
-      <div class="pick">◎ ${p.horse}</div>
-      <div class="comment">${p.reason || "理由なし"}</div>
-      <div class="date">${new Date(p.created_at).toLocaleString("ja-JP")}</div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 async function updateNav(){
