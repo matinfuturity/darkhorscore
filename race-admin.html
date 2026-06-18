@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>締切設定 | DARKHORSCORE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111}
+.header{background:#111;color:white;padding:24px;text-align:center}
+.logo{font-size:28px;font-weight:900}
+.sub{font-size:13px;color:#ccc;margin-top:6px}
+.container{padding:16px}
+.card{background:white;border-radius:20px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+label{display:block;font-weight:900;margin-top:16px}
+input,select{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px;background:white}
+button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;background:#111;color:white;font-size:16px;font-weight:900}
+.note{font-size:13px;color:#666;line-height:1.7;margin-top:14px}
+</style>
+</head>
+<body>
 
+<div class="header">
+  <div class="logo">DARKHORSCORE</div>
+  <div class="sub">運営用・締切設定</div>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <label>管理パスワード</label>
+    <input id="adminPass" type="password" placeholder="管理用パスワード">
+
+    <label>対象レース</label>
+    <select id="raceSelect">
+      <option value="">読み込み中...</option>
+    </select>
+
+    <label>締切日時</label>
+    <input id="deadline" type="datetime-local">
+
+    <button onclick="saveDeadline()">締切を保存する</button>
+
+    <div class="note">
+      ※締切後は投稿できないようにします。<br>
+      ※発走2分前を目安に設定してください。
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
+const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const ADMIN_PASSWORD = "darkhorse";
+let races = [];
+
+async function loadRaces(){
+  const select = document.getElementById("raceSelect");
+
+  const { data, error } = await supabaseClient
+    .from("races")
+    .select("*")
+    .order("id", { ascending:true });
+
+  if(error){
+    select.innerHTML = '<option value="">レース取得失敗</option>';
+    return;
+  }
+
+  races = data || [];
+  select.innerHTML = '<option value="">レースを選択してください</option>';
+
+  races.forEach(r => {
+    select.innerHTML += `
+      <option value="${r.id}">
+        ${r.racecourse}｜${r.race}
+      </option>
+    `;
+  });
+}
+
+async function saveDeadline(){
+  const pass = document.getElementById("adminPass").value;
+  const raceId = document.getElementById("raceSelect").value;
+  const deadline = document.getElementById("deadline").value;
+
+  if(pass !== ADMIN_PASSWORD){
+    alert("管理パスワードが違います。");
+    return;
+  }
+
+  if(!raceId){
+    alert("対象レースを選択してください。");
+    return;
+  }
+
+  if(!deadline){
+    alert("締切日時を入力してください。");
+    return;
+  }
+
+  const deadlineJST = deadline + ":00+09:00";
+
+  const { error } = await supabaseClient
+    .from("races")
+    .update({ deadline: deadlineJST })
+    .eq("id", Number(raceId));
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("締切を保存しました。");
+}
+
+loadRaces();
+</script>
+
+</body>
+</html>
