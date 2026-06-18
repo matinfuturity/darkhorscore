@@ -7,44 +7,228 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;background:#f4f4f4;color:#111}
-.header{background:#fff;padding:16px;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
-.logo{text-align:center;font-size:24px;font-weight:900}
-.copy{text-align:center;font-size:12px;color:#666;margin-top:4px}
-.section{margin:18px 14px}
-.section-title{font-size:20px;font-weight:900;margin-bottom:12px;border-left:5px solid #111;padding-left:10px}
-.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 5px 16px rgba(0,0,0,.05);border:1px solid #e5e5e5}
-.rank{font-size:24px;font-weight:900}
-.name{font-size:20px;font-weight:900;margin-top:8px}
-.stats{font-size:13px;color:#666;line-height:1.7;margin-top:8px}
-.badge{display:inline-block;background:#111;color:#fff;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:900;margin-top:10px}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ccc;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 0}
-.bottom-nav a{text-align:center;color:#111;text-decoration:none;font-size:12px;font-weight:800}
-.space{height:80px}
+
+:root{
+  --gold:#d4af37;
+  --silver:#bfc5cd;
+  --bronze:#b87333;
+}
+
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+}
+
+.header{
+  background:linear-gradient(180deg,#050505,#151515);
+  padding:24px 18px;
+  border-bottom:1px solid rgba(212,175,55,.25);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+  text-align:center;
+}
+
+.copy{
+  text-align:center;
+  color:var(--gold);
+  font-size:13px;
+  margin-top:6px;
+}
+
+.hero{
+  margin-top:18px;
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-radius:22px;
+  padding:22px;
+  border:1px solid rgba(212,175,55,.2);
+}
+
+.hero-title{
+  font-size:28px;
+  font-weight:900;
+  line-height:1.4;
+}
+
+.gold{
+  color:var(--gold);
+}
+
+.section{
+  padding:16px;
+}
+
+.section-title{
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:14px;
+}
+
+.top-card{
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:16px;
+  color:white;
+}
+
+.top1{
+  background:linear-gradient(135deg,#f4d36b,#8f6a17);
+}
+
+.top2{
+  background:linear-gradient(135deg,#dfe4ea,#7f8c8d);
+}
+
+.top3{
+  background:linear-gradient(135deg,#d19156,#8b4513);
+}
+
+.medal{
+  font-size:34px;
+}
+
+.rank-name{
+  font-size:24px;
+  font-weight:900;
+  margin-top:10px;
+}
+
+.rate{
+  font-size:56px;
+  font-weight:900;
+  margin-top:10px;
+}
+
+.rank-sub{
+  font-size:14px;
+  margin-top:10px;
+}
+
+.normal-card{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border:1px solid rgba(255,255,255,.08);
+  border-left:5px solid var(--gold);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.normal-rank{
+  color:#aaa;
+  font-size:14px;
+}
+
+.normal-name{
+  font-size:18px;
+  font-weight:900;
+  margin-top:6px;
+}
+
+.normal-rate{
+  color:var(--gold);
+  font-size:28px;
+  font-weight:900;
+  margin-top:6px;
+}
+
+.normal-sub{
+  color:#bbb;
+  font-size:13px;
+  margin-top:6px;
+}
+
+.info-card{
+  background:linear-gradient(180deg,#1b1b1b,#111);
+  border-radius:18px;
+  padding:18px;
+  color:#ddd;
+  line-height:1.8;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#070707;
+  border-top:1px solid rgba(212,175,55,.25);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:10px 0;
+}
+
+.bottom-nav a{
+  text-align:center;
+  color:#ddd;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:900;
+}
+
+.bottom-nav a:nth-child(3){
+  color:var(--gold);
+}
+
+.space{
+  height:90px;
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <div class="logo">DARKHORSCORE</div>
-  <div class="copy">予想家ランキング</div>
+
+  <div class="logo">
+    DARKHORSCORE
+  </div>
+
+  <div class="copy">
+    予想家ランキング
+  </div>
+
+  <div class="hero">
+    <div class="hero-title">
+      当たる人が<br>
+      <span class="gold">評価される。</span>
+    </div>
+  </div>
+
 </div>
 
 <div class="section">
-  <div class="section-title">総合ランキング</div>
+
+  <div class="section-title">
+    🏆 TOP RANKING
+  </div>
+
+  <div id="top3Box">
+    読み込み中...
+  </div>
+
+  <div class="section-title">
+    📈 ALL RANKING
+  </div>
+
   <div id="rankingBox">
-    <div class="card">ランキングを読み込み中...</div>
+    読み込み中...
   </div>
-</div>
 
-<div class="section">
-  <div class="section-title">DARKHORSCOREとは</div>
-
-  <div class="card">
-    予想の人気ではなく、実績で予想家を評価するランキングです。<br><br>
-    現在は、投稿した本命馬がレース結果で1着だった場合に「的中」として集計しています。
+  <div class="section-title">
+    DARKHORSCOREとは
   </div>
+
+  <div class="info-card">
+    人気ではなく実績で評価される競馬SNSです。<br><br>
+    投稿した本命馬が1着だった場合に的中として集計しています。
+  </div>
+
 </div>
 
 <div class="space"></div>
@@ -57,115 +241,189 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 </div>
 
 <script>
-const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
-const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const SUPABASE_URL =
+"https://fnhhthhaspogymniuust.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 async function loadRanking(){
-  const rankingBox = document.getElementById("rankingBox");
 
-  const { data: picks, error: picksError } = await supabaseClient
-    .from("picks")
-    .select("*");
+  const top3Box =
+    document.getElementById("top3Box");
 
-  const { data: results, error: resultsError } = await supabaseClient
-    .from("results")
-    .select("*");
+  const rankingBox =
+    document.getElementById("rankingBox");
 
- if(picksError){
-  rankingBox.innerHTML =
-  `<div class="card">${picksError.message}</div>`;
-  return;
-}
+  const { data:picks } =
+    await supabaseClient
+      .from("picks")
+      .select("*");
 
-if(resultsError){
-  rankingBox.innerHTML =
-  `<div class="card">${resultsError.message}</div>`;
-  return;
-}
+  const { data:results } =
+    await supabaseClient
+      .from("results")
+      .select("*");
 
   if(!picks || picks.length === 0){
-    rankingBox.innerHTML = `<div class="card">まだ予想がありません。</div>`;
+
+    top3Box.innerHTML =
+      `<div class="info-card">
+        まだ予想がありません。
+      </div>`;
+
+    rankingBox.innerHTML = "";
     return;
   }
 
   const users = {};
 
   picks.forEach(pick => {
-    const username = pick.username || "名無しの予想家";
+
+    const username =
+      pick.username ||
+      "名無しの予想家";
 
     if(!users[username]){
       users[username] = {
-        username: username,
-        total: 0,
-        hit: 0
+        username,
+        total:0,
+        hit:0
       };
     }
 
     users[username].total++;
 
-    const matchedResult = results.find(result =>
-      result.race === pick.race &&
-      result.horse === pick.horse &&
-      Number(result.result) === 1
-    );
+    const matchedResult =
+      results.find(result =>
+        result.race === pick.race &&
+        result.horse === pick.horse &&
+        Number(result.result) === 1
+      );
 
     if(matchedResult){
       users[username].hit++;
     }
+
   });
 
-  const ranking = Object.values(users)
-    .map(user => {
-      const rate = user.total === 0 ? 0 : (user.hit / user.total) * 100;
-      return {
+  const ranking =
+    Object.values(users)
+      .map(user => ({
         ...user,
-        rate: rate
-      };
-    })
-    .sort((a,b) => b.rate - a.rate || b.hit - a.hit || b.total - a.total);
+        rate:
+          user.total === 0
+            ? 0
+            : (user.hit / user.total) * 100
+      }))
+      .sort(
+        (a,b) =>
+          b.rate - a.rate ||
+          b.hit - a.hit ||
+          b.total - a.total
+      );
 
-  rankingBox.innerHTML = ranking.map((user, index) => {
-    const medal =
-      index === 0 ? "🥇" :
-      index === 1 ? "🥈" :
-      index === 2 ? "🥉" : "🏇";
+  const top3 =
+    ranking.slice(0,3);
 
-    const badge =
-      user.total < 3 ? "集計中" :
-      user.rate >= 50 ? "高的中率" :
-      user.hit > 0 ? "的中あり" : "挑戦中";
+  const classes =
+    ["top1","top2","top3"];
 
-    return `
-      <div class="card">
-        <div class="rank">${medal} ${index + 1}位</div>
-        <div class="name">${user.username}</div>
-        <div class="stats">
-          的中率：${user.rate.toFixed(1)}%<br>
-          的中数：${user.hit}<br>
-          予想数：${user.total}
+  const medals =
+    ["🥇","🥈","🥉"];
+
+  top3Box.innerHTML =
+    top3.map((user,index) => `
+
+      <div class="top-card ${classes[index]}">
+
+        <div class="medal">
+          ${medals[index]}
         </div>
-        <span class="badge">${badge}</span>
+
+        <div class="rank-name">
+          ${user.username}
+        </div>
+
+        <div class="rate">
+          ${user.rate.toFixed(1)}%
+        </div>
+
+        <div class="rank-sub">
+          的中 ${user.hit} ／ 投稿 ${user.total}
+        </div>
+
       </div>
-    `;
-  }).join("");
+
+    `).join("");
+
+  rankingBox.innerHTML =
+    ranking.slice(3).map((user,index) => `
+
+      <div class="normal-card">
+
+        <div class="normal-rank">
+          ${index + 4}位
+        </div>
+
+        <div class="normal-name">
+          ${user.username}
+        </div>
+
+        <div class="normal-rate">
+          ${user.rate.toFixed(1)}%
+        </div>
+
+        <div class="normal-sub">
+          的中 ${user.hit}
+          ／
+          投稿 ${user.total}
+        </div>
+
+      </div>
+
+    `).join("");
+
 }
 
 async function updateNav(){
-  const { data } = await supabaseClient.auth.getUser();
-  const link = document.getElementById("mypageLink");
+
+  const { data } =
+    await supabaseClient.auth.getUser();
+
+  const link =
+    document.getElementById("mypageLink");
 
   if(data.user){
-    link.textContent = "マイページ";
-    link.href = "mypage.html";
+
+    link.textContent =
+      "マイページ";
+
+    link.href =
+      "mypage.html";
+
   }else{
-    link.textContent = "ログイン";
-    link.href = "login.html";
+
+    link.textContent =
+      "ログイン";
+
+    link.href =
+      "login.html";
+
   }
+
 }
 
 loadRanking();
 updateNav();
+
 </script>
 
 </body>
