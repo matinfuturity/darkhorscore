@@ -35,32 +35,10 @@ button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;b
   <div class="card">
     <div class="login-user" id="loginUser">ログイン確認中...</div>
 
-    <label>競馬場</label>
-    <select id="racecourse">
-      <option value="">競馬場を選択してください</option>
-      <option value="札幌">札幌</option>
-      <option value="函館">函館</option>
-      <option value="福島">福島</option>
-      <option value="新潟">新潟</option>
-      <option value="東京">東京</option>
-      <option value="中山">中山</option>
-      <option value="中京">中京</option>
-      <option value="京都">京都</option>
-      <option value="阪神">阪神</option>
-      <option value="小倉">小倉</option>
-      <option value="大井">大井</option>
-      <option value="川崎">川崎</option>
-      <option value="船橋">船橋</option>
-      <option value="浦和">浦和</option>
-      <option value="名古屋">名古屋</option>
-      <option value="笠松">笠松</option>
-      <option value="園田">園田</option>
-      <option value="高知">高知</option>
-      <option value="佐賀">佐賀</option>
+    <label>対象レース</label>
+    <select id="raceSelect">
+      <option value="">レースを読み込み中...</option>
     </select>
-
-    <label>レース名</label>
-    <input id="race" placeholder="例：函館記念">
 
     <label>本命馬</label>
     <input id="horse" placeholder="例：ソールオリエンス">
@@ -88,6 +66,7 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let currentUser = null;
 let currentProfile = null;
+let races = [];
 
 async function init(){
   const { data } = await supabaseClient.auth.getUser();
@@ -100,6 +79,7 @@ async function init(){
     navLink.textContent = "ログイン";
     navLink.href = "login.html";
     loginUser.textContent = "予想を投稿するにはログインしてください。";
+    await loadRaces();
     return;
   }
 
@@ -119,6 +99,39 @@ async function init(){
   }else{
     loginUser.textContent = "ログイン中：" + currentUser.email;
   }
+
+  await loadRaces();
+}
+
+async function loadRaces(){
+  const select = document.getElementById("raceSelect");
+
+  const { data, error } = await supabaseClient
+    .from("races")
+    .select("*")
+    .order("id", { ascending:true });
+
+  if(error){
+    select.innerHTML = '<option value="">レースの取得に失敗しました</option>';
+    return;
+  }
+
+  races = data || [];
+
+  if(races.length === 0){
+    select.innerHTML = '<option value="">対象レースがありません</option>';
+    return;
+  }
+
+  select.innerHTML = '<option value="">レースを選択してください</option>';
+
+  races.forEach(r => {
+    select.innerHTML += `
+      <option value="${r.id}">
+        ${r.racecourse}｜${r.race}
+      </option>
+    `;
+  });
 }
 
 async function submitPick(){
@@ -128,23 +141,24 @@ async function submitPick(){
     return;
   }
 
-  const racecourse = document.getElementById("racecourse").value;
-  const race = document.getElementById("race").value.trim();
+  const raceId = document.getElementById("raceSelect").value;
   const horse = document.getElementById("horse").value.trim();
   const reason = document.getElementById("reason").value.trim();
 
-  if(!racecourse){
-    alert("競馬場を選択してください。");
-    return;
-  }
-
-  if(!race){
-    alert("レース名をご入力ください。");
+  if(!raceId){
+    alert("対象レースを選択してください。");
     return;
   }
 
   if(!horse){
     alert("本命馬をご入力ください。");
+    return;
+  }
+
+  const selectedRace = races.find(r => String(r.id) === String(raceId));
+
+  if(!selectedRace){
+    alert("対象レースの取得に失敗しました。");
     return;
   }
 
@@ -157,15 +171,15 @@ async function submitPick(){
     .insert({
       user_id: currentUser.id,
       username: username,
-      racecourse: racecourse,
-      race: race,
+      race_id: Number(raceId),
+      racecourse: selectedRace.racecourse,
+      race: selectedRace.race,
       horse: horse,
       reason: reason
     });
 
   if(error){
     alert(error.message);
-    console.log(error);
     return;
   }
 
