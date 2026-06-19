@@ -5,98 +5,114 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>マイページ | DARKHORSCORE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{
   --gold:#d4af37;
   --green:#1e7f4f;
   --red:#b84432;
 }
+
 body{
   margin:0;
   background:#0b0b0b;
   color:white;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
 }
+
 .header{
   background:linear-gradient(180deg,#050505,#151515);
   padding:24px;
   text-align:center;
   border-bottom:1px solid rgba(212,175,55,.25);
 }
+
 .logo{
   font-size:30px;
   font-weight:900;
 }
+
 .sub{
   color:var(--gold);
   margin-top:6px;
 }
+
 .container{
   padding:16px;
 }
-.hero-card{
-  background:linear-gradient(180deg,#1b1b1b,#111);
-  border-radius:24px;
-  padding:24px;
-  border:1px solid rgba(255,255,255,.08);
-  margin-bottom:16px;
-}
-.name{
-  font-size:32px;
-  font-weight:900;
-}
-.favorite{
-  color:#bbb;
-  margin-top:8px;
-}
-.rate{
-  font-size:64px;
-  font-weight:900;
-  color:var(--gold);
-  margin-top:18px;
-}
-.rate-label{
-  color:#aaa;
-  font-size:13px;
-}
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:20px;
-}
-.stat{
-  background:#070707;
-  border-radius:16px;
-  padding:12px;
-  text-align:center;
-}
-.stat-num{
-  font-size:24px;
-  font-weight:900;
-  color:var(--gold);
-}
-.stat-label{
-  color:#aaa;
-  font-size:12px;
-}
-.card{
+
+.hero-card,.card{
   background:linear-gradient(180deg,#1b1b1b,#111);
   border-radius:22px;
   padding:18px;
   border:1px solid rgba(255,255,255,.08);
   margin-bottom:14px;
 }
+
+.hero-card{
+  border-radius:24px;
+  padding:24px;
+}
+
+.name{
+  font-size:32px;
+  font-weight:900;
+}
+
+.favorite{
+  color:#bbb;
+  margin-top:8px;
+}
+
+.rate{
+  font-size:64px;
+  font-weight:900;
+  color:var(--gold);
+  margin-top:18px;
+}
+
+.rate-label{
+  color:#aaa;
+  font-size:13px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.stat{
+  background:#070707;
+  border-radius:16px;
+  padding:12px;
+  text-align:center;
+}
+
+.stat-num{
+  font-size:24px;
+  font-weight:900;
+  color:var(--gold);
+}
+
+.stat-label{
+  color:#aaa;
+  font-size:12px;
+}
+
 .title{
   font-size:22px;
   font-weight:900;
-  margin-bottom:12px;
+  margin:24px 0 12px;
 }
+
 label{
   display:block;
   font-weight:900;
   margin-top:14px;
 }
+
 input{
   width:100%;
   box-sizing:border-box;
@@ -107,6 +123,7 @@ input{
   color:white;
   margin-top:8px;
 }
+
 button{
   width:100%;
   padding:16px;
@@ -118,6 +135,13 @@ button{
   font-size:16px;
   margin-top:14px;
 }
+
+.logout-btn{
+  background:#222;
+  color:white;
+  border:1px solid rgba(255,255,255,.12);
+}
+
 .badge{
   display:inline-block;
   padding:5px 10px;
@@ -126,15 +150,11 @@ button{
   font-weight:900;
   margin-bottom:10px;
 }
-.hit{
-  background:var(--green);
-}
-.miss{
-  background:var(--red);
-}
-.wait{
-  background:#8a6818;
-}
+
+.hit{background:var(--green)}
+.miss{background:var(--red)}
+.wait{background:#8a6818}
+
 .pick-card{
   background:linear-gradient(180deg,#1b1b1b,#111);
   border-left:5px solid var(--gold);
@@ -142,20 +162,34 @@ button{
   padding:16px;
   margin-bottom:12px;
 }
+
 .pick-race{
   color:#aaa;
   font-size:13px;
 }
+
 .pick-horse{
   font-size:24px;
   font-weight:900;
   margin-top:8px;
 }
+
 .pick-reason{
   color:#bbb;
   margin-top:8px;
   line-height:1.6;
 }
+
+.error{
+  background:#2a1111;
+  border:1px solid rgba(184,68,50,.4);
+  color:#ffb3a8;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:14px;
+  line-height:1.6;
+}
+
 .bottom-nav{
   position:fixed;
   bottom:0;
@@ -167,6 +201,7 @@ button{
   grid-template-columns:repeat(4,1fr);
   padding:10px 0;
 }
+
 .bottom-nav a{
   text-align:center;
   text-decoration:none;
@@ -174,361 +209,368 @@ button{
   font-size:12px;
   font-weight:900;
 }
+
 .bottom-nav a:nth-child(4){
   color:var(--gold);
 }
+
 .space{
   height:90px;
 }
 </style>
 </head>
+
 <body>
+
 <div class="header">
   <div class="logo">DARKHORSCORE</div>
   <div class="sub">マイページ</div>
 </div>
+
 <div class="container">
-<div class="hero-card">
-<div class="name" id="displayName">
-読み込み中...
-</div>
-<div class="favorite" id="favoriteText">
-好きな馬：未設定
-</div>
-<div class="rate" id="hitRate">
--
-</div>
-<div class="rate-label">
-的中率
-</div>
-<div class="stats">
-<div class="stat">
-<div class="stat-num" id="hitCount">0</div>
-<div class="stat-label">的中数</div>
-</div>
-<div class="stat">
-<div class="stat-num" id="postCount">0</div>
-<div class="stat-label">投稿数</div>
-</div>
-<div class="stat">
-<div class="stat-num" id="rankNumber">-</div>
-<div class="stat-label">順位</div>
-</div>
-</div>
-</div>
-<div class="card">
-<div class="title">
-プロフィール編集
+
+  <div id="errorBox"></div>
+
+  <div class="hero-card">
+    <div class="name" id="displayName">読み込み中...</div>
+    <div class="favorite" id="favoriteText">好きな馬：未設定</div>
+
+    <div class="rate" id="hitRate">-</div>
+    <div class="rate-label">的中率</div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num" id="hitCount">0</div>
+        <div class="stat-label">的中数</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-num" id="postCount">0</div>
+        <div class="stat-label">投稿数</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-num" id="rankNumber">-</div>
+        <div class="stat-label">順位</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">プロフィール編集</div>
+
+    <label>表示名</label>
+    <input id="usernameInput" placeholder="例：ようよう">
+
+    <label>好きな馬</label>
+    <input id="favoriteInput" placeholder="例：ソールオリエンス">
+
+    <button onclick="saveProfile()">保存する</button>
+  </div>
+
+  <div class="title">最近の予想</div>
+  <div id="myPicks"></div>
+
+  <button class="logout-btn" onclick="logout()">ログアウト</button>
+
 </div>
 
-表示名
-好きな馬
-<button onclick="saveProfile()">
-保存する
-</button>
-</div>
-<div class="title">
-最近の予想
-</div>
-<div id="myPicks"></div>
-<button onclick="logout()">
-ログアウト
-</button>
-</div>
 <div class="space"></div>
+
 <div class="bottom-nav">
-<a href="index.html">ホーム</a>
-<a href="post.html">予想</a>
-<a href="ranking.html">ランキング</a>
-<a href="mypage.html">マイページ</a>
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a href="mypage.html">マイページ</a>
 </div>
+
 <script>
-const SUPABASE_URL="https://fnhhthhaspogymniuust.supabase.co";
-const SUPABASE_KEY="YOUR_KEY";
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let currentUser=null;
-let currentProfile=null;
+const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
+const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-async function init(){
+let currentUser = null;
+let currentProfile = null;
 
-const { data } =
-await supabaseClient.auth.getUser();
-
-currentUser = data.user;
-
-if(!currentUser){
-location.href = “login.html”;
-return;
+function showError(message){
+  document.getElementById("errorBox").innerHTML =
+    `<div class="error">${message}</div>`;
 }
 
-await loadProfile();
-await loadStats();
-await loadMyPicks();
+function clearError(){
+  document.getElementById("errorBox").innerHTML = "";
+}
 
+function isHit(pick, results){
+  return results.find(result => {
+    if(pick.race_id && result.race_id){
+      return (
+        Number(pick.race_id) === Number(result.race_id) &&
+        result.horse === pick.horse &&
+        Number(result.result) === 1
+      );
+    }
+
+    return (
+      result.race === pick.race &&
+      result.horse === pick.horse &&
+      Number(result.result) === 1
+    );
+  });
+}
+
+function hasRaceResult(pick, results){
+  return results.find(result => {
+    if(pick.race_id && result.race_id){
+      return Number(pick.race_id) === Number(result.race_id);
+    }
+
+    return result.race === pick.race;
+  });
+}
+
+async function init(){
+  clearError();
+
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if(error){
+    showError(error.message);
+    return;
+  }
+
+  currentUser = data.user;
+
+  if(!currentUser){
+    location.href = "login.html";
+    return;
+  }
+
+  await loadProfile();
+  await loadStatsAndPicks();
 }
 
 async function loadProfile(){
+  const { data: profile, error } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("email", currentUser.email)
+    .single();
 
-const { data:profile } =
-await supabaseClient
-.from(“users”)
-.select(”*”)
-.eq(“email”, currentUser.email)
-.single();
+  if(error){
+    currentProfile = null;
 
-currentProfile = profile;
-
-const username =
-profile?.username ||
-currentUser.email;
-
-document.getElementById(“displayName”)
-.textContent = username;
-
-document.getElementById(“favoriteText”)
-.textContent =
-“好きな馬：” +
-(profile?.favorite_horse || “未設定”);
-
-document.getElementById(“usernameInput”)
-.value = profile?.username || “”;
-
-document.getElementById(“favoriteInput”)
-.value = profile?.favorite_horse || “”;
-
-}
-
-async function loadStats(){
-
-const { data:picks } =
-await supabaseClient
-.from(“picks”)
-.select(”*”);
-
-const { data:results } =
-await supabaseClient
-.from(“results”)
-.select(”*”);
-
-const users = {};
-
-picks.forEach(pick => {
-
-const username =
-  pick.username ||
-  "名無しの予想家";
-if(!users[username]){
-  users[username] = {
-    username,
-    total:0,
-    hit:0
-  };
-}
-users[username].total++;
-const hit =
-  results.find(result =>
-    result.race === pick.race &&
-    result.horse === pick.horse &&
-    Number(result.result) === 1
-  );
-if(hit){
-  users[username].hit++;
-}
-
-});
-
-const ranking =
-Object.values(users)
-.filter(user => user.total >= 5)
-.map(user => ({
-…user,
-rate:
-user.total === 0
-? 0
-: (user.hit / user.total) * 100
-}))
-.sort(
-(a,b)=>
-b.rate - a.rate ||
-b.hit - a.hit ||
-b.total - a.total
-);
-
-const myName =
-currentProfile?.username ||
-currentUser.email;
-
-const me =
-ranking.find(
-u => u.username === myName
-);
-
-const myRank =
-ranking.findIndex(
-u => u.username === myName
-);
-
-if(!me){
-
-document.getElementById("hitRate")
-  .textContent = "-";
-document.getElementById("rankNumber")
-  .textContent = "集計中";
-return;
-
-}
-
-document.getElementById(“hitRate”)
-.textContent =
-me.rate.toFixed(1) + “%”;
-
-document.getElementById(“hitCount”)
-.textContent =
-me.hit;
-
-document.getElementById(“postCount”)
-.textContent =
-me.total;
-
-let rankText =
-“#” + (myRank + 1);
-
-if(myRank === 0){
-rankText = “🥇”;
-}
-else if(myRank === 1){
-rankText = “🥈”;
-}
-else if(myRank === 2){
-rankText = “🥉”;
-}
-
-document.getElementById(“rankNumber”)
-.textContent = rankText;
-
-}
-
-async function loadMyPicks(){
-
-const box =
-document.getElementById(“myPicks”);
-
-const { data:picks } =
-await supabaseClient
-.from(“picks”)
-.select(”*”)
-.eq(“user_id”, currentUser.id)
-.order(“created_at”,{ascending:false});
-
-const { data:results } =
-await supabaseClient
-.from(“results”)
-.select(”*”);
-
-if(!picks || picks.length === 0){
-
-box.innerHTML =
-  `<div class="card">
-    まだ予想がありません。
-  </div>`;
-return;
-
-}
-
-box.innerHTML =
-picks.map(p => {
-
-  const hit =
-    results.find(r =>
-      r.race === p.race &&
-      r.horse === p.horse &&
-      Number(r.result) === 1
-    );
-  const raceResult =
-    results.find(r =>
-      r.race === p.race
-    );
-  let badge =
-    `<span class="badge wait">
-      集計待ち
-    </span>`;
-  if(raceResult){
-    badge = hit
-    ?
-    `<span class="badge hit">
-      的中
-    </span>`
-    :
-    `<span class="badge miss">
-      不的中
-    </span>`;
+    document.getElementById("displayName").textContent = currentUser.email;
+    document.getElementById("favoriteText").textContent = "好きな馬：未設定";
+    document.getElementById("usernameInput").value = "";
+    document.getElementById("favoriteInput").value = "";
+    return;
   }
-  return `
-    <div class="pick-card">
-      ${badge}
-      <div class="pick-race">
-        ${p.racecourse || ""}
-        ${p.race || ""}
-      </div>
-      <div class="pick-horse">
-        ◎ ${p.horse}
-      </div>
-      <div class="pick-reason">
-        ${p.reason || "理由なし"}
-      </div>
-    </div>
-  `;
-}).join("");
 
+  currentProfile = profile;
+
+  const username = profile?.username || currentUser.email;
+  const favoriteHorse = profile?.favorite_horse || "未設定";
+
+  document.getElementById("displayName").textContent = username;
+  document.getElementById("favoriteText").textContent = "好きな馬：" + favoriteHorse;
+  document.getElementById("usernameInput").value = profile?.username || "";
+  document.getElementById("favoriteInput").value = profile?.favorite_horse || "";
+}
+
+async function loadStatsAndPicks(){
+  const { data: allPicks, error: picksError } = await supabaseClient
+    .from("picks")
+    .select("*")
+    .order("created_at", { ascending:false });
+
+  const { data: results, error: resultsError } = await supabaseClient
+    .from("results")
+    .select("*");
+
+  if(picksError){
+    showError(picksError.message);
+    return;
+  }
+
+  if(resultsError){
+    showError(resultsError.message);
+    return;
+  }
+
+  const picks = allPicks || [];
+  const resultList = results || [];
+
+  const users = {};
+
+  picks.forEach(pick => {
+    const username = pick.username || "名無しの予想家";
+
+    if(!users[username]){
+      users[username] = {
+        username,
+        total:0,
+        hit:0
+      };
+    }
+
+    users[username].total++;
+
+    if(isHit(pick, resultList)){
+      users[username].hit++;
+    }
+  });
+
+  const ranking = Object.values(users)
+    .filter(user => user.total >= 5)
+    .map(user => ({
+      ...user,
+      rate: user.total === 0 ? 0 : (user.hit / user.total) * 100
+    }))
+    .sort((a,b) =>
+      b.rate - a.rate ||
+      b.hit - a.hit ||
+      b.total - a.total
+    );
+
+  const myName = currentProfile?.username || currentUser.email;
+  const me = ranking.find(user => user.username === myName);
+  const myRank = ranking.findIndex(user => user.username === myName);
+
+  const myPicks = picks.filter(pick => pick.user_id === currentUser.id);
+
+  document.getElementById("postCount").textContent = myPicks.length;
+
+  let myHitCount = 0;
+
+  myPicks.forEach(pick => {
+    if(isHit(pick, resultList)){
+      myHitCount++;
+    }
+  });
+
+  document.getElementById("hitCount").textContent = myHitCount;
+
+  if(myPicks.length === 0){
+    document.getElementById("hitRate").textContent = "-";
+    document.getElementById("rankNumber").textContent = "集計中";
+  }else{
+    const myRate = (myHitCount / myPicks.length) * 100;
+    document.getElementById("hitRate").textContent = myRate.toFixed(1) + "%";
+  }
+
+  if(!me){
+    document.getElementById("rankNumber").textContent = "集計中";
+  }else{
+    let rankText = "#" + (myRank + 1);
+
+    if(myRank === 0){
+      rankText = "🥇";
+    }else if(myRank === 1){
+      rankText = "🥈";
+    }else if(myRank === 2){
+      rankText = "🥉";
+    }
+
+    document.getElementById("rankNumber").textContent = rankText;
+  }
+
+  renderMyPicks(myPicks, resultList);
+}
+
+function renderMyPicks(picks, results){
+  const box = document.getElementById("myPicks");
+
+  if(!picks || picks.length === 0){
+    box.innerHTML = `
+      <div class="card">
+        まだ予想がありません。
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = picks.map(p => {
+    const hit = isHit(p, results);
+    const raceResult = hasRaceResult(p, results);
+
+    let badgeText = "集計待ち";
+    let badgeClass = "wait";
+
+    if(raceResult){
+      if(hit){
+        badgeText = "的中";
+        badgeClass = "hit";
+      }else{
+        badgeText = "不的中";
+        badgeClass = "miss";
+      }
+    }
+
+    return `
+      <div class="pick-card">
+        <span class="badge ${badgeClass}">
+          ${badgeText}
+        </span>
+
+        <div class="pick-race">
+          ${p.racecourse || ""} ${p.race || ""}
+        </div>
+
+        <div class="pick-horse">
+          ◎ ${p.horse}
+        </div>
+
+        <div class="pick-reason">
+          ${p.reason || "理由なし"}
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
 async function saveProfile(){
+  clearError();
 
-const username =
-document.getElementById(“usernameInput”)
-.value.trim();
+  const username = document.getElementById("usernameInput").value.trim();
+  const favoriteHorse = document.getElementById("favoriteInput").value.trim();
 
-const favoriteHorse =
-document.getElementById(“favoriteInput”)
-.value.trim();
+  if(!username){
+    alert("表示名をご入力ください。");
+    return;
+  }
 
-if(!username){
-alert(“表示名をご入力ください。”);
-return;
-}
+  const { error } = await supabaseClient
+    .from("users")
+    .update({
+      username: username,
+      favorite_horse: favoriteHorse
+    })
+    .eq("email", currentUser.email);
 
-await supabaseClient
-.from(“users”)
-.update({
-username,
-favorite_horse:favoriteHorse
-})
-.eq(“email”, currentUser.email);
+  if(error){
+    showError(error.message);
+    return;
+  }
 
-await supabaseClient
-.from(“picks”)
-.update({ username })
-.eq(“user_id”, currentUser.id);
+  await supabaseClient
+    .from("picks")
+    .update({ username: username })
+    .eq("user_id", currentUser.id);
 
-alert(“保存しました。”);
+  alert("保存しました。");
 
-await loadProfile();
-await loadStats();
-await loadMyPicks();
-
+  await loadProfile();
+  await loadStatsAndPicks();
 }
 
 async function logout(){
-
-await supabaseClient.auth.signOut();
-
-location.href =
-“index.html”;
-
+  await supabaseClient.auth.signOut();
+  location.href = "index.html";
 }
 
 init();
-
 </script>
+
 </body>
 </html>
