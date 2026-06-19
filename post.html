@@ -234,9 +234,9 @@ async function loadRaces(){
   const select = document.getElementById("raceSelect");
 
   const { data, error } = await supabaseClient
-    .from("races")
-    .select("*")
-    .order("id", { ascending:true });
+   .from("races")
+.select("*")
+.order("deadline", { ascending:true });
 
   if(error){
     select.innerHTML = '<option value="">レースの取得に失敗しました</option>';
