@@ -297,555 +297,219 @@ body{
   </div>
 </div>
 
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DARKHORSCORE</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div class="container">
 
-<style>
-:root{
-  --gold:#d4af37;
-  --green:#1e7f4f;
-  --red:#b84432;
-}
-
-body{
-  margin:0;
-  background:#f5f5f5;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  color:#111;
-}
-
-.header{
-  background:#111;
-  padding:18px 16px 14px;
-  border-bottom:1px solid rgba(212,175,55,.25);
-}
-
-.logo{
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:1px;
-  color:white;
-}
-
-.sub{
-  color:var(--gold);
-  font-size:12px;
-  margin-top:4px;
-  font-weight:700;
-}
-
-.hero{
-  margin-top:14px;
-  background:white;
-  border:1px solid #e8e8e8;
-  border-radius:18px;
-  padding:14px;
-}
-
-.hero-title{
-  font-size:20px;
-  font-weight:900;
-  line-height:1.35;
-  color:#111;
-}
-
-.gold{
-  color:var(--gold);
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:14px;
-}
-
-.stat{
-  background:white;
-  border:1px solid #e5e5e5;
-  border-radius:12px;
-  padding:8px;
-  text-align:center;
-}
-
-.stat-label{
-  font-size:11px;
-  color:#777;
-}
-
-.stat-num{
-  font-size:16px;
-  font-weight:900;
-  margin-top:4px;
-  color:#111;
-}
-
-.container{
-  padding:14px;
-}
-
-.section-title{
-  font-size:18px;
-  font-weight:900;
-  margin:18px 0 10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#111;
-}
-
-.more{
-  font-size:11px;
-  color:var(--gold);
-}
-
-.post,
-.rank-card,
-.race-card{
-  background:white;
-  border:1px solid #e8e8e8;
-  border-left:4px solid var(--gold);
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-
-.user{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.name{
-  font-size:15px;
-  font-weight:900;
-  color:#111;
-}
-
-.badge{
-  font-size:11px;
-  font-weight:900;
-  padding:5px 9px;
-  border-radius:999px;
-}
-
-.hit{
-  background:var(--green);
-  color:white;
-}
-
-.miss{
-  background:var(--red);
-  color:white;
-}
-
-.wait{
-  background:#8a6818;
-  color:white;
-}
-
-.race{
-  margin-top:6px;
-  color:#777;
-  font-size:12px;
-}
-
-.pick{
-  font-size:19px;
-  font-weight:900;
-  margin-top:6px;
-  color:#111;
-}
-
-.comment{
-  color:#555;
-  margin-top:6px;
-  line-height:1.5;
-  font-size:13px;
-}
-
-.date{
-  color:#999;
-  font-size:11px;
-  margin-top:8px;
-}
-
-.rank-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.rank-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.medal{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#f4d36b,#9c7419);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  color:#111;
-}
-
-.rank-name{
-  font-size:15px;
-  font-weight:900;
-  color:#111;
-}
-
-.rank-sub{
-  color:#777;
-  font-size:11px;
-  margin-top:2px;
-}
-
-.rate{
-  color:var(--gold);
-  font-size:20px;
-  font-weight:900;
-}
-
-.race-title{
-  font-size:15px;
-  font-weight:900;
-  color:#111;
-}
-
-.deadline{
-  color:#777;
-  font-size:12px;
-  margin-top:4px;
-}
-
-.legal{
-  text-align:center;
-  padding:20px 0 90px;
-  font-size:12px;
-}
-
-.legal a{
-  color:#777;
-  text-decoration:none;
-}
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  border-top:1px solid #ddd;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:10px 0;
-}
-
-.bottom-nav a{
-  text-align:center;
-  text-decoration:none;
-  color:#666;
-  font-size:12px;
-  font-weight:900;
-}
-
-.bottom-nav a:first-child{
-  color:var(--gold);
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">
-  <div class="logo">DARKHORSCORE</div>
-  <div class="sub">当たる人が評価される競馬SNS</div>
-
-  <div class="hero">
-    <div class="hero-title">
-      予想で競馬をもっと楽しく、<br>
-      実力で<span class="gold">ランキング上位へ。</span>
-    </div>
-
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-label">ユーザー</div>
-        <div class="stat-num" id="userCount">-</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">投稿予想</div>
-        <div class="stat-num" id="pickCount">-</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">結果登録</div>
-        <div class="stat-num" id="resultCount">-</div>
-      </div>
-    </div>
+  <div class="section-title">
+    <span>🔥 新着予想</span>
   </div>
+  <div id="feed"></div>
+
+  <div class="section-title">
+    <span>🏆 的中率ランキング</span>
+    <span class="more">TOP3</span>
+  </div>
+  <div id="rankingBox"></div>
+
+  <div class="section-title">
+    <span>🏇 対象レース</span>
+    <span class="more">受付中</span>
+  </div>
+  <div id="raceBox"></div>
+
+  <div class="legal">
+    <a href="legal.html">利用規約・プライバシーポリシー</a>
+  </div>
+
 </div>
 
-function renderFeed(){
+<div class="bottom-nav">
+  <a href="index.html">ホーム</a>
+  <a href="post.html">予想</a>
+  <a href="ranking.html">ランキング</a>
+  <a id="mypageLink" href="login.html">ログイン</a>
+</div>
 
-  const feed =
-    document.getElementById("feed");
+<script>
+const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
+const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let picks = [];
+let results = [];
+let races = [];
+let users = [];
+
+function getStatus(p){
+  const sameRaceResults = results.filter(r => {
+    if(p.race_id && r.race_id){
+      return Number(r.race_id) === Number(p.race_id);
+    }
+    return r.racecourse === p.racecourse && r.race === p.race;
+  });
+
+  if(sameRaceResults.length === 0){
+    return { text:"集計待ち", cls:"wait" };
+  }
+
+  const hit = sameRaceResults.find(r =>
+    r.horse === p.horse && Number(r.result) === 1
+  );
+
+  if(hit){
+    return { text:"的中", cls:"hit" };
+  }
+
+  return { text:"不的中", cls:"miss" };
+}
+
+async function loadData(){
+  const pickRes = await supabaseClient
+    .from("picks")
+    .select("*")
+    .order("created_at", { ascending:false });
+
+  const resultRes = await supabaseClient
+    .from("results")
+    .select("*");
+
+  const raceRes = await supabaseClient
+    .from("races")
+    .select("*")
+    .order("deadline", { ascending:true });
+
+  const userRes = await supabaseClient
+    .from("users")
+    .select("*");
+
+  picks = pickRes.data || [];
+  results = resultRes.data || [];
+  races = raceRes.data || [];
+  users = userRes.data || [];
+
+  document.getElementById("userCount").textContent = users.length + "人";
+  document.getElementById("pickCount").textContent = picks.length + "件";
+  document.getElementById("resultCount").textContent = results.length + "件";
+
+  renderFeed();
+  renderRanking();
+  renderRaces();
+}
+
+function renderFeed(){
+  const feed = document.getElementById("feed");
 
   if(picks.length === 0){
-
-    feed.innerHTML =
-      `<div class="post">
-        まだ予想がありません。
-      </div>`;
-
+    feed.innerHTML = `<div class="post">まだ予想がありません。</div>`;
     return;
   }
 
-  feed.innerHTML =
-    picks.slice(0,3).map(p => {
+  feed.innerHTML = picks.slice(0,3).map(p => {
+    const status = getStatus(p);
 
-      const status =
-        getStatus(p);
-
-      return `
-
+    return `
       <div class="post">
-
         <div class="user">
-
-          <div class="name">
-            ${p.username || "名無しの予想家"}
-          </div>
-
-          <div class="badge ${status.cls}">
-            ${status.text}
-          </div>
-
+          <div class="name">${p.username || "名無しの予想家"}</div>
+          <div class="badge ${status.cls}">${status.text}</div>
         </div>
 
-        <div class="race">
-          ${p.racecourse || ""}
-          ${p.race || ""}
-        </div>
-
-        <div class="pick">
-          ◎ ${p.horse}
-        </div>
-
-        <div class="comment">
-          ${p.reason || "理由なし"}
-        </div>
-
-        <div class="date">
-          ${new Date(
-            p.created_at
-          ).toLocaleString("ja-JP")}
-        </div>
-
+        <div class="race">${p.racecourse || ""} ${p.race || ""}</div>
+        <div class="pick">◎ ${p.horse}</div>
+        <div class="comment">${p.reason || "理由なし"}</div>
+        <div class="date">${new Date(p.created_at).toLocaleString("ja-JP")}</div>
       </div>
-
-      `;
-
-    }).join("");
-
+    `;
+  }).join("");
 }
 
 function renderRanking(){
-
-  const box =
-    document.getElementById("rankingBox");
-
+  const box = document.getElementById("rankingBox");
   const map = {};
 
   picks.forEach(p => {
-
-    const name =
-      p.username ||
-      "名無しの予想家";
+    const name = p.username || "名無しの予想家";
 
     if(!map[name]){
-      map[name] = {
-        name,
-        total:0,
-        hit:0
-      };
+      map[name] = { name, total:0, hit:0 };
     }
 
     map[name].total++;
 
-    const status =
-      getStatus(p);
-
+    const status = getStatus(p);
     if(status.text === "的中"){
       map[name].hit++;
     }
-
   });
 
-  const ranking =
-    Object.values(map)
-      .map(u => ({
-        ...u,
-        rate:
-          u.total
-          ? (u.hit / u.total) * 100
-          : 0
-      }))
-      .sort(
-        (a,b)=>
-          b.rate - a.rate
-      )
-      .slice(0,3);
+  const ranking = Object.values(map)
+    .map(u => ({
+      ...u,
+      rate: u.total ? (u.hit / u.total) * 100 : 0
+    }))
+    .sort((a,b) => b.rate - a.rate)
+    .slice(0,3);
 
   if(ranking.length === 0){
-
-    box.innerHTML =
-      `<div class="rank-card">
-        ランキングは集計中です
-      </div>`;
-
+    box.innerHTML = `<div class="rank-card">ランキングは集計中です</div>`;
     return;
   }
 
-  box.innerHTML =
-    ranking.map((u,i)=>`
-
-      <div class="rank-card">
-
-        <div class="rank-left">
-
-          <div class="medal">
-            ${i+1}
-          </div>
-
-          <div>
-
-            <div class="rank-name">
-              ${u.name}
-            </div>
-
-            <div class="rank-sub">
-              的中 ${u.hit}
-              /
-              投稿 ${u.total}
-            </div>
-
-          </div>
-
+  box.innerHTML = ranking.map((u,i) => `
+    <div class="rank-card">
+      <div class="rank-left">
+        <div class="medal">${i+1}</div>
+        <div>
+          <div class="rank-name">${u.name}</div>
+          <div class="rank-sub">的中 ${u.hit} / 投稿 ${u.total}</div>
         </div>
-
-        <div class="rate">
-          ${u.rate.toFixed(1)}%
-        </div>
-
       </div>
-
-    `).join("");
-
+      <div class="rate">${u.rate.toFixed(1)}%</div>
+    </div>
+  `).join("");
 }
 
 function renderRaces(){
+  const box = document.getElementById("raceBox");
+  const now = new Date();
 
-  const box =
-    document.getElementById("raceBox");
-
-  const now =
-    new Date();
-
-  const upcoming =
-    races
-      .filter(r =>
-        !r.deadline ||
-        new Date(r.deadline) > now
-      )
-      .slice(0,3);
+  const upcoming = races
+    .filter(r => !r.deadline || new Date(r.deadline) > now)
+    .slice(0,3);
 
   if(upcoming.length === 0){
-
-    box.innerHTML =
-      `<div class="race-card">
-        受付中の対象レースがありません。
-      </div>`;
-
+    box.innerHTML = `<div class="race-card">受付中の対象レースがありません。</div>`;
     return;
   }
 
-  box.innerHTML =
-    upcoming.map(r => {
+  box.innerHTML = upcoming.map(r => {
+    const deadline = r.deadline
+      ? new Date(r.deadline).toLocaleString("ja-JP")
+      : "未設定";
 
-      const deadline =
-        r.deadline
-        ? new Date(
-            r.deadline
-          ).toLocaleString("ja-JP")
-        : "未設定";
-
-      return `
-
+    return `
       <div class="race-card">
-
-        <div class="race-title">
-          ${r.racecourse}
-          ｜${r.race}
-        </div>
-
-        <div class="deadline">
-          締切：${deadline}
-        </div>
-
+        <div class="race-title">${r.racecourse}｜${r.race}</div>
+        <div class="deadline">締切：${deadline}</div>
       </div>
-
-      `;
-
-    }).join("");
-
+    `;
+  }).join("");
 }
 
 async function updateNav(){
-
-  const { data } =
-    await supabaseClient
-      .auth
-      .getUser();
-
-  const link =
-    document.getElementById(
-      "mypageLink"
-    );
+  const { data } = await supabaseClient.auth.getUser();
+  const link = document.getElementById("mypageLink");
 
   if(data.user){
-
-    link.textContent =
-      "マイページ";
-
-    link.href =
-      "mypage.html";
-
+    link.textContent = "マイページ";
+    link.href = "mypage.html";
   }else{
-
-    link.textContent =
-      "ログイン";
-
-    link.href =
-      "login.html";
-
+    link.textContent = "ログイン";
+    link.href = "login.html";
   }
-
 }
 
 loadData();
 updateNav();
-
 </script>
 
 </body>
