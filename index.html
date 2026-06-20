@@ -604,13 +604,12 @@ function renderRanking(){
   `).join("");
 }
 
-  function renderRaces(){
+function renderRaces(){
   const box = document.getElementById("raceBox");
   const now = new Date();
 
   const upcoming = races
-    .filter(r => !r.deadline || new Date(r.deadline) > now)
-    .slice(0,3);
+    .filter(r => !r.deadline || new Date(r.deadline) > now);
 
   if(upcoming.length === 0){
     box.innerHTML = `<div class="race-card">受付中の対象レースがありません。</div>`;
@@ -622,15 +621,12 @@ function renderRanking(){
       ? new Date(r.deadline).toLocaleString("ja-JP")
       : "未設定";
 
-rediv>
-
-  return `
-      <div class="race-card">
+    return `
+      <a class="race-card" href="race.html?racecourse=${encodeURIComponent(r.racecourse)}&race=${encodeURIComponent(r.race)}">
         <div class="race-title">${r.racecourse}｜${r.race}</div>
         <div class="deadline">締切：${deadline}</div>
-      </
-    
-    
+      </a>
+    `;
   }).join("");
 }
 
