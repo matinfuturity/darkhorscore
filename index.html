@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -30,30 +30,20 @@ a{color:inherit;text-decoration:none}
 .hero-buttons a{flex:1;text-align:center;padding:13px 8px;border-radius:15px;font-size:14px;font-weight:950}
 .primary{background:white;color:#111}
 .secondary{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:white}
-
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 18px}
 .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 8px;text-align:center}
 .stat-label{font-size:11px;color:#aaa;font-weight:800}
 .stat-num{font-size:20px;font-weight:950;color:var(--gold);margin-top:5px}
-
 .container{padding:0 16px}
 .section-title{margin:22px 0 12px;display:flex;justify-content:space-between;align-items:end}
 .section-title span:first-child{font-size:19px;font-weight:950}
 .more{font-size:11px;color:var(--gold);font-weight:900}
-
 .post,.rank-card,.race-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:11px;box-shadow:0 8px 22px rgba(0,0,0,.22)}
 .post{border-left:4px solid var(--gold)}
-.user{display:flex;justify-content:space-between;align-items:center}
-.name{font-size:15px;font-weight:950}
 .badge{font-size:11px;font-weight:950;padding:5px 9px;border-radius:999px}
 .hit{background:var(--green)}
 .miss{background:var(--red)}
 .wait{background:#8a6818}
-.race{margin-top:8px;color:#aaa;font-size:12px;font-weight:700}
-.pick{font-size:21px;font-weight:950;margin-top:7px}
-.comment{color:#cfcfcf;margin-top:7px;line-height:1.55;font-size:13px}
-.date{color:#777;font-size:11px;margin-top:9px}
-
 .rank-card{display:flex;justify-content:space-between;align-items:center}
 .rank-card:first-child{background:linear-gradient(135deg,rgba(245,197,66,.28),#171717 55%);border-color:rgba(245,197,66,.5)}
 .rank-left{display:flex;align-items:center;gap:11px}
@@ -61,21 +51,18 @@ a{color:inherit;text-decoration:none}
 .rank-name{font-size:15px;font-weight:950}
 .rank-sub{color:#aaa;font-size:11px;margin-top:3px}
 .rate{color:var(--gold);font-size:22px;font-weight:950}
-
 .race-card{border-left:4px solid var(--gold)}
 .race-slider{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
 .race-slider a{min-width:82%;flex-shrink:0}
 .race-title{font-size:15px;font-weight:950}
 .deadline{color:#aaa;font-size:12px;margin-top:5px}
 .race-count{color:var(--gold);font-size:12px;font-weight:900;margin-top:7px}
-
 .tool-card{margin:22px 0 10px;background:linear-gradient(135deg,var(--gold),#c99416);color:#111;border-radius:24px;padding:20px}
 .tool-card h3{margin:0;font-size:21px;font-weight:950}
 .tool-card p{margin:9px 0 15px;font-size:13px;font-weight:700}
 .tool-card a{display:inline-block;background:#111;color:white;padding:12px 16px;border-radius:14px;font-size:13px;font-weight:950}
 .legal{text-align:center;padding:24px 0 90px;font-size:12px}
 .legal a{color:#777}
-
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-top:1px solid #222;display:grid;grid-template-columns:repeat(4,1fr);padding:11px 0}
 .bottom-nav a{text-align:center;color:#888;font-size:12px;font-weight:950}
 .bottom-nav a:first-child{color:var(--gold)}
@@ -109,7 +96,6 @@ a{color:inherit;text-decoration:none}
   <div class="container">
     <div class="section-title"><span>🏆 単勝的中率ランキング</span><span class="more">TOP3</span></div>
     <div id="rankingBox"></div>
-
 
     <div class="section-title"><span>🏇 対象レース</span><span class="more">横にスワイプ</span></div>
     <div id="raceBox"></div>
@@ -181,31 +167,6 @@ async function loadData(){
   renderRaces();
 }
 
-function renderFeed(){
-  const feed = document.getElementById("feed");
-
-  if(picks.length === 0){
-    feed.innerHTML = `<div class="post">まだ予想がありません。</div>`;
-    return;
-  }
-
-  feed.innerHTML = picks.slice(0,3).map(p => {
-    const status = getStatus(p);
-    return `
-      <div class="post">
-        <div class="user">
-          <div class="name">${p.username || "名無しの予想家"}</div>
-          <div class="badge ${status.cls}">${status.text}</div>
-        </div>
-        <div class="race">${p.racecourse || ""} ${p.race || ""}</div>
-        <div class="pick">◎ ${p.horse || ""}</div>
-        <div class="comment">${p.reason || "理由なし"}</div>
-        <div class="date">${new Date(p.created_at).toLocaleString("ja-JP")}</div>
-      </div>
-    `;
-  }).join("");
-}
-
 function renderRanking(){
   const box = document.getElementById("rankingBox");
   const map = {};
@@ -219,7 +180,6 @@ function renderRanking(){
 
     const status = getStatus(p);
 
-    // 集計待ちは的中率に入れない
     if(status.text !== "集計待ち"){
       map[name].total++;
 
@@ -259,14 +219,10 @@ function renderRanking(){
 
 function renderRaces(){
   const box = document.getElementById("raceBox");
-  const now = new Date();
-
-  const upcoming = races.filter(r =>
-    !r.deadline || new Date(r.deadline) > now
-  );
+  const upcoming = races;
 
   if(upcoming.length === 0){
-    box.innerHTML = `<div class="race-card">受付中の対象レースがありません。</div>`;
+    box.innerHTML = `<div class="race-card">対象レースがありません。</div>`;
     return;
   }
 
