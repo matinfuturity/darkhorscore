@@ -219,7 +219,11 @@ function renderRanking(){
 
 function renderRaces(){
   const box = document.getElementById("raceBox");
-  const upcoming = races;
+  const now = new Date();
+
+const upcoming = races.filter(r => {
+  return !r.deadline || new Date(r.deadline) > now;
+});
 
   if(upcoming.length === 0){
     box.innerHTML = `<div class="race-card">対象レースがありません。</div>`;
