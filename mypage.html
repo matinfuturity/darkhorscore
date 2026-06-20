@@ -369,7 +369,7 @@ async function loadProfile(){
 
   currentProfile = profile;
 
-  const username = profile?.username || currentUser.email;
+  conconst username = profile?.username || "名無しの予想家";
   const favoriteHorse = profile?.favorite_horse || "未設定";
 
   document.getElementById("displayName").textContent = username;
