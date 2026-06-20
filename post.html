@@ -1,3 +1,6 @@
+これを post.html 全部差し替え でOK。
+レース選択したら一覧が縮んで、選んだレースだけ残る版。
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -125,6 +128,17 @@ button{
   font-size:17px;
   font-weight:900;
   box-shadow:0 8px 18px rgba(212,175,55,.25);
+}
+.reset-button{
+  margin-top:12px;
+  background:#333;
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:14px;
+  width:100%;
+  font-weight:900;
+  box-shadow:none;
 }
 .notice{
   margin-top:16px;
@@ -256,6 +270,8 @@ function getDateKey(deadline){
   return `${month}/${date}（${day}）`;
 }
 function renderRacesByDate(){
+  selectedRaceId = "";
+  document.getElementById("selectedRaceText").textContent = "未選択";
   const box = document.getElementById("raceList");
   const grouped = {};
   races.forEach(r => {
@@ -276,7 +292,7 @@ function renderRacesByDate(){
             })
           : "未設定";
         return `
-          <div class="race-card" onclick="selectRace('${r.id}', event)">
+          <div class="race-card" onclick="selectRace('${r.id}')">
             <div class="race-title">${r.racecourse}｜${r.race}</div>
             <div class="race-deadline">締切 ${deadlineText}</div>
           </div>
@@ -285,17 +301,33 @@ function renderRacesByDate(){
     </div>
   `).join("");
 }
-function selectRace(id, event){
+function selectRace(id){
   selectedRaceId = String(id);
-  document.querySelectorAll(".race-card").forEach(card => {
-    card.classList.remove("selected");
-  });
-  event.currentTarget.classList.add("selected");
-  const selectedRace = races.find(r => String(r.id) === String(selectedRaceId));
-  if(selectedRace){
-    document.getElementById("selectedRaceText").textContent =
-      "選択中：" + selectedRace.racecourse + "｜" + selectedRace.race;
+  const selectedRace = races.find(r =>
+    String(r.id) === selectedRaceId
+  );
+  if(!selectedRace){
+    return;
   }
+  const deadlineText = selectedRace.deadline
+    ? new Date(selectedRace.deadline).toLocaleTimeString("ja-JP", {
+        hour:"2-digit",
+        minute:"2-digit"
+      })
+    : "未設定";
+  document.getElementById("selectedRaceText").textContent =
+    "選択中：" + selectedRace.racecourse + "｜" + selectedRace.race;
+  document.getElementById("raceList").innerHTML = `
+    <div class="race-list">
+      <div class="race-card selected">
+        <div class="race-title">${selectedRace.racecourse}｜${selectedRace.race}</div>
+        <div class="race-deadline">締切 ${deadlineText}</div>
+      </div>
+      <button type="button" class="reset-button" onclick="renderRacesByDate()">
+        レースを選び直す
+      </button>
+    </div>
+  `;
 }
 async function submitPick(){
   if(!currentUser){
@@ -314,7 +346,9 @@ async function submitPick(){
     alert("本命馬をご入力ください。");
     return;
   }
-  const selectedRace = races.find(r => String(r.id) === String(raceId));
+  const selectedRace = races.find(r =>
+    String(r.id) === String(raceId)
+  );
   if(!selectedRace){
     alert("対象レースの取得に失敗しました。");
     return;
