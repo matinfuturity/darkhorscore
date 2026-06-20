@@ -609,7 +609,8 @@ function renderRaces(){
   const now = new Date();
 
   const upcoming = races
-    .filter(r => !r.deadline || new Date(r.deadline) > now);
+  .filter(r => !r.deadline || new Date(r.deadline) > now)
+  .slice(0,3);
 
   if(upcoming.length === 0){
     box.innerHTML = `<div class="race-card">受付中の対象レースがありません。</div>`;
