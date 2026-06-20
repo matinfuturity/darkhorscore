@@ -212,22 +212,30 @@ function renderRanking(){
 
   picks.forEach(p => {
     const name = p.username || "名無しの予想家";
+
     if(!map[name]){
       map[name] = { name, total:0, hit:0 };
     }
-    map[name].total++;
 
-    if(getStatus(p).text === "的中"){
-      map[name].hit++;
+    const status = getStatus(p);
+
+    // 集計待ちは的中率に入れない
+    if(status.text !== "集計待ち"){
+      map[name].total++;
+
+      if(status.text === "的中"){
+        map[name].hit++;
+      }
     }
   });
 
   const ranking = Object.values(map)
+    .filter(u => u.total > 0)
     .map(u => ({
       ...u,
       rate: u.total ? (u.hit / u.total) * 100 : 0
     }))
-    .sort((a,b) => b.rate - a.rate)
+    .sort((a,b) => b.rate - a.rate || b.hit - a.hit)
     .slice(0,3);
 
   if(ranking.length === 0){
@@ -241,7 +249,7 @@ function renderRanking(){
         <div class="medal">${i+1}</div>
         <div>
           <div class="rank-name">${u.name}</div>
-          <div class="rank-sub">的中 ${u.hit} / 投稿 ${u.total}</div>
+          <div class="rank-sub">的中 ${u.hit} / 集計済み ${u.total}</div>
         </div>
       </div>
       <div class="rate">${u.rate.toFixed(1)}%</div>
