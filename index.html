@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -14,387 +14,75 @@
   --card:#171717;
   --line:#2a2a2a;
 }
+*{box-sizing:border-box}
+body{margin:0;background:#050505;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:white;padding-bottom:78px}
+a{color:inherit;text-decoration:none}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:radial-gradient(circle at top right,rgba(245,197,66,.18),transparent 34%),linear-gradient(180deg,#111 0%,#050505 38%,#101010 100%)}
+.header{padding:18px 16px 8px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:950;letter-spacing:1px}
+.login-pill{background:white;color:#111;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:900}
+.hero{margin:10px 16px 18px;padding:28px 20px;border-radius:28px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(245,197,66,.95),rgba(255,255,255,.08) 42%,rgba(0,0,0,.92));box-shadow:0 20px 45px rgba(0,0,0,.5)}
+.hero::after{content:"🏇";position:absolute;right:10px;bottom:4px;font-size:92px;opacity:.15;transform:rotate(-8deg)}
+.hero-badge{display:inline-block;background:rgba(0,0,0,.72);color:var(--gold);padding:6px 12px;border-radius:999px;font-size:11px;font-weight:900;margin-bottom:14px}
+.hero-title{margin:0;font-size:34px;line-height:1.16;letter-spacing:-1px;font-weight:950}
+.hero-text{margin:14px 0 0;color:#eee;font-size:14px;line-height:1.7;font-weight:700}
+.hero-buttons{display:flex;gap:10px;margin-top:22px;position:relative;z-index:1}
+.hero-buttons a{flex:1;text-align:center;padding:13px 8px;border-radius:15px;font-size:14px;font-weight:950}
+.primary{background:white;color:#111}
+.secondary{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:white}
 
-*{box-sizing:border-box;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 18px}
+.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 8px;text-align:center}
+.stat-label{font-size:11px;color:#aaa;font-weight:800}
+.stat-num{font-size:20px;font-weight:950;color:var(--gold);margin-top:5px}
 
-body{
-  margin:0;
-  background:#050505;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  color:white;
-  padding-bottom:78px;
-}
+.container{padding:0 16px}
+.section-title{margin:22px 0 12px;display:flex;justify-content:space-between;align-items:end}
+.section-title span:first-child{font-size:19px;font-weight:950}
+.more{font-size:11px;color:var(--gold);font-weight:900}
 
-a{
-  color:inherit;
-  text-decoration:none;
-}
+.post,.rank-card,.race-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:11px;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.post{border-left:4px solid var(--gold)}
+.user{display:flex;justify-content:space-between;align-items:center}
+.name{font-size:15px;font-weight:950}
+.badge{font-size:11px;font-weight:950;padding:5px 9px;border-radius:999px}
+.hit{background:var(--green)}
+.miss{background:var(--red)}
+.wait{background:#8a6818}
+.race{margin-top:8px;color:#aaa;font-size:12px;font-weight:700}
+.pick{font-size:21px;font-weight:950;margin-top:7px}
+.comment{color:#cfcfcf;margin-top:7px;line-height:1.55;font-size:13px}
+.date{color:#777;font-size:11px;margin-top:9px}
 
-.app{
-  max-width:480px;
-  margin:0 auto;
-  min-height:100vh;
-  background:
-    radial-gradient(circle at top right, rgba(245,197,66,.18), transparent 34%),
-    linear-gradient(180deg,#111 0%,#050505 38%,#101010 100%);
-}
+.rank-card{display:flex;justify-content:space-between;align-items:center}
+.rank-card:first-child{background:linear-gradient(135deg,rgba(245,197,66,.28),#171717 55%);border-color:rgba(245,197,66,.5)}
+.rank-left{display:flex;align-items:center;gap:11px}
+.medal{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ffe88a,#b88917);display:flex;align-items:center;justify-content:center;font-weight:950;color:#111}
+.rank-name{font-size:15px;font-weight:950}
+.rank-sub{color:#aaa;font-size:11px;margin-top:3px}
+.rate{color:var(--gold);font-size:22px;font-weight:950}
 
-.header{
-  padding:18px 16px 8px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+.race-card{border-left:4px solid var(--gold)}
+.race-slider{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
+.race-slider a{min-width:82%;flex-shrink:0}
+.race-title{font-size:15px;font-weight:950}
+.deadline{color:#aaa;font-size:12px;margin-top:5px}
+.race-count{color:var(--gold);font-size:12px;font-weight:900;margin-top:7px}
 
-.logo{
-  font-size:22px;
-  font-weight:950;
-  letter-spacing:1px;
-}
+.tool-card{margin:22px 0 10px;background:linear-gradient(135deg,var(--gold),#c99416);color:#111;border-radius:24px;padding:20px}
+.tool-card h3{margin:0;font-size:21px;font-weight:950}
+.tool-card p{margin:9px 0 15px;font-size:13px;font-weight:700}
+.tool-card a{display:inline-block;background:#111;color:white;padding:12px 16px;border-radius:14px;font-size:13px;font-weight:950}
+.legal{text-align:center;padding:24px 0 90px;font-size:12px}
+.legal a{color:#777}
 
-.login-pill{
-  background:white;
-  color:#111;
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:900;
-}
-
-.hero{
-  margin:10px 16px 18px;
-  padding:28px 20px;
-  border-radius:28px;
-  position:relative;
-  overflow:hidden;
-  background:
-    linear-gradient(135deg, rgba(245,197,66,.95), rgba(255,255,255,.08) 42%, rgba(0,0,0,.92)),
-    radial-gradient(circle at top right, rgba(255,255,255,.35), transparent 36%);
-  box-shadow:0 20px 45px rgba(0,0,0,.5);
-}
-
-.hero::after{
-  content:"🏇";
-  position:absolute;
-  right:10px;
-  bottom:4px;
-  font-size:92px;
-  opacity:.15;
-  transform:rotate(-8deg);
-}
-
-.hero-badge{
-  display:inline-block;
-  background:rgba(0,0,0,.72);
-  color:var(--gold);
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:900;
-  margin-bottom:14px;
-}
-
-.hero-title{
-  margin:0;
-  font-size:34px;
-  line-height:1.16;
-  letter-spacing:-1px;
-  font-weight:950;
-}
-
-.hero-text{
-  margin:14px 0 0;
-  color:#eee;
-  font-size:14px;
-  line-height:1.7;
-  font-weight:700;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:10px;
-  margin-top:22px;
-  position:relative;
-  z-index:1;
-}
-
-.hero-buttons a{
-  flex:1;
-  text-align:center;
-  padding:13px 8px;
-  border-radius:15px;
-  font-size:14px;
-  font-weight:950;
-}
-
-.hero-buttons .primary{
-  background:white;
-  color:#111;
-}
-
-.hero-buttons .secondary{
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.25);
-  color:white;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  padding:0 16px 18px;
-}
-
-.stat{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;
-  padding:14px 8px;
-  text-align:center;
-}
-
-.stat-label{
-  font-size:11px;
-  color:#aaa;
-  font-weight:800;
-}
-
-.stat-num{
-  font-size:20px;
-  font-weight:950;
-  color:var(--gold);
-  margin-top:5px;
-}
-
-.container{
-  padding:0 16px;
-}
-
-.section-title{
-  margin:22px 0 12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-}
-
-.section-title span:first-child{
-  font-size:19px;
-  font-weight:950;
-}
-
-.more{
-  font-size:11px;
-  color:var(--gold);
-  font-weight:900;
-}
-
-.post,
-.rank-card,
-.race-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:15px;
-  margin-bottom:11px;
-  box-shadow:0 8px 22px rgba(0,0,0,.22);
-}
-
-.post{
-  border-left:4px solid var(--gold);
-}
-
-.user{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.name{
-  font-size:15px;
-  font-weight:950;
-}
-
-.badge{
-  font-size:11px;
-  font-weight:950;
-  padding:5px 9px;
-  border-radius:999px;
-}
-
-.hit{background:var(--green);color:white;}
-.miss{background:var(--red);color:white;}
-.wait{background:#8a6818;color:white;}
-
-.race{
-  margin-top:8px;
-  color:#aaa;
-  font-size:12px;
-  font-weight:700;
-}
-
-.pick{
-  font-size:21px;
-  font-weight:950;
-  margin-top:7px;
-  color:white;
-}
-
-.comment{
-  color:#cfcfcf;
-  margin-top:7px;
-  line-height:1.55;
-  font-size:13px;
-}
-
-.date{
-  color:#777;
-  font-size:11px;
-  margin-top:9px;
-}
-
-.rank-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.rank-card:first-child{
-  background:linear-gradient(135deg, rgba(245,197,66,.28), #171717 55%);
-  border-color:rgba(245,197,66,.5);
-}
-
-.rank-left{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.medal{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#ffe88a,#b88917);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:950;
-  color:#111;
-}
-
-.rank-name{
-  font-size:15px;
-  font-weight:950;
-}
-
-.rank-sub{
-  color:#aaa;
-  font-size:11px;
-  margin-top:3px;
-}
-
-.rate{
-  color:var(--gold);
-  font-size:22px;
-  font-weight:950;
-}
-
-.race-card{
-  border-left:4px solid var(--gold);
-}
-
- .race-slider{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  padding-bottom:8px;
-}
-
-.race-slider a{
-  min-width:82%;
-  flex-shrink:0;
-} 
-
-.race-title{
-  font-size:15px;
-  font-weight:950;
-}
-
-.deadline{
-  color:#aaa;
-  font-size:12px;
-  margin-top:5px;
-}
-
-.tool-card{
-  margin:22px 0 10px;
-  background:linear-gradient(135deg,var(--gold),#c99416);
-  color:#111;
-  border-radius:24px;
-  padding:20px;
-}
-
-.tool-card h3{
-  margin:0;
-  font-size:21px;
-  font-weight:950;
-}
-
-.tool-card p{
-  margin:9px 0 15px;
-  font-size:13px;
-  font-weight:700;
-}
-
-.tool-card a{
-  display:inline-block;
-  background:#111;
-  color:white;
-  padding:12px 16px;
-  border-radius:14px;
-  font-size:13px;
-  font-weight:950;
-}
-
-.legal{
-  text-align:center;
-  padding:24px 0 90px;
-  font-size:12px;
-}
-
-.legal a{
-  color:#777;
-}
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:480px;
-  background:rgba(10,10,10,.96);
-  backdrop-filter:blur(12px);
-  border-top:1px solid #222;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:11px 0;
-}
-
-.bottom-nav a{
-  text-align:center;
-  color:#888;
-  font-size:12px;
-  font-weight:950;
-}
-
-.bottom-nav a:first-child{
-  color:var(--gold);
-}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-top:1px solid #222;display:grid;grid-template-columns:repeat(4,1fr);padding:11px 0}
+.bottom-nav a{text-align:center;color:#888;font-size:12px;font-weight:950}
+.bottom-nav a:first-child{color:var(--gold)}
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
   <div class="header">
@@ -404,17 +92,8 @@ a{
 
   <section class="hero">
     <div class="hero-badge">単勝的中率ランキング</div>
-
-    <h1 class="hero-title">
-      単勝的中率で<br>
-      予想家を探す。
-    </h1>
-
-    <p class="hero-text">
-      フォロワー数より、的中率。<br>
-      本当に当たる人を見つけるための競馬SNS。
-    </p>
-
+    <h1 class="hero-title">単勝的中率で<br>予想家を探す。</h1>
+    <p class="hero-text">フォロワー数より、的中率。<br>本当に当たる人を見つけるための競馬SNS。</p>
     <div class="hero-buttons">
       <a class="primary" href="#rankingBox">ランキングを見る</a>
       <a class="secondary" href="post.html">予想を投稿</a>
@@ -422,38 +101,19 @@ a{
   </section>
 
   <div class="stats">
-    <div class="stat">
-      <div class="stat-label">ユーザー</div>
-      <div class="stat-num" id="userCount">...</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">投稿予想</div>
-      <div class="stat-num" id="pickCount">...</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">結果登録</div>
-      <div class="stat-num" id="resultCount">...</div>
-    </div>
+    <div class="stat"><div class="stat-label">ユーザー</div><div class="stat-num" id="userCount">...</div></div>
+    <div class="stat"><div class="stat-label">投稿予想</div><div class="stat-num" id="pickCount">...</div></div>
+    <div class="stat"><div class="stat-label">結果登録</div><div class="stat-num" id="resultCount">...</div></div>
   </div>
 
   <div class="container">
-
-    <div class="section-title">
-      <span>🏆 単勝的中率ランキング</span>
-      <span class="more">TOP3</span>
-    </div>
+    <div class="section-title"><span>🏆 単勝的中率ランキング</span><span class="more">TOP3</span></div>
     <div id="rankingBox"></div>
 
-    <div class="section-title">
-      <span>🔥 新着予想</span>
-      <span class="more">NEW</span>
-    </div>
+    <div class="section-title"><span>🔥 新着予想</span><span class="more">NEW</span></div>
     <div id="feed"></div>
 
-    <div class="section-title">
-      <span>🏇 対象レース</span>
-      <span class="more">受付中</span>
-    </div>
+    <div class="section-title"><span>🏇 対象レース</span><span class="more">横にスワイプ</span></div>
     <div id="raceBox"></div>
 
     <div class="tool-card">
@@ -465,9 +125,7 @@ a{
     <div class="legal">
       <a href="legal.html">利用規約・プライバシーポリシー</a>
     </div>
-
   </div>
-
 </div>
 
 <div class="bottom-nav">
@@ -503,31 +161,14 @@ function getStatus(p){
     r.horse === p.horse && Number(r.result) === 1
   );
 
-  if(hit){
-    return { text:"的中", cls:"hit" };
-  }
-
-  return { text:"不的中", cls:"miss" };
+  return hit ? { text:"的中", cls:"hit" } : { text:"不的中", cls:"miss" };
 }
 
 async function loadData(){
-  const pickRes = await supabaseClient
-    .from("picks")
-    .select("*")
-    .order("created_at", { ascending:false });
-
-  const resultRes = await supabaseClient
-    .from("results")
-    .select("*");
-
-  const raceRes = await supabaseClient
-    .from("races")
-    .select("*")
-    .order("deadline", { ascending:true });
-
-  const userRes = await supabaseClient
-    .from("users")
-    .select("*");
+  const pickRes = await supabaseClient.from("picks").select("*").order("created_at", { ascending:false });
+  const resultRes = await supabaseClient.from("results").select("*");
+  const raceRes = await supabaseClient.from("races").select("*").order("deadline", { ascending:true });
+  const userRes = await supabaseClient.from("users").select("*");
 
   picks = pickRes.data || [];
   results = resultRes.data || [];
@@ -553,16 +194,14 @@ function renderFeed(){
 
   feed.innerHTML = picks.slice(0,3).map(p => {
     const status = getStatus(p);
-
     return `
       <div class="post">
         <div class="user">
           <div class="name">${p.username || "名無しの予想家"}</div>
           <div class="badge ${status.cls}">${status.text}</div>
         </div>
-
         <div class="race">${p.racecourse || ""} ${p.race || ""}</div>
-        <div class="pick">◎ ${p.horse}</div>
+        <div class="pick">◎ ${p.horse || ""}</div>
         <div class="comment">${p.reason || "理由なし"}</div>
         <div class="date">${new Date(p.created_at).toLocaleString("ja-JP")}</div>
       </div>
@@ -576,15 +215,12 @@ function renderRanking(){
 
   picks.forEach(p => {
     const name = p.username || "名無しの予想家";
-
     if(!map[name]){
       map[name] = { name, total:0, hit:0 };
     }
-
     map[name].total++;
 
-    const status = getStatus(p);
-    if(status.text === "的中"){
+    if(getStatus(p).text === "的中"){
       map[name].hit++;
     }
   });
@@ -614,29 +250,47 @@ function renderRanking(){
       <div class="rate">${u.rate.toFixed(1)}%</div>
     </div>
   `).join("");
-join("");
 }
-box.innerHTML = `
-  <div class="race-slider">
-    ${upcoming.map(r => {
-      const deadline = r.deadline
-        ? new Date(r.deadline).toLocaleString("ja-JP")
-        : "未設定";
 
-      return `
-        <a href="race.html?racecourse=${encodeURIComponent(r.racecourse)}&race=${encodeURIComponent(r.race)}">
-          <div class="race-card">
-            <div class="race-title">${r.racecourse}｜${r.race}</div>
-            <div class="deadline">締切：${deadline}</div>
-          </div>
-        </a>
-      `;
-    }).join("")}
-  </div>
-`;
+function renderRaces(){
+  const box = document.getElementById("raceBox");
+  const now = new Date();
+
+  const upcoming = races.filter(r =>
+    !r.deadline || new Date(r.deadline) > now
+  );
+
+  if(upcoming.length === 0){
+    box.innerHTML = `<div class="race-card">受付中の対象レースがありません。</div>`;
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="race-slider">
+      ${upcoming.map(r => {
+        const deadline = r.deadline
+          ? new Date(r.deadline).toLocaleString("ja-JP")
+          : "未設定";
+
+        const count = picks.filter(p =>
+          p.racecourse === r.racecourse &&
+          p.race === r.race
+        ).length;
+
+        return `
+          <a href="race.html?racecourse=${encodeURIComponent(r.racecourse)}&race=${encodeURIComponent(r.race)}">
+            <div class="race-card">
+              <div class="race-title">${r.racecourse}｜${r.race}</div>
+              <div class="deadline">締切：${deadline}</div>
+              <div class="race-count">現在 ${count}件の予想</div>
+            </div>
+          </a>
+        `;
+      }).join("")}
+    </div>
+  `;
 }
-  
-  
+
 async function updateNav(){
   const { data } = await supabaseClient.auth.getUser();
   const link = document.getElementById("mypageLink");
