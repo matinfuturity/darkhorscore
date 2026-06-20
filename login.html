@@ -29,8 +29,6 @@ button{width:100%;margin-top:18px;padding:16px;border:none;border-radius:999px;b
 
 <div class="container">
   <div class="card">
-    <label>表示名</label>
-    <input id="username" placeholder="例：ようよう">
 
     <label>メールアドレス</label>
     <input id="email" type="email" placeholder="example@gmail.com">
@@ -39,7 +37,7 @@ button{width:100%;margin-top:18px;padding:16px;border:none;border-radius:999px;b
     <input id="password" type="password" placeholder="6文字以上">
 
     <label>パスワード（確認）</label>
-    <input id="passwordConfirm" type="password" placeholder="パスワードを再入力">
+    <input id="passwordConfirm" type="password" placeholder="新規登録時のみ入力">
 
     <button onclick="signup()">新規登録</button>
     <button onclick="login()">ログイン</button>
@@ -48,7 +46,7 @@ button{width:100%;margin-top:18px;padding:16px;border:none;border-radius:999px;b
     <div class="note">
       新規登録後、認証メールが送信されます。<br>
       メール内のリンクを開いてからログインしてください。<br><br>
-      パスワード再設定を行う場合は、メールアドレスを入力してから「パスワードを忘れた方」を押してください。
+      表示名はログイン後、マイページから変更できます。
     </div>
   </div>
 
@@ -60,16 +58,15 @@ const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
 const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+function makeDefaultUsername(email){
+  const base = email.split("@")[0] || "user";
+  return base + Math.floor(Math.random() * 10000);
+}
+
 async function signup(){
-  const username = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const passwordConfirm = document.getElementById("passwordConfirm").value;
-
-  if(!username){
-    alert("表示名をご入力ください。");
-    return;
-  }
 
   if(!email){
     alert("メールアドレスをご入力ください。");
@@ -100,6 +97,8 @@ async function signup(){
     return;
   }
 
+  const username = makeDefaultUsername(email);
+
   const { error: userError } = await supabaseClient
     .from("users")
     .insert({
@@ -111,15 +110,13 @@ async function signup(){
   if(userError){
     if(userError.message.includes("users_email_key")){
       alert("このメールアドレスは既に登録されています。");
-    }else if(userError.message.includes("users_username_key")){
-      alert("この表示名は既に使用されています。");
     }else{
       alert(userError.message);
     }
     return;
   }
 
-  alert("確認メールを送信しました。メールをご確認ください。");
+  alert("確認メールを送信しました。メールをご確認ください。表示名はマイページから変更できます。");
 }
 
 async function login(){
