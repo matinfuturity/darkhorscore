@@ -1,5 +1,4 @@
-これを post.html 全部差し替え でOK。
-レース選択したら一覧が縮んで、選んだレースだけ残る版。
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -254,7 +253,12 @@ async function loadRaces(){
     box.innerHTML = '<div class="empty">レースの取得に失敗しました：' + error.message + '</div>';
     return;
   }
-  races = data || [];
+  const now = new Date();
+
+races = (data || []).filter(r => {
+  if(!r.deadline) return true;
+  return new Date(r.deadline) >= now;
+});
   if(races.length === 0){
     box.innerHTML = '<div class="empty">対象レースがありません</div>';
     return;
