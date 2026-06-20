@@ -221,11 +221,11 @@ async function init(){
 
   currentProfile = profile;
 
-  if(currentProfile && currentProfile.username){
-    loginUser.textContent = "ログイン中：" + currentProfile.username;
-  }else{
-    loginUser.textContent = "ログイン中：" + currentUser.email;
-  }
+if(currentProfile && currentProfile.username){
+  loginUser.textContent = "ログイン中：" + currentProfile.username;
+}else{
+  loginUser.textContent = "ログイン中：名無しの予想家";
+}
 
   await loadRaces();
 }
@@ -303,7 +303,7 @@ async function submitPick(){
     }
   }
 
-  const username = currentProfile?.username || currentUser.email;
+const username = currentProfile?.username || "名無しの予想家";
 
   const { error } = await supabaseClient
     .from("picks")
