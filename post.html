@@ -19,6 +19,7 @@ body{
   background:#0b0b0b;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
   color:white;
+  padding-bottom:90px;
 }
 
 .header{
@@ -66,7 +67,7 @@ label{
   color:white;
 }
 
-input,select,textarea{
+input,textarea{
   width:100%;
   box-sizing:border-box;
   padding:15px;
@@ -83,13 +84,54 @@ textarea::placeholder{
   color:#777;
 }
 
-select{
-  appearance:auto;
-}
-
 textarea{
   min-height:130px;
   resize:vertical;
+}
+
+.date-title{
+  margin:18px 0 10px;
+  color:#f5c542;
+  font-weight:900;
+  font-size:15px;
+}
+
+.race-list{
+  display:grid;
+  gap:10px;
+}
+
+.race-card{
+  background:#070707;
+  border:1px solid rgba(255,255,255,.12);
+  border-left:4px solid rgba(212,175,55,.65);
+  border-radius:16px;
+  padding:14px;
+  cursor:pointer;
+}
+
+.race-card.selected{
+  border-color:#f5c542;
+  background:rgba(212,175,55,.16);
+  box-shadow:0 0 0 2px rgba(212,175,55,.25);
+}
+
+.race-title{
+  font-weight:950;
+  font-size:16px;
+}
+
+.race-deadline{
+  color:#aaa;
+  font-size:12px;
+  margin-top:6px;
+}
+
+.selected-race{
+  margin-top:12px;
+  color:#f5c542;
+  font-size:13px;
+  font-weight:900;
 }
 
 button{
@@ -116,6 +158,14 @@ button{
   line-height:1.7;
 }
 
+.empty{
+  color:#aaa;
+  background:#070707;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;
+  padding:14px;
+}
+
 .bottom-nav{
   position:fixed;
   bottom:0;
@@ -139,10 +189,6 @@ button{
 .bottom-nav a:nth-child(2){
   color:var(--gold);
 }
-
-.space{
-  height:90px;
-}
 </style>
 </head>
 
@@ -158,9 +204,10 @@ button{
     <div class="login-user" id="loginUser">ログイン確認中...</div>
 
     <label>対象レース</label>
-    <select id="raceSelect">
-      <option value="">レースを読み込み中...</option>
-    </select>
+    <div id="raceList">
+      <div class="empty">レースを読み込み中...</div>
+    </div>
+    <div id="selectedRaceText" class="selected-race">未選択</div>
 
     <label>本命馬</label>
     <input id="horse" placeholder="例：ソールオリエンス">
@@ -177,8 +224,6 @@ button{
   </div>
 </div>
 
-<div class="space"></div>
-
 <div class="bottom-nav">
   <a href="index.html">ホーム</a>
   <a href="post.html">予想</a>
@@ -194,6 +239,7 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let currentUser = null;
 let currentProfile = null;
 let races = [];
+let selectedRaceId = "";
 
 async function init(){
   const { data } = await supabaseClient.auth.getUser();
@@ -217,52 +263,107 @@ async function init(){
     .from("users")
     .select("*")
     .eq("email", currentUser.email)
-    .single();
+    .maybeSingle();
 
   currentProfile = profile;
 
-if(currentProfile && currentProfile.username){
-  loginUser.textContent = "ログイン中：" + currentProfile.username;
-}else{
-  loginUser.textContent = "ログイン中：名無しの予想家";
-}
+  if(currentProfile && currentProfile.username){
+    loginUser.textContent = "ログイン中：" + currentProfile.username;
+  }else{
+    loginUser.textContent = "ログイン中：名無しの予想家";
+  }
 
   await loadRaces();
 }
 
 async function loadRaces(){
-  const select = document.getElementById("raceSelect");
+  const box = document.getElementById("raceList");
 
   const { data, error } = await supabaseClient
-   .from("races")
-.select("*")
-.order("deadline", { ascending:true });
+    .from("races")
+    .select("*")
+    .order("deadline", { ascending:true });
 
   if(error){
-    select.innerHTML = '<option value="">レースの取得に失敗しました</option>';
+    box.innerHTML = '<div class="empty">レースの取得に失敗しました</div>';
     return;
   }
 
-  races = data || [];
+  const now = new Date();
+
+  races = (data || []).filter(r => {
+    if(!r.deadline) return true;
+    return new Date(r.deadline) > now;
+  });
 
   if(races.length === 0){
-    select.innerHTML = '<option value="">対象レースがありません</option>';
+    box.innerHTML = '<div class="empty">受付中の対象レースがありません</div>';
     return;
   }
 
-  select.innerHTML = '<option value="">レースを選択してください</option>';
+  renderRacesByDate();
+}
+
+function getDateKey(deadline){
+  if(!deadline) return "日付未設定";
+
+  const d = new Date(deadline);
+  const month = d.getMonth() + 1;
+  const date = d.getDate();
+  const day = ["日","月","火","水","木","金","土"][d.getDay()];
+
+  return `${month}/${date}（${day}）`;
+}
+
+function renderRacesByDate(){
+  const box = document.getElementById("raceList");
+  const grouped = {};
 
   races.forEach(r => {
-    const deadlineText = r.deadline
-      ? " / 締切 " + new Date(r.deadline).toLocaleString("ja-JP")
-      : "";
-
-    select.innerHTML += `
-      <option value="${r.id}">
-        ${r.racecourse}｜${r.race}${deadlineText}
-      </option>
-    `;
+    const key = getDateKey(r.deadline);
+    if(!grouped[key]){
+      grouped[key] = [];
+    }
+    grouped[key].push(r);
   });
+
+  box.innerHTML = Object.keys(grouped).map(dateKey => `
+    <div class="date-title">${dateKey}</div>
+    <div class="race-list">
+      ${grouped[dateKey].map(r => {
+        const deadlineText = r.deadline
+          ? new Date(r.deadline).toLocaleTimeString("ja-JP", {
+              hour:"2-digit",
+              minute:"2-digit"
+            })
+          : "未設定";
+
+        return `
+          <div class="race-card" onclick="selectRace('${r.id}')">
+            <div class="race-title">${r.racecourse}｜${r.race}</div>
+            <div class="race-deadline">締切 ${deadlineText}</div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `).join("");
+}
+
+function selectRace(id){
+  selectedRaceId = String(id);
+
+  document.querySelectorAll(".race-card").forEach(card => {
+    card.classList.remove("selected");
+  });
+
+  event.currentTarget.classList.add("selected");
+
+  const selectedRace = races.find(r => String(r.id) === String(selectedRaceId));
+
+  if(selectedRace){
+    document.getElementById("selectedRaceText").textContent =
+      "選択中：" + selectedRace.racecourse + "｜" + selectedRace.race;
+  }
 }
 
 async function submitPick(){
@@ -272,7 +373,7 @@ async function submitPick(){
     return;
   }
 
-  const raceId = document.getElementById("raceSelect").value;
+  const raceId = selectedRaceId;
   const horse = document.getElementById("horse").value.trim();
   const reason = document.getElementById("reason").value.trim();
 
@@ -303,7 +404,7 @@ async function submitPick(){
     }
   }
 
-const username = currentProfile?.username || "名無しの予想家";
+  const username = currentProfile?.username || "名無しの予想家";
 
   const { error } = await supabaseClient
     .from("picks")
