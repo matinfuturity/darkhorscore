@@ -307,7 +307,7 @@ async function saveProfile(){
 
   const { error } = await supabaseClient
     .from("users")
-    ..upsert(payload, { onConflict:'email' });
+    .upsert(payload, { onConflict:'email' });
 
   if(error){
     showError(error.message);
