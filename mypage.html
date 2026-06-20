@@ -128,11 +128,7 @@ function getStatus(p){
     r.horse === p.horse && Number(r.result) === 1
   );
 
-  if(hit){
-    return { text:"的中", cls:"hit" };
-  }
-
-  return { text:"不的中", cls:"miss" };
+  return hit ? { text:"的中", cls:"hit" } : { text:"不的中", cls:"miss" };
 }
 
 async function init(){
@@ -186,11 +182,8 @@ async function loadProfile(){
 
   currentProfile = profile;
 
-  const username = profile.username || "名無しの予想家";
-  const favoriteHorse = profile.favorite_horse || "未設定";
-
-  document.getElementById("displayName").textContent = username;
-  document.getElementById("favoriteText").textContent = favoriteHorse;
+  document.getElementById("displayName").textContent = profile.username || "名無しの予想家";
+  document.getElementById("favoriteText").textContent = profile.favorite_horse || "未設定";
   document.getElementById("usernameInput").value = profile.username || "";
   document.getElementById("favoriteInput").value = profile.favorite_horse || "";
 }
@@ -220,13 +213,20 @@ async function loadStatsAndPicks(){
     return false;
   });
 
-  const hitCount = myPicks.filter(p => getStatus(p).text === "的中").length;
-  const total = myPicks.length;
+  const judgedPicks = myPicks.filter(p =>
+    getStatus(p).text !== "集計待ち"
+  );
+
+  const hitCount = judgedPicks.filter(p =>
+    getStatus(p).text === "的中"
+  ).length;
+
+  const total = judgedPicks.length;
   const rate = total ? (hitCount / total) * 100 : 0;
 
   document.getElementById("hitRate").textContent = rate.toFixed(1) + "%";
   document.getElementById("hitCount").textContent = hitCount;
-  document.getElementById("postCount").textContent = total;
+  document.getElementById("postCount").textContent = myPicks.length;
 
   renderRank();
   renderMyPicks();
@@ -242,10 +242,14 @@ function renderRank(){
       users[name] = { name, total:0, hit:0 };
     }
 
-    users[name].total++;
+    const status = getStatus(p);
 
-    if(getStatus(p).text === "的中"){
-      users[name].hit++;
+    if(status.text !== "集計待ち"){
+      users[name].total++;
+
+      if(status.text === "的中"){
+        users[name].hit++;
+      }
     }
   });
 
