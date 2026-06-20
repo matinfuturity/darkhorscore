@@ -3,285 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>マイページ | DARKHORSCORE</title>
+<title>ログイン | DARKHORSCORE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root{
-  --gold:#d4af37;
-  --green:#1e7f4f;
-  --red:#b84432;
-}
-
-body{
-  margin:0;
-  background:#0b0b0b;
-  color:white;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-}
-
-.header{
-  background:linear-gradient(180deg,#050505,#151515);
-  padding:24px;
-  text-align:center;
-  border-bottom:1px solid rgba(212,175,55,.25);
-}
-
-.logo{
-  font-size:30px;
-  font-weight:900;
-}
-
-.sub{
-  color:var(--gold);
-  margin-top:6px;
-}
-
-.container{
-  padding:16px;
-}
-
-.hero-card,.card{
-  background:linear-gradient(180deg,#1b1b1b,#111);
-  border-radius:22px;
-  padding:18px;
-  border:1px solid rgba(255,255,255,.08);
-  margin-bottom:14px;
-}
-
-.hero-card{
-  border-radius:24px;
-  padding:24px;
-}
-
-.name{
-  font-size:32px;
-  font-weight:900;
-}
-
-.favorite{
-  color:#bbb;
-  margin-top:8px;
-}
-
-.rate{
-  font-size:64px;
-  font-weight:900;
-  color:var(--gold);
-  margin-top:18px;
-}
-
-.rate-label{
-  color:#aaa;
-  font-size:13px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:20px;
-}
-
-.stat{
-  background:#070707;
-  border-radius:16px;
-  padding:12px;
-  text-align:center;
-}
-
-.stat-num{
-  font-size:24px;
-  font-weight:900;
-  color:var(--gold);
-}
-
-.stat-label{
-  color:#aaa;
-  font-size:12px;
-}
-
-.title{
-  font-size:22px;
-  font-weight:900;
-  margin:24px 0 12px;
-}
-
-label{
-  display:block;
-  font-weight:900;
-  margin-top:14px;
-}
-
-input{
-  width:100%;
-  box-sizing:border-box;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#070707;
-  color:white;
-  margin-top:8px;
-}
-
-button{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(135deg,#f4d36b,#b58a22);
-  color:#111;
-  font-weight:900;
-  font-size:16px;
-  margin-top:14px;
-}
-
-.logout-btn{
-  background:#222;
-  color:white;
-  border:1px solid rgba(255,255,255,.12);
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-
-.hit{background:var(--green)}
-.miss{background:var(--red)}
-.wait{background:#8a6818}
-
-.pick-card{
-  background:linear-gradient(180deg,#1b1b1b,#111);
-  border-left:5px solid var(--gold);
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:12px;
-}
-
-.pick-race{
-  color:#aaa;
-  font-size:13px;
-}
-
-.pick-horse{
-  font-size:24px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-.pick-reason{
-  color:#bbb;
-  margin-top:8px;
-  line-height:1.6;
-}
-
-.error{
-  background:#2a1111;
-  border:1px solid rgba(184,68,50,.4);
-  color:#ffb3a8;
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:14px;
-  line-height:1.6;
-}
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#070707;
-  border-top:1px solid rgba(212,175,55,.25);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:10px 0;
-}
-
-.bottom-nav a{
-  text-align:center;
-  text-decoration:none;
-  color:#ddd;
-  font-size:12px;
-  font-weight:900;
-}
-
-.bottom-nav a:nth-child(4){
-  color:var(--gold);
-}
-
-.space{
-  height:90px;
-}
+body{margin:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111}
+.header{background:#111;color:white;padding:30px 20px;text-align:center}
+.logo{font-size:30px;font-weight:900}
+.sub{font-size:13px;color:#ccc;margin-top:6px}
+.container{padding:18px}
+.card{background:white;border-radius:22px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+label{font-weight:900;display:block;margin-top:16px}
+input{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #ddd;font-size:16px;margin-top:8px}
+button{width:100%;margin-top:18px;padding:16px;border:none;border-radius:999px;background:#111;color:white;font-size:16px;font-weight:900}
+.reset-btn{background:#eee;color:#111;margin-top:10px}
+.note{font-size:13px;color:#666;line-height:1.7;margin-top:16px}
+.back{display:block;text-align:center;margin-top:20px;color:#666;text-decoration:none}
 </style>
 </head>
-
 <body>
 
 <div class="header">
   <div class="logo">DARKHORSCORE</div>
-  <div class="sub">マイページ</div>
+  <div class="sub">予想実績で評価される競馬SNS</div>
 </div>
 
 <div class="container">
+  <div class="card">
 
-  <div id="errorBox"></div>
+    <label>メールアドレス</label>
+    <input id="email" type="email" placeholder="example@gmail.com">
 
-  <div class="hero-card">
-    <div class="name" id="displayName">読み込み中...</div>
-    <div class="favorite" id="favoriteText">好きな馬：未設定</div>
+    <label>パスワード</label>
+    <input id="password" type="password" placeholder="6文字以上">
 
-    <div class="rate" id="hitRate">-</div>
-    <div class="rate-label">的中率</div>
+    <label>パスワード（確認）</label>
+    <input id="passwordConfirm" type="password" placeholder="新規登録時のみ入力">
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-num" id="hitCount">0</div>
-        <div class="stat-label">的中数</div>
-      </div>
+    <button onclick="signup()">新規登録</button>
+    <button onclick="login()">ログイン</button>
+    <button class="reset-btn" onclick="resetPassword()">パスワードを忘れた方</button>
 
-      <div class="stat">
-        <div class="stat-num" id="postCount">0</div>
-        <div class="stat-label">投稿数</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-num" id="rankNumber">-</div>
-        <div class="stat-label">順位</div>
-      </div>
+    <div class="note">
+      新規登録後、認証メールが送信されます。<br>
+      メール内のリンクを開いてからログインしてください。<br><br>
+      表示名はログイン後、マイページから変更できます。
     </div>
   </div>
 
-  <div class="card">
-    <div class="title">プロフィール編集</div>
-
-    <label>表示名</label>
-    <input id="usernameInput" placeholder="例：ようよう">
-
-    <label>好きな馬</label>
-    <input id="favoriteInput" placeholder="例：ソールオリエンス">
-
-    <button onclick="saveProfile()">保存する</button>
-  </div>
-
-  <div class="title">最近の予想</div>
-  <div id="myPicks"></div>
-
-  <button class="logout-btn" onclick="logout()">ログアウト</button>
-
-</div>
-
-<div class="space"></div>
-
-<div class="bottom-nav">
-  <a href="index.html">ホーム</a>
-  <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
-  <a href="mypage.html">マイページ</a>
+  <a class="back" href="index.html">← ホームへ戻る</a>
 </div>
 
 <script>
@@ -289,287 +58,113 @@ const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
 const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let currentUser = null;
-let currentProfile = null;
-
-function showError(message){
-  document.getElementById("errorBox").innerHTML =
-    `<div class="error">${message}</div>`;
+function makeDefaultUsername(email){
+  const base = email.split("@")[0] || "user";
+  return base + Math.floor(Math.random() * 10000);
 }
 
-function clearError(){
-  document.getElementById("errorBox").innerHTML = "";
-}
+async function signup(){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const passwordConfirm = document.getElementById("passwordConfirm").value;
 
-function isHit(pick, results){
-  return results.find(result => {
-    if(pick.race_id && result.race_id){
-      return (
-        Number(pick.race_id) === Number(result.race_id) &&
-        result.horse === pick.horse &&
-        Number(result.result) === 1
-      );
-    }
+  if(!email){
+    alert("メールアドレスをご入力ください。");
+    return;
+  }
 
-    return (
-      result.race === pick.race &&
-      result.horse === pick.horse &&
-      Number(result.result) === 1
-    );
+  if(!password){
+    alert("パスワードをご入力ください。");
+    return;
+  }
+
+  if(password !== passwordConfirm){
+    alert("パスワードが一致しません。");
+    return;
+  }
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password
   });
-}
-
-function hasRaceResult(pick, results){
-  return results.find(result => {
-    if(pick.race_id && result.race_id){
-      return Number(pick.race_id) === Number(result.race_id);
-    }
-
-    return result.race === pick.race;
-  });
-}
-
-async function init(){
-  clearError();
-
-  const { data, error } = await supabaseClient.auth.getUser();
 
   if(error){
-    showError(error.message);
+    if(error.message.includes("already registered")){
+      alert("このメールアドレスは既に登録されています。");
+    }else{
+      alert(error.message);
+    }
     return;
   }
 
-  currentUser = data.user;
+  const username = makeDefaultUsername(email);
 
-  if(!currentUser){
-    location.href = "login.html";
-    return;
-  }
-
-  await loadProfile();
-  await loadStatsAndPicks();
-}
-
-async function loadProfile(){
-  const { data: profile, error } = await supabaseClient
+  const { error: userError } = await supabaseClient
     .from("users")
-    .select("*")
-    .eq("email", currentUser.email)
-    .single();
-
-  if(error){
-    currentProfile = null;
-
-    ddocument.getElementById("displayName").textContent = "名無しの予想家";
-    document.getElementById("favoriteText").textContent = "好きな馬：未設定";
-    document.getElementById("usernameInput").value = "";
-    document.getElementById("favoriteInput").value = "";
-    return;
-  }
-
-  currentProfile = profile;
-
-  conconst username = profile?.username || "名無しの予想家";
-  const favoriteHorse = profile?.favorite_horse || "未設定";
-
-  document.getElementById("displayName").textContent = username;
-  document.getElementById("favoriteText").textContent = "好きな馬：" + favoriteHorse;
-  document.getElementById("usernameInput").value = profile?.username || "";
-  document.getElementById("favoriteInput").value = profile?.favorite_horse || "";
-}
-
-async function loadStatsAndPicks(){
-  const { data: allPicks, error: picksError } = await supabaseClient
-    .from("picks")
-    .select("*")
-    .order("created_at", { ascending:false });
-
-  const { data: results, error: resultsError } = await supabaseClient
-    .from("results")
-    .select("*");
-
-  if(picksError){
-    showError(picksError.message);
-    return;
-  }
-
-  if(resultsError){
-    showError(resultsError.message);
-    return;
-  }
-
-  const picks = allPicks || [];
-  const resultList = results || [];
-
-  const users = {};
-
-  picks.forEach(pick => {
-    const username = pick.username || "名無しの予想家";
-
-    if(!users[username]){
-      users[username] = {
-        username,
-        total:0,
-        hit:0
-      };
-    }
-
-    users[username].total++;
-
-    if(isHit(pick, resultList)){
-      users[username].hit++;
-    }
-  });
-
-  const ranking = Object.values(users)
-    .filter(user => user.total >= 5)
-    .map(user => ({
-      ...user,
-      rate: user.total === 0 ? 0 : (user.hit / user.total) * 100
-    }))
-    .sort((a,b) =>
-      b.rate - a.rate ||
-      b.hit - a.hit ||
-      b.total - a.total
-    );
-
-  const myName = currentProfile?.username || currentUser.email;
-  const me = ranking.find(user => user.username === myName);
-  const myRank = ranking.findIndex(user => user.username === myName);
-
-  const myPicks = picks.filter(pick => pick.user_id === currentUser.id);
-
-  document.getElementById("postCount").textContent = myPicks.length;
-
-  let myHitCount = 0;
-
-  myPicks.forEach(pick => {
-    if(isHit(pick, resultList)){
-      myHitCount++;
-    }
-  });
-
-  document.getElementById("hitCount").textContent = myHitCount;
-
-  if(myPicks.length === 0){
-    document.getElementById("hitRate").textContent = "-";
-    document.getElementById("rankNumber").textContent = "集計中";
-  }else{
-    const myRate = (myHitCount / myPicks.length) * 100;
-    document.getElementById("hitRate").textContent = myRate.toFixed(1) + "%";
-  }
-
-  if(!me){
-    document.getElementById("rankNumber").textContent = "集計中";
-  }else{
-    let rankText = "#" + (myRank + 1);
-
-    if(myRank === 0){
-      rankText = "🥇";
-    }else if(myRank === 1){
-      rankText = "🥈";
-    }else if(myRank === 2){
-      rankText = "🥉";
-    }
-
-    document.getElementById("rankNumber").textContent = rankText;
-  }
-
-  renderMyPicks(myPicks, resultList);
-}
-
-function renderMyPicks(picks, results){
-  const box = document.getElementById("myPicks");
-
-  if(!picks || picks.length === 0){
-    box.innerHTML = `
-      <div class="card">
-        まだ予想がありません。
-      </div>
-    `;
-    return;
-  }
-
-  box.innerHTML = picks.map(p => {
-    const hit = isHit(p, results);
-    const raceResult = hasRaceResult(p, results);
-
-    let badgeText = "集計待ち";
-    let badgeClass = "wait";
-
-    if(raceResult){
-      if(hit){
-        badgeText = "的中";
-        badgeClass = "hit";
-      }else{
-        badgeText = "不的中";
-        badgeClass = "miss";
-      }
-    }
-
-    return `
-      <div class="pick-card">
-        <span class="badge ${badgeClass}">
-          ${badgeText}
-        </span>
-
-        <div class="pick-race">
-          ${p.racecourse || ""} ${p.race || ""}
-        </div>
-
-        <div class="pick-horse">
-          ◎ ${p.horse}
-        </div>
-
-        <div class="pick-reason">
-          ${p.reason || "理由なし"}
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-async function saveProfile(){
-  clearError();
-
-  const username = document.getElementById("usernameInput").value.trim();
-  const favoriteHorse = document.getElementById("favoriteInput").value.trim();
-
-  if(!username){
-    alert("表示名をご入力ください。");
-    return;
-  }
-
-  const { error } = await supabaseClient
-    .from("users")
-    .update({
+    .insert({
+      id: data.user.id,
       username: username,
-      favorite_horse: favoriteHorse
-    })
-    .eq("email", currentUser.email);
+      email: email
+    });
 
-  if(error){
-    showError(error.message);
+  if(userError){
+    if(userError.message.includes("users_email_key")){
+      alert("このメールアドレスは既に登録されています。");
+    }else{
+      alert(userError.message);
+    }
     return;
   }
 
-  await supabaseClient
-    .from("picks")
-    .update({ username: username })
-    .eq("user_id", currentUser.id);
-
-  alert("保存しました。");
-
-  await loadProfile();
-  await loadStatsAndPicks();
+  alert("確認メールを送信しました。メールをご確認ください。表示名はマイページから変更できます。");
 }
 
-async function logout(){
-  await supabaseClient.auth.signOut();
-  location.href = "index.html";
+async function login(){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!email){
+    alert("メールアドレスをご入力ください。");
+    return;
+  }
+
+  if(!password){
+    alert("パスワードをご入力ください。");
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if(error){
+    alert("メールアドレスまたはパスワードが正しくありません。");
+  }else{
+    alert("ログインに成功しました。");
+    location.href = "index.html";
+  }
 }
 
-init();
+async function resetPassword(){
+  const email = document.getElementById("email").value.trim();
+
+  if(!email){
+    alert("メールアドレスをご入力ください。");
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: "https://matinfuturity.github.io/darkhorscore/reset.html"
+  });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("パスワード再設定メールを送信しました。メールをご確認ください。");
+}
 </script>
 
 </body>
