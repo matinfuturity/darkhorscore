@@ -32,32 +32,10 @@ button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;b
     <label>管理パスワード</label>
     <input id="adminPass" type="password" placeholder="管理用パスワード">
 
-    <label>競馬場</label>
-    <select id="racecourse">
-      <option value="">競馬場を選択してください</option>
-      <option value="札幌">札幌</option>
-      <option value="函館">函館</option>
-      <option value="福島">福島</option>
-      <option value="新潟">新潟</option>
-      <option value="東京">東京</option>
-      <option value="中山">中山</option>
-      <option value="中京">中京</option>
-      <option value="京都">京都</option>
-      <option value="阪神">阪神</option>
-      <option value="小倉">小倉</option>
-      <option value="大井">大井</option>
-      <option value="川崎">川崎</option>
-      <option value="船橋">船橋</option>
-      <option value="浦和">浦和</option>
-      <option value="名古屋">名古屋</option>
-      <option value="笠松">笠松</option>
-      <option value="園田">園田</option>
-      <option value="高知">高知</option>
-      <option value="佐賀">佐賀</option>
+    <label>対象レース</label>
+    <select id="raceSelect">
+      <option value="">レースを読み込み中...</option>
     </select>
-
-    <label>レース名</label>
-    <input id="race" placeholder="例：函館記念">
 
     <label>1着馬</label>
     <input id="horse" placeholder="例：ローシャムパーク">
@@ -65,8 +43,9 @@ button{width:100%;margin-top:22px;padding:16px;border:none;border-radius:999px;b
     <button onclick="saveResult()">結果を登録する</button>
 
     <div class="note">
+      ※レースは登録済みの対象レースから選択します。<br>
       ※現在は「1着馬＝的中対象」として登録します。<br>
-      ※競馬場・レース名・馬名が予想と一致すると的中判定されます。
+      ※race_idで紐付けるため、レース名の誤字による判定ミスを防げます。
     </div>
 
   </div>
@@ -78,11 +57,47 @@ const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const ADMIN_PASSWORD = "darkhorse";
+let races = [];
+
+async function loadRaces(){
+  const select = document.getElementById("raceSelect");
+
+  const { data, error } = await supabaseClient
+    .from("races")
+    .select("*")
+    .order("deadline", { ascending:true });
+
+  if(error){
+    select.innerHTML = '<option value="">レース取得に失敗しました</option>';
+    alert(error.message);
+    return;
+  }
+
+  races = data || [];
+
+  if(races.length === 0){
+    select.innerHTML = '<option value="">対象レースがありません</option>';
+    return;
+  }
+
+  select.innerHTML = '<option value="">レースを選択してください</option>';
+
+  races.forEach(r => {
+    const deadlineText = r.deadline
+      ? " / 締切 " + new Date(r.deadline).toLocaleString("ja-JP")
+      : "";
+
+    select.innerHTML += `
+      <option value="${r.id}">
+        ${r.racecourse}｜${r.race}${deadlineText}
+      </option>
+    `;
+  });
+}
 
 async function saveResult(){
   const pass = document.getElementById("adminPass").value;
-  const racecourse = document.getElementById("racecourse").value;
-  const race = document.getElementById("race").value.trim();
+  const raceId = document.getElementById("raceSelect").value;
   const horse = document.getElementById("horse").value.trim();
 
   if(pass !== ADMIN_PASSWORD){
@@ -90,13 +105,8 @@ async function saveResult(){
     return;
   }
 
-  if(!racecourse){
-    alert("競馬場を選択してください。");
-    return;
-  }
-
-  if(!race){
-    alert("レース名をご入力ください。");
+  if(!raceId){
+    alert("対象レースを選択してください。");
     return;
   }
 
@@ -105,11 +115,21 @@ async function saveResult(){
     return;
   }
 
+  const selectedRace = races.find(r =>
+    String(r.id) === String(raceId)
+  );
+
+  if(!selectedRace){
+    alert("対象レースの取得に失敗しました。");
+    return;
+  }
+
   const { error } = await supabaseClient
     .from("results")
     .insert({
-      racecourse: racecourse,
-      race: race,
+      race_id: Number(selectedRace.id),
+      racecourse: selectedRace.racecourse,
+      race: selectedRace.race,
       horse: horse,
       result: 1
     });
@@ -121,9 +141,11 @@ async function saveResult(){
 
   alert("結果を登録しました。");
 
-  document.getElementById("race").value = "";
   document.getElementById("horse").value = "";
+  document.getElementById("raceSelect").value = "";
 }
+
+loadRaces();
 </script>
 
 </body>
