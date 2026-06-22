@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -9,70 +8,79 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
-  --gold:#d4af37;
   --green:#1e7f4f;
   --brown:#8b5a2b;
-  --gray:#aaa;
+  --gold:#d4af37;
+  --cream:#f7f3ea;
+  --card:#ffffff;
+  --line:#e4dccf;
+  --text:#171717;
+  --sub:#777;
 }
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:#0b0b0b;
+  background:var(--cream);
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  color:white;
+  color:var(--text);
   padding-bottom:90px;
 }
 .header{
-  background:linear-gradient(180deg,#050505,#151515);
-  padding:24px 18px 18px;
-  border-bottom:1px solid rgba(212,175,55,.35);
+  background:linear-gradient(135deg,var(--green),#2f9b64 45%,var(--brown));
+  color:white;
+  padding:28px 18px 22px;
   text-align:center;
+  border-bottom:1px solid rgba(0,0,0,.08);
 }
 .logo{
-  font-size:32px;
-  font-weight:900;
-  letter-spacing:1px;
+  font-size:28px;
+  font-weight:950;
+  letter-spacing:.5px;
 }
 .sub{
-  color:var(--gold);
+  color:rgba(255,255,255,.86);
   font-size:13px;
-  margin-top:5px;
-  font-weight:700;
+  margin-top:6px;
+  font-weight:800;
 }
 .container{
   padding:16px;
+  max-width:480px;
+  margin:0 auto;
 }
 .card{
-  background:linear-gradient(180deg,#1b1b1b,#111);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
   padding:18px;
-  box-shadow:0 8px 22px rgba(0,0,0,.35);
+  box-shadow:0 8px 22px rgba(50,35,15,.08);
 }
 .login-user{
   font-size:14px;
-  color:#bbb;
+  color:var(--sub);
   margin-bottom:18px;
+  font-weight:800;
 }
 label{
   display:block;
-  font-weight:900;
+  font-weight:950;
   margin-top:18px;
-  color:white;
+  color:var(--text);
 }
 input,textarea{
   width:100%;
   box-sizing:border-box;
   padding:15px;
   border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
+  border:1px solid var(--line);
   font-size:16px;
   margin-top:8px;
-  background:#070707;
-  color:white;
+  background:#fbfaf7;
+  color:var(--text);
 }
 input::placeholder,
 textarea::placeholder{
-  color:#777;
+  color:#aaa;
 }
 textarea{
   min-height:130px;
@@ -80,8 +88,8 @@ textarea{
 }
 .date-title{
   margin:18px 0 10px;
-  color:#f5c542;
-  font-weight:900;
+  color:var(--brown);
+  font-weight:950;
   font-size:15px;
 }
 .race-list{
@@ -89,32 +97,34 @@ textarea{
   gap:10px;
 }
 .race-card{
-  background:#070707;
-  border:1px solid rgba(255,255,255,.12);
-  border-left:4px solid rgba(212,175,55,.65);
-  border-radius:16px;
-  padding:14px;
+  background:#fbfaf7;
+  border:1px solid var(--line);
+  border-left:5px solid var(--green);
+  border-radius:18px;
+  padding:15px;
   cursor:pointer;
+  box-shadow:0 5px 15px rgba(50,35,15,.05);
 }
 .race-card.selected{
-  border-color:#f5c542;
-  background:rgba(212,175,55,.16);
-  box-shadow:0 0 0 2px rgba(212,175,55,.25);
+  border-color:var(--green);
+  background:rgba(30,127,79,.10);
+  box-shadow:0 0 0 2px rgba(30,127,79,.18);
 }
 .race-title{
   font-weight:950;
   font-size:16px;
 }
 .race-deadline{
-  color:#aaa;
+  color:var(--sub);
   font-size:12px;
-  margin-top:6px;
+  margin-top:7px;
+  font-weight:800;
 }
 .selected-race{
   margin-top:12px;
-  color:#f5c542;
+  color:var(--green);
   font-size:13px;
-  font-weight:900;
+  font-weight:950;
 }
 button{
   width:100%;
@@ -122,60 +132,65 @@ button{
   padding:17px;
   border:none;
   border-radius:999px;
-  background:linear-gradient(135deg,#f4d36b,#b58a22);
-  color:#111;
+  background:var(--green);
+  color:white;
   font-size:17px;
-  font-weight:900;
-  box-shadow:0 8px 18px rgba(212,175,55,.25);
+  font-weight:950;
+  box-shadow:0 8px 18px rgba(30,127,79,.22);
 }
 .reset-button{
   margin-top:12px;
-  background:#333;
-  color:white;
+  background:#eee6da;
+  color:#111;
   border:none;
   border-radius:14px;
   padding:14px;
   width:100%;
-  font-weight:900;
+  font-weight:950;
   box-shadow:none;
 }
 .notice{
   margin-top:16px;
   padding:14px;
   border-radius:16px;
-  background:rgba(212,175,55,.08);
-  border:1px solid rgba(212,175,55,.25);
-  color:#ddd;
+  background:#f7f0e3;
+  border:1px solid var(--line);
+  color:#555;
   font-size:13px;
   line-height:1.7;
+  font-weight:700;
 }
 .empty{
-  color:#aaa;
-  background:#070707;
-  border:1px solid rgba(255,255,255,.1);
+  color:var(--sub);
+  background:#fbfaf7;
+  border:1px solid var(--line);
   border-radius:16px;
   padding:14px;
+  font-weight:800;
 }
 .bottom-nav{
   position:fixed;
   bottom:0;
-  left:0;
-  right:0;
-  background:#070707;
-  border-top:1px solid rgba(212,175,55,.25);
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-top:1px solid #ddd3c3;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:10px 0;
+  grid-template-columns:repeat(3,1fr);
+  padding:11px 0;
 }
 .bottom-nav a{
   text-align:center;
   text-decoration:none;
-  color:#ddd;
+  color:#888;
   font-size:12px;
-  font-weight:900;
+  font-weight:950;
 }
 .bottom-nav a:nth-child(2){
-  color:var(--gold);
+  color:var(--green);
 }
 </style>
 </head>
@@ -198,14 +213,13 @@ button{
     <textarea id="reason" placeholder="例：前走内容を評価。距離延長もプラス。"></textarea>
     <button onclick="submitPick()">投稿する</button>
     <div class="notice">
-      投稿した予想はホーム・マイページ・ランキングに反映されます。
+      投稿した予想はホーム・マイページに反映されます。
     </div>
   </div>
 </div>
 <div class="bottom-nav">
   <a href="index.html">ホーム</a>
   <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
   <a id="mypageLink" href="login.html">ログイン</a>
 </div>
 <script>
@@ -254,11 +268,10 @@ async function loadRaces(){
     return;
   }
   const now = new Date();
-
-races = (data || []).filter(r => {
-  if(!r.deadline) return true;
-  return new Date(r.deadline) >= now;
-});
+  races = (data || []).filter(r => {
+    if(!r.deadline) return true;
+    return new Date(r.deadline) >= now;
+  });
   if(races.length === 0){
     box.innerHTML = '<div class="empty">対象レースがありません</div>';
     return;
