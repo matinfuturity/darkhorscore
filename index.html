@@ -5,243 +5,372 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DARKHORSCORE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 :root{
-  --gold:#f5c542;
   --green:#1e7f4f;
-  --red:#b84432;
-  --card:#171717;
-  --line:#2a2a2a;
+  --brown:#8b5a2b;
+  --gold:#d4af37;
+  --cream:#f7f3ea;
+  --card:#ffffff;
+  --line:#e4dccf;
+  --text:#171717;
+  --sub:#777;
 }
 *{box-sizing:border-box}
-body{margin:0;background:#050505;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:white;padding-bottom:78px}
-a{color:inherit;text-decoration:none}
-.app{max-width:480px;margin:0 auto;min-height:100vh;background:radial-gradient(circle at top right,rgba(245,197,66,.18),transparent 34%),linear-gradient(180deg,#111 0%,#050505 38%,#101010 100%)}
-.header{padding:18px 16px 8px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:22px;font-weight:950;letter-spacing:1px}
-.login-pill{background:white;color:#111;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:900}
-.hero{margin:10px 16px 18px;padding:28px 20px;border-radius:28px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(245,197,66,.95),rgba(255,255,255,.08) 42%,rgba(0,0,0,.92));box-shadow:0 20px 45px rgba(0,0,0,.5)}
-.hero::after{content:"🏇";position:absolute;right:10px;bottom:4px;font-size:92px;opacity:.15;transform:rotate(-8deg)}
-.hero-badge{display:inline-block;background:rgba(0,0,0,.72);color:var(--gold);padding:6px 12px;border-radius:999px;font-size:11px;font-weight:900;margin-bottom:14px}
-.hero-title{margin:0;font-size:34px;line-height:1.16;letter-spacing:-1px;font-weight:950}
-.hero-text{margin:14px 0 0;color:#eee;font-size:14px;line-height:1.7;font-weight:700}
-.hero-buttons{display:flex;gap:10px;margin-top:22px;position:relative;z-index:1}
-.hero-buttons a{flex:1;text-align:center;padding:13px 8px;border-radius:15px;font-size:14px;font-weight:950}
-.primary{background:white;color:#111}
-.secondary{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:white}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 18px}
-.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 8px;text-align:center}
-.stat-label{font-size:11px;color:#aaa;font-weight:800}
-.stat-num{font-size:20px;font-weight:950;color:var(--gold);margin-top:5px}
-.container{padding:0 16px}
-.section-title{margin:22px 0 12px;display:flex;justify-content:space-between;align-items:end}
-.section-title span:first-child{font-size:19px;font-weight:950}
-.more{font-size:11px;color:var(--gold);font-weight:900}
-.post,.rank-card,.race-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:11px;box-shadow:0 8px 22px rgba(0,0,0,.22)}
-.post{border-left:4px solid var(--gold)}
-.badge{font-size:11px;font-weight:950;padding:5px 9px;border-radius:999px}
-.hit{background:var(--green)}
-.miss{background:var(--red)}
-.wait{background:#8a6818}
-.rank-card{display:flex;justify-content:space-between;align-items:center}
-.rank-card:first-child{background:linear-gradient(135deg,rgba(245,197,66,.28),#171717 55%);border-color:rgba(245,197,66,.5)}
-.rank-left{display:flex;align-items:center;gap:11px}
-.medal{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ffe88a,#b88917);display:flex;align-items:center;justify-content:center;font-weight:950;color:#111}
-.rank-name{font-size:15px;font-weight:950}
-.rank-sub{color:#aaa;font-size:11px;margin-top:3px}
-.rate{color:var(--gold);font-size:22px;font-weight:950}
-.race-card{border-left:4px solid var(--gold)}
-.race-slider{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
-.race-slider a{min-width:82%;flex-shrink:0}
-.race-title{font-size:15px;font-weight:950}
-.deadline{color:#aaa;font-size:12px;margin-top:5px}
-.race-count{color:var(--gold);font-size:12px;font-weight:900;margin-top:7px}
-.tool-card{margin:22px 0 10px;background:linear-gradient(135deg,var(--gold),#c99416);color:#111;border-radius:24px;padding:20px}
-.tool-card h3{margin:0;font-size:21px;font-weight:950}
-.tool-card p{margin:9px 0 15px;font-size:13px;font-weight:700}
-.tool-card a{display:inline-block;background:#111;color:white;padding:12px 16px;border-radius:14px;font-size:13px;font-weight:950}
-.legal{text-align:center;padding:24px 0 90px;font-size:12px}
-.legal a{color:#777}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-top:1px solid #222;display:grid;grid-template-columns:repeat(4,1fr);padding:11px 0}
-.bottom-nav a{text-align:center;color:#888;font-size:12px;font-weight:950}
-.bottom-nav a:first-child{color:var(--gold)}
+body{
+  margin:0;
+  background:var(--cream);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  color:var(--text);
+  padding-bottom:78px;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+.app{
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top right, rgba(30,127,79,.14), transparent 35%),
+    linear-gradient(180deg,#fbf8f1 0%,#f7f3ea 45%,#f1eadf 100%);
+}
+.header{
+  padding:18px 16px 8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:22px;
+  font-weight:950;
+  letter-spacing:.5px;
+}
+.login-pill{
+  background:#111;
+  color:white;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+}
+.hero{
+  margin:10px 16px 18px;
+  padding:28px 20px;
+  border-radius:28px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,var(--green),#2f9b64 45%,var(--brown));
+  box-shadow:0 18px 35px rgba(50,35,15,.18);
+  color:white;
+}
+.hero::after{
+  content:"🏇";
+  position:absolute;
+  right:10px;
+  bottom:4px;
+  font-size:92px;
+  opacity:.16;
+  transform:rotate(-8deg);
+}
+.hero-badge{
+  display:inline-block;
+  background:rgba(255,255,255,.18);
+  color:white;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:14px;
+}
+.hero-title{
+  margin:0;
+  font-size:34px;
+  line-height:1.16;
+  letter-spacing:-1px;
+  font-weight:950;
+}
+.hero-text{
+  margin:14px 0 0;
+  color:rgba(255,255,255,.9);
+  font-size:14px;
+  line-height:1.7;
+  font-weight:700;
+}
+.hero-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+  position:relative;
+  z-index:1;
+}
+.hero-buttons a{
+  flex:1;
+  text-align:center;
+  padding:13px 8px;
+  border-radius:15px;
+  font-size:14px;
+  font-weight:950;
+}
+.primary{
+  background:white;
+  color:#111;
+}
+.secondary{
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.35);
+  color:white;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:0 16px 18px;
+}
+.stat{
+  background:rgba(255,255,255,.72);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px 8px;
+  text-align:center;
+}
+.stat-label{
+  font-size:11px;
+  color:var(--sub);
+  font-weight:800;
+}
+.stat-num{
+  font-size:20px;
+  font-weight:950;
+  color:var(--green);
+  margin-top:5px;
+}
+.container{
+  padding:0 16px;
+}
+.section-title{
+  margin:22px 0 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+}
+.section-title span:first-child{
+  font-size:19px;
+  font-weight:950;
+}
+.more{
+  font-size:11px;
+  color:var(--green);
+  font-weight:900;
+}
+.race-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-left:5px solid var(--green);
+  border-radius:22px;
+  padding:17px;
+  margin-bottom:11px;
+  box-shadow:0 8px 22px rgba(50,35,15,.08);
+}
+.race-slider{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:8px;
+}
+.race-slider a{
+  min-width:82%;
+  flex-shrink:0;
+}
+.race-title{
+  font-size:18px;
+  font-weight:950;
+  line-height:1.35;
+}
+.deadline{
+  color:var(--sub);
+  font-size:12px;
+  margin-top:8px;
+  font-weight:700;
+}
+.race-count{
+  color:var(--green);
+  font-size:13px;
+  font-weight:950;
+  margin-top:8px;
+}
+.tool-card{
+  margin:22px 0 10px;
+  background:linear-gradient(135deg,#fff,#f2eadc);
+  color:#111;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 8px 22px rgba(50,35,15,.08);
+}
+.tool-card h3{
+  margin:0;
+  font-size:21px;
+  font-weight:950;
+}
+.tool-card p{
+  margin:9px 0 15px;
+  font-size:13px;
+  color:#555;
+  font-weight:700;
+}
+.tool-card a{
+  display:inline-block;
+  background:var(--brown);
+  color:white;
+  padding:12px 16px;
+  border-radius:14px;
+  font-size:13px;
+  font-weight:950;
+}
+.legal{
+  text-align:center;
+  padding:24px 0 90px;
+  font-size:12px;
+}
+.legal a{
+  color:#777;
+}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-top:1px solid #ddd3c3;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  padding:11px 0;
+}
+.bottom-nav a{
+  text-align:center;
+  color:#888;
+  font-size:12px;
+  font-weight:950;
+}
+.bottom-nav a:first-child{
+  color:var(--green);
+}
 </style>
 </head>
-
 <body>
 <div class="app">
-
   <div class="header">
     <div class="logo">DARKHORSCORE</div>
     <a class="login-pill" id="topLoginLink" href="login.html">ログイン</a>
   </div>
-
   <section class="hero">
-    <div class="hero-badge">単勝的中率ランキング</div>
-    <h1 class="hero-title">単勝的中率で<br>予想家を探す。</h1>
-    <p class="hero-text">フォロワー数より、的中率。<br>本当に当たる人を見つけるための競馬SNS。</p>
+    <div class="hero-badge">みんなの本命が見える</div>
+    <h1 class="hero-title">
+      レースごとの<br>
+      単勝人気を見る。
+    </h1>
+    <p class="hero-text">
+      どの馬に票が集まっているか。<br>
+      DARKHORSCOREで、みんなの本命をチェック。
+    </p>
     <div class="hero-buttons">
-      <a class="primary" href="#rankingBox">ランキングを見る</a>
+      <a class="primary" href="#raceBox">対象レースを見る</a>
       <a class="secondary" href="post.html">予想を投稿</a>
     </div>
   </section>
-
   <div class="stats">
-    <div class="stat"><div class="stat-label">ユーザー</div><div class="stat-num" id="userCount">...</div></div>
-    <div class="stat"><div class="stat-label">投稿予想</div><div class="stat-num" id="pickCount">...</div></div>
-    <div class="stat"><div class="stat-label">結果登録</div><div class="stat-num" id="resultCount">...</div></div>
+    <div class="stat">
+      <div class="stat-label">ユーザー</div>
+      <div class="stat-num" id="userCount">...</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">投稿予想</div>
+      <div class="stat-num" id="pickCount">...</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">結果登録</div>
+      <div class="stat-num" id="resultCount">...</div>
+    </div>
   </div>
-
   <div class="container">
-    <div class="section-title"><span>🏆 単勝的中率ランキング</span><span class="more">TOP3</span></div>
-    <div id="rankingBox"></div>
-
-    <div class="section-title"><span>🏇 対象レース</span><span class="more">横にスワイプ</span></div>
+    <div class="section-title">
+      <span>対象レース</span>
+      <span class="more">横にスワイプ</span>
+    </div>
     <div id="raceBox"></div>
-
     <div class="tool-card">
       <h3>📊 回収率計算機</h3>
       <p>投資額と払戻金から、回収率をすぐ計算。</p>
       <a href="roi.html">使ってみる</a>
     </div>
-
     <div class="legal">
       <a href="legal.html">利用規約・プライバシーポリシー</a>
     </div>
   </div>
 </div>
-
 <div class="bottom-nav">
   <a href="index.html">ホーム</a>
   <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
   <a id="mypageLink" href="login.html">ログイン</a>
 </div>
-
 <script>
 const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
 const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
 let picks = [];
 let results = [];
 let races = [];
 let users = [];
-
-function getStatus(p){
-  const sameRaceResults = results.filter(r => {
-    if(p.race_id && r.race_id){
-      return Number(r.race_id) === Number(p.race_id);
-    }
-    return r.racecourse === p.racecourse && r.race === p.race;
-  });
-
-  if(sameRaceResults.length === 0){
-    return { text:"集計待ち", cls:"wait" };
-  }
-
-  const hit = sameRaceResults.find(r =>
-    r.horse === p.horse && Number(r.result) === 1
-  );
-
-  return hit ? { text:"的中", cls:"hit" } : { text:"不的中", cls:"miss" };
-}
-
 async function loadData(){
-  const pickRes = await supabaseClient.from("picks").select("*").order("created_at", { ascending:false });
-  const resultRes = await supabaseClient.from("results").select("*");
-  const raceRes = await supabaseClient.from("races").select("*").order("deadline", { ascending:true });
-  const userRes = await supabaseClient.from("users").select("*");
-
+  const pickRes = await supabaseClient
+    .from("picks")
+    .select("*")
+    .order("created_at", { ascending:false });
+  const resultRes = await supabaseClient
+    .from("results")
+    .select("*");
+  const raceRes = await supabaseClient
+    .from("races")
+    .select("*")
+    .order("deadline", { ascending:true });
+  const userRes = await supabaseClient
+    .from("users")
+    .select("*");
   picks = pickRes.data || [];
   results = resultRes.data || [];
   races = raceRes.data || [];
   users = userRes.data || [];
-
   document.getElementById("userCount").textContent = users.length + "人";
   document.getElementById("pickCount").textContent = picks.length + "件";
   document.getElementById("resultCount").textContent = results.length + "件";
-
-  renderRanking();
   renderRaces();
 }
-
-function renderRanking(){
-  const box = document.getElementById("rankingBox");
-  const map = {};
-
-  picks.forEach(p => {
-    const name = p.username || "名無しの予想家";
-
-    if(!map[name]){
-      map[name] = { name, total:0, hit:0 };
-    }
-
-    const status = getStatus(p);
-
-    if(status.text !== "集計待ち"){
-      map[name].total++;
-
-      if(status.text === "的中"){
-        map[name].hit++;
-      }
-    }
-  });
-
-  const ranking = Object.values(map)
-    .filter(u => u.total > 0)
-    .map(u => ({
-      ...u,
-      rate: u.total ? (u.hit / u.total) * 100 : 0
-    }))
-    .sort((a,b) => b.rate - a.rate || b.hit - a.hit)
-    .slice(0,3);
-
-  if(ranking.length === 0){
-    box.innerHTML = `<div class="rank-card">ランキングは集計中です</div>`;
-    return;
-  }
-
-  box.innerHTML = ranking.map((u,i) => `
-    <div class="rank-card">
-      <div class="rank-left">
-        <div class="medal">${i+1}</div>
-        <div>
-          <div class="rank-name">${u.name}</div>
-          <div class="rank-sub">的中 ${u.hit} / 集計済み ${u.total}</div>
-        </div>
-      </div>
-      <div class="rate">${u.rate.toFixed(1)}%</div>
-    </div>
-  `).join("");
-}
-
 function renderRaces(){
   const box = document.getElementById("raceBox");
   const now = new Date();
-
-const upcoming = races.filter(r => {
-  return !r.deadline || new Date(r.deadline) > now;
-});
-
+  const upcoming = races.filter(r => {
+    return !r.deadline || new Date(r.deadline) > now;
+  });
   if(upcoming.length === 0){
     box.innerHTML = `<div class="race-card">対象レースがありません。</div>`;
     return;
   }
-
   box.innerHTML = `
     <div class="race-slider">
       ${upcoming.map(r => {
         const deadline = r.deadline
           ? new Date(r.deadline).toLocaleString("ja-JP")
           : "未設定";
-
         const count = picks.filter(p =>
           p.racecourse === r.racecourse &&
           p.race === r.race
         ).length;
-
         return `
           <a href="race.html?racecourse=${encodeURIComponent(r.racecourse)}&race=${encodeURIComponent(r.race)}">
             <div class="race-card">
@@ -255,12 +384,10 @@ const upcoming = races.filter(r => {
     </div>
   `;
 }
-
 async function updateNav(){
   const { data } = await supabaseClient.auth.getUser();
   const link = document.getElementById("mypageLink");
   const topLink = document.getElementById("topLoginLink");
-
   if(data.user){
     link.textContent = "マイページ";
     link.href = "mypage.html";
@@ -273,10 +400,8 @@ async function updateNav(){
     topLink.href = "login.html";
   }
 }
-
 loadData();
 updateNav();
 </script>
-
 </body>
 </html>
