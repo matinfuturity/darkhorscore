@@ -382,10 +382,16 @@ async function submitPick(){
       horse: horse,
       reason: reason
     });
-  if(error){
-    alert(error.message);
+if(error){
+
+  if(error.message.includes("unique_user_race_pick")){
+    alert("このレースには既に投票済みです。");
     return;
   }
+
+  alert(error.message);
+  return;
+}
   alert("予想を投稿しました。");
   location.href = "index.html";
 }
