@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -61,18 +62,17 @@ a{
   border-radius:28px;
   position:relative;
   overflow:hidden;
-  background:
-    linear-gradient(135deg,var(--green),#2f9b64 45%,var(--brown));
+  background:linear-gradient(135deg,var(--green),#2f9b64 45%,var(--brown));
   box-shadow:0 18px 35px rgba(50,35,15,.18);
   color:white;
 }
 .hero::after{
-  content:"🏇";
+  content:"↔️";
   position:absolute;
   right:10px;
-  bottom:4px;
-  font-size:92px;
-  opacity:.16;
+  bottom:8px;
+  font-size:86px;
+  opacity:.18;
   transform:rotate(-8deg);
 }
 .hero-badge{
@@ -283,18 +283,18 @@ a{
     <a class="login-pill" id="topLoginLink" href="login.html">ログイン</a>
   </div>
   <section class="hero">
-    <div class="hero-badge">みんなの本命が見える</div>
+    <div class="hero-badge">ログインなしで参加</div>
     <h1 class="hero-title">
-      レースごとの<br>
-      単勝人気を見る。
+      この馬、<br>
+      買う？消す？
     </h1>
     <p class="hero-text">
-      どの馬に票が集まっているか。<br>
-      DARKHORSCOREで、みんなの本命をチェック。
+      馬をスワイプ感覚で評価。<br>
+      みんなの支持率からレースを見る。
     </p>
     <div class="hero-buttons">
-      <a class="primary" href="#raceBox">対象レースを見る</a>
-      <a class="secondary" href="post.html">予想を投稿</a>
+      <a class="primary" href="swipe.html">スワイプする</a>
+      <a class="secondary" href="#raceBox">レースを見る</a>
     </div>
   </section>
   <div class="stats">
@@ -312,11 +312,21 @@ a{
     </div>
   </div>
   <div class="container">
+    <div class="tool-card">
+      <h3>🔥 スワイプ予想</h3>
+      <p>買う？消す？馬を右左で評価するだけ。ログイン不要で参加できます。</p>
+      <a href="swipe.html">参加する</a>
+    </div>
     <div class="section-title">
       <span>対象レース</span>
       <span class="more">横にスワイプ</span>
     </div>
     <div id="raceBox"></div>
+    <div class="tool-card">
+      <h3>🏆 的中実績</h3>
+      <p>的中した予想家だけを一覧でチェック。</p>
+      <a href="ranking.html">見てみる</a>
+    </div>
     <div class="tool-card">
       <h3>📊 回収率計算機</h3>
       <p>投資額と払戻金から、回収率をすぐ計算。</p>
@@ -327,8 +337,8 @@ a{
     </div>
   </div>
 </div>
-<a href="ranking.html" class="floating-ranking">
-  🔥 今週当てた人
+<a href="swipe.html" class="floating-ranking">
+  🔥 スワイプ
 </a>
 <div class="bottom-nav">
   <a href="index.html">ホーム</a>
