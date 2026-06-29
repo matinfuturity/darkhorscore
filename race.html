@@ -1,50 +1,65 @@
+これをrace.html全文に上書きして。
+ログイン・ランキング・マイページ・理由表示なしで、馬の人気だけ見るページにしてある。
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>レース別人気 | DARKHORSCORE</title>
+<title>人気順 | DARKHORSCORE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
+:root{
+  --bg:#050505;
+  --card:#121212;
+  --line:#242424;
+  --gold:#d4af37;
+  --text:#fff;
+  --sub:#999;
+}
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:#f4f4f4;
-  color:#111;
+  background:var(--bg);
+  color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  padding-bottom:78px;
+  padding-bottom:76px;
+}
+a{
+  color:inherit;
+  text-decoration:none;
 }
 .app{
   max-width:480px;
   margin:0 auto;
   min-height:100vh;
-  background:#f7f7f7;
+  padding:26px 18px;
+  background:
+    radial-gradient(circle at top right, rgba(212,175,55,.16), transparent 38%),
+    linear-gradient(180deg,#070707 0%,#050505 100%);
 }
 .header{
-  padding:22px 18px 14px;
-  background:white;
-  border-bottom:1px solid #e5e5e5;
+  padding:14px 0 26px;
 }
 .logo{
-  font-size:18px;
+  font-size:24px;
   font-weight:950;
-  letter-spacing:.5px;
+  letter-spacing:1.5px;
+  color:var(--gold);
 }
-.sub{
-  color:#777;
-  font-size:12px;
-  margin-top:4px;
+.catch{
+  margin-top:10px;
+  color:var(--sub);
+  font-size:14px;
+  line-height:1.7;
   font-weight:700;
 }
-.container{
-  padding:16px;
-}
 .hero{
-  background:white;
-  border:1px solid #e5e5e5;
-  border-radius:22px;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
+  border-radius:24px;
   padding:20px;
-  margin-bottom:14px;
+  margin-bottom:20px;
 }
 .race-title{
   font-size:24px;
@@ -52,9 +67,10 @@ body{
   line-height:1.35;
 }
 .race-info{
-  color:#777;
+  color:var(--sub);
   font-size:13px;
   margin-top:8px;
+  font-weight:700;
 }
 .total-box{
   display:grid;
@@ -63,54 +79,55 @@ body{
   margin-top:18px;
 }
 .total-item{
-  background:#f5f5f5;
+  background:#0b0b0b;
+  border:1px solid var(--line);
   border-radius:16px;
   padding:14px;
 }
 .total-label{
-  color:#777;
+  color:var(--sub);
   font-size:12px;
   font-weight:800;
 }
 .total-num{
-  font-size:24px;
+  font-size:25px;
   font-weight:950;
   margin-top:4px;
+  color:var(--gold);
 }
 .action-row{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:14px;
+  margin-top:16px;
 }
 .btn{
   display:block;
   text-align:center;
-  padding:13px;
+  padding:14px;
   border-radius:999px;
   font-weight:950;
   font-size:13px;
-  text-decoration:none;
 }
 .btn-primary{
-  background:#111;
-  color:white;
+  background:var(--gold);
+  color:#050505;
 }
 .btn-secondary{
-  background:#eee;
-  color:#111;
+  background:#222;
+  color:#fff;
 }
 .section-title{
-  margin:22px 0 10px;
-  font-size:17px;
+  margin:22px 0 12px;
+  font-size:19px;
   font-weight:950;
 }
 .rank-card{
-  background:white;
-  border:1px solid #e6e6e6;
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:10px;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:12px;
 }
 .rank-top{
   display:flex;
@@ -125,11 +142,11 @@ body{
   min-width:0;
 }
 .rank-num{
-  width:30px;
-  height:30px;
+  width:32px;
+  height:32px;
   border-radius:50%;
-  background:#111;
-  color:white;
+  background:var(--gold);
+  color:#050505;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -138,7 +155,7 @@ body{
   flex-shrink:0;
 }
 .horse-name{
-  font-size:17px;
+  font-size:18px;
   font-weight:950;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -147,9 +164,11 @@ body{
 .vote-count{
   font-size:18px;
   font-weight:950;
+  color:#fff;
+  text-align:right;
 }
 .percent{
-  color:#777;
+  color:var(--sub);
   font-size:12px;
   font-weight:800;
   text-align:right;
@@ -157,59 +176,35 @@ body{
 }
 .bar-bg{
   height:8px;
-  background:#eee;
+  background:#222;
   border-radius:999px;
   overflow:hidden;
-  margin-top:12px;
+  margin-top:13px;
 }
 .bar{
   height:100%;
-  background:#111;
+  background:var(--gold);
   border-radius:999px;
 }
-.pick-card{
-  background:white;
-  border:1px solid #e6e6e6;
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:10px;
-}
-.pick-head{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-}
-.pick-user{
-  font-weight:950;
-  font-size:14px;
-}
-.pick-horse{
-  font-size:20px;
-  font-weight:950;
-  margin-top:8px;
-}
-.pick-reason{
-  color:#555;
-  font-size:13px;
-  line-height:1.65;
-  margin-top:8px;
-}
 .empty{
-  background:white;
-  border:1px solid #e6e6e6;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
   border-radius:18px;
   padding:18px;
-  color:#777;
+  color:var(--sub);
+  font-size:14px;
+  line-height:1.7;
   font-weight:700;
 }
 .error{
-  color:#b00020;
-  background:#fff0f2;
-  border:1px solid #ffd0d8;
+  color:#ffb3b3;
+  background:rgba(255,0,0,.08);
+  border:1px solid rgba(255,0,0,.22);
   padding:12px;
   border-radius:14px;
   margin-bottom:12px;
   display:none;
+  font-size:13px;
 }
 .bottom-nav{
   position:fixed;
@@ -218,21 +213,22 @@ body{
   transform:translateX(-50%);
   width:100%;
   max-width:480px;
-  background:rgba(255,255,255,.96);
-  border-top:1px solid #ddd;
+  background:rgba(5,5,5,.94);
+  backdrop-filter:blur(14px);
+  border-top:1px solid #222;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:11px 0;
+  grid-template-columns:repeat(3,1fr);
+  padding:12px 0;
+  z-index:999;
 }
 .bottom-nav a{
   text-align:center;
   color:#777;
-  text-decoration:none;
   font-size:12px;
   font-weight:950;
 }
 .bottom-nav a:first-child{
-  color:#111;
+  color:var(--gold);
 }
 </style>
 </head>
@@ -240,39 +236,34 @@ body{
 <div class="app">
   <div class="header">
     <div class="logo">DARKHORSCORE</div>
-    <div class="sub">みんなの単勝人気</div>
+    <div class="catch">みんなが買う馬をチェック。</div>
   </div>
-  <div class="container">
-    <div id="errorBox" class="error"></div>
-    <div class="hero">
-      <div id="raceTitle" class="race-title">読み込み中...</div>
-      <div id="raceInfo" class="race-info"></div>
-      <div class="total-box">
-        <div class="total-item">
-          <div class="total-label">総投票数</div>
-          <div id="totalVotes" class="total-num">0</div>
-        </div>
-        <div class="total-item">
-          <div class="total-label">選択馬数</div>
-          <div id="horseKinds" class="total-num">0</div>
-        </div>
+  <div id="errorBox" class="error"></div>
+  <div class="hero">
+    <div id="raceTitle" class="race-title">読み込み中...</div>
+    <div id="raceInfo" class="race-info"></div>
+    <div class="total-box">
+      <div class="total-item">
+        <div class="total-label">総投票数</div>
+        <div id="totalVotes" class="total-num">0</div>
       </div>
-      <div class="action-row">
-        <a id="postLink" href="post.html" class="btn btn-primary">このレースを予想</a>
-        <a href="index.html" class="btn btn-secondary">戻る</a>
+      <div class="total-item">
+        <div class="total-label">投票馬数</div>
+        <div id="horseKinds" class="total-num">0</div>
       </div>
     </div>
-    <div class="section-title">単勝人気</div>
-    <div id="voteRanking"></div>
-    <div class="section-title">みんなの本命</div>
-    <div id="pickList"></div>
+    <div class="action-row">
+      <a id="postLink" href="post.html" class="btn btn-primary">投票する</a>
+      <a href="index.html" class="btn btn-secondary">戻る</a>
+    </div>
   </div>
+  <div class="section-title">人気順</div>
+  <div id="voteRanking"></div>
 </div>
 <div class="bottom-nav">
   <a href="index.html">ホーム</a>
-  <a href="post.html">予想</a>
-  <a href="ranking.html">ランキング</a>
-  <a href="mypage.html">マイページ</a>
+  <a href="post.html">投票</a>
+  <a href="legal.html">規約</a>
 </div>
 <script>
 const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
@@ -290,13 +281,13 @@ async function loadRacePicks(){
   if(!race){
     document.getElementById("raceTitle").textContent = "レースが指定されていません";
     document.getElementById("raceInfo").textContent = "ホームからレースを選んでください。";
-    document.getElementById("voteRanking").innerHTML = `<div class="empty">表示できる予想がありません。</div>`;
-    document.getElementById("pickList").innerHTML = `<div class="empty">まだ予想がありません。</div>`;
+    document.getElementById("voteRanking").innerHTML =
+      `<div class="empty">表示できる投票がありません。</div>`;
     return;
   }
   document.getElementById("raceTitle").textContent = race;
   document.getElementById("raceInfo").textContent =
-    racecourse ? `${racecourse}｜単勝予想一覧` : "単勝予想一覧";
+    racecourse ? `${racecourse}｜人気投票` : "人気投票";
   document.getElementById("postLink").href =
     `post.html?racecourse=${encodeURIComponent(racecourse)}&race=${encodeURIComponent(race)}`;
   let query = supabaseClient
@@ -315,7 +306,6 @@ async function loadRacePicks(){
   const picks = data || [];
   renderSummary(picks);
   renderVoteRanking(picks);
-  renderPickList(picks);
 }
 function renderSummary(picks){
   const horses = new Set(
@@ -327,7 +317,7 @@ function renderSummary(picks){
 function renderVoteRanking(picks){
   const box = document.getElementById("voteRanking");
   if(picks.length === 0){
-    box.innerHTML = `<div class="empty">まだ予想がありません。</div>`;
+    box.innerHTML = `<div class="empty">まだ投票がありません。</div>`;
     return;
   }
   const counts = {};
@@ -360,23 +350,9 @@ function renderVoteRanking(picks){
     </div>
   `).join("");
 }
-function renderPickList(picks){
-  const box = document.getElementById("pickList");
-  if(picks.length === 0){
-    box.innerHTML = `<div class="empty">まだこのレースの予想はありません。</div>`;
-    return;
-  }
-  box.innerHTML = picks.map(p => `
-    <div class="pick-card">
-      <div class="pick-head">
-        <div class="pick-user">${p.username || "名無しの予想家"}</div>
-      </div>
-      <div class="pick-horse">◎ ${p.horse || "未入力"}</div>
-      <div class="pick-reason">${p.reason || "理由なし"}</div>
-    </div>
-  `).join("");
-}
 loadRacePicks();
 </script>
 </body>
 </html>
+
+これでrace.htmlは人気順だけ表示になる。
