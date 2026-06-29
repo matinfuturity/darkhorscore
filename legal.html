@@ -1,222 +1,218 @@
+これをlegal.html全文に上書きでOK。
+ログイン機能を消したから、メールアドレス・ユーザー名・アカウント系も消してある。
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>利用規約・プライバシーポリシー | DARKHORSCORE</title>
-
 <style>
+:root{
+  --bg:#050505;
+  --card:#121212;
+  --line:#242424;
+  --gold:#d4af37;
+  --text:#fff;
+  --sub:#999;
+}
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:#f5f5f5;
+  background:var(--bg);
+  color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  color:#111;
+  padding-bottom:76px;
 }
-
+a{
+  color:inherit;
+  text-decoration:none;
+}
+.app{
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  padding:26px 18px;
+  background:
+    radial-gradient(circle at top right, rgba(212,175,55,.16), transparent 38%),
+    linear-gradient(180deg,#070707 0%,#050505 100%);
+}
 .header{
-  background:#111;
-  color:white;
-  padding:24px;
-  text-align:center;
+  padding:14px 0 26px;
 }
-
 .logo{
-  font-size:28px;
-  font-weight:900;
+  font-size:24px;
+  font-weight:950;
+  letter-spacing:1.5px;
+  color:var(--gold);
 }
-
-.sub{
-  color:#ccc;
-  font-size:13px;
-  margin-top:6px;
+.catch{
+  margin-top:10px;
+  color:var(--sub);
+  font-size:14px;
+  line-height:1.7;
+  font-weight:700;
 }
-
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-
 .card{
-  background:white;
-  border-radius:20px;
-  padding:24px;
-  box-shadow:0 4px 12px rgba(0,0,0,.06);
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px;
   line-height:1.8;
 }
-
 h1{
-  margin-top:0;
+  margin:0 0 18px;
+  font-size:24px;
 }
-
 h2{
-  margin-top:32px;
-  border-left:5px solid #111;
-  padding-left:10px;
+  margin:28px 0 10px;
+  font-size:17px;
+  color:var(--gold);
 }
-
+p,li{
+  color:#ddd;
+  font-size:14px;
+}
 ul{
   padding-left:20px;
 }
-
+hr{
+  border:none;
+  border-top:1px solid var(--line);
+  margin:36px 0;
+}
 .footer{
   text-align:center;
-  color:#666;
-  margin-top:30px;
-  font-size:13px;
+  color:var(--sub);
+  margin-top:34px;
+  font-size:12px;
+  line-height:1.8;
+}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  background:rgba(5,5,5,.94);
+  backdrop-filter:blur(14px);
+  border-top:1px solid #222;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  padding:12px 0;
+  z-index:999;
+}
+.bottom-nav a{
+  text-align:center;
+  color:#777;
+  font-size:12px;
+  font-weight:950;
+}
+.bottom-nav a:nth-child(3){
+  color:var(--gold);
 }
 </style>
 </head>
-
 <body>
-
-<div class="header">
-  <div class="logo">DARKHORSCORE</div>
-  <div class="sub">利用規約・プライバシーポリシー</div>
+<div class="app">
+  <div class="header">
+    <div class="logo">DARKHORSCORE</div>
+    <div class="catch">利用規約・プライバシーポリシー</div>
+  </div>
+  <div class="card">
+    <h1>利用規約</h1>
+    <p>
+      本利用規約は、DARKHORSCOREの利用条件を定めるものです。
+      利用者は本規約に同意した上で当サービスを利用するものとします。
+    </p>
+    <h2>第1条（適用）</h2>
+    <p>
+      本規約は、利用者と当サービスとの間の一切の関係に適用されます。
+    </p>
+    <h2>第2条（サービス内容）</h2>
+    <p>
+      当サービスは、競馬レースにおいて利用者が支持する馬を投票し、その集計結果を表示するサービスです。
+    </p>
+    <h2>第3条（禁止事項）</h2>
+    <ul>
+      <li>法令または公序良俗に反する行為</li>
+      <li>不正アクセス行為</li>
+      <li>短時間での大量投票など、集計結果を不当に操作する行為</li>
+      <li>虚偽情報や不適切な内容の投稿</li>
+      <li>サービス運営を妨害する行為</li>
+      <li>その他運営が不適切と判断する行為</li>
+    </ul>
+    <h2>第4条（投稿内容）</h2>
+    <p>
+      利用者が投稿した内容は、当サービス内で表示・集計されます。
+      不適切と判断した投稿は、予告なく削除する場合があります。
+    </p>
+    <h2>第5条（サービスの変更・停止）</h2>
+    <p>
+      当サービスは、事前通知なく内容の変更・停止・終了を行う場合があります。
+    </p>
+    <h2>第6条（免責事項）</h2>
+    <p>
+      当サービスは、競馬予想の的中や利益を保証するものではありません。
+      当サービスの情報を利用したことによる損害について、運営者は責任を負いません。
+    </p>
+    <h2>第7条（規約変更）</h2>
+    <p>
+      本規約は、予告なく変更される場合があります。
+    </p>
+    <h2>第8条（準拠法）</h2>
+    <p>
+      本規約は日本法に準拠します。
+    </p>
+    <hr>
+    <h1>プライバシーポリシー</h1>
+    <p>
+      DARKHORSCOREは、利用者のプライバシー保護に努めます。
+    </p>
+    <h2>1. 取得する情報</h2>
+    <ul>
+      <li>投稿された投票内容</li>
+      <li>アクセスログ</li>
+      <li>Cookie等の利用情報</li>
+    </ul>
+    <h2>2. 利用目的</h2>
+    <ul>
+      <li>投票結果の集計・表示のため</li>
+      <li>不正利用防止のため</li>
+      <li>サービス改善のため</li>
+    </ul>
+    <h2>3. 第三者提供</h2>
+    <p>
+      法令に基づく場合を除き、取得した情報を第三者へ提供することはありません。
+    </p>
+    <h2>4. 外部サービス</h2>
+    <ul>
+      <li>Supabase</li>
+      <li>GitHub Pages</li>
+    </ul>
+    <h2>5. Cookieについて</h2>
+    <p>
+      利便性向上や不正利用防止のため、CookieまたはLocalStorageを利用する場合があります。
+    </p>
+    <h2>6. 改定</h2>
+    <p>
+      本ポリシーは、予告なく変更される場合があります。
+    </p>
+    <h2>7. お問い合わせ</h2>
+    <p>
+      お問い合わせは、運営者のSNSアカウント等までお願いいたします。
+    </p>
+    <div class="footer">
+      制定日：2026年6月<br>
+      DARKHORSCORE運営
+    </div>
+  </div>
 </div>
-
-<div class="container">
-
-<div class="card">
-
-<h1>利用規約</h1>
-
-<p>
-本利用規約（以下「本規約」）は、DARKHORSCORE（以下「当サービス」）の利用条件を定めるものです。
-利用者は本規約に同意した上で当サービスを利用するものとします。
-</p>
-
-<h2>第1条（適用）</h2>
-
-<p>
-本規約は利用者と当サービスとの間の一切の関係に適用されます。
-</p>
-
-<h2>第2条（アカウント）</h2>
-
-<p>
-利用者は正確な情報を登録するものとします。
-</p>
-
-<h2>第3条（禁止事項）</h2>
-
-<ul>
-<li>法令または公序良俗に反する行為</li>
-<li>不正アクセス行為</li>
-<li>誹謗中傷や嫌がらせ行為</li>
-<li>虚偽情報の投稿</li>
-<li>サービス運営を妨害する行為</li>
-<li>その他運営が不適切と判断する行為</li>
-</ul>
-
-<h2>第4条（投稿内容）</h2>
-
-<p>
-投稿内容の著作権は投稿者に帰属します。
-ただし当サービスはサービス運営・紹介・広報目的の範囲で利用できるものとします。
-</p>
-
-<h2>第5条（サービスの変更・停止）</h2>
-
-<p>
-当サービスは事前通知なく内容の変更・停止・終了を行う場合があります。
-</p>
-
-<h2>第6条（免責事項）</h2>
-
-<p>
-当サービスは競馬予想の的中を保証するものではありません。
-利用者が被った損害について運営者は責任を負いません。
-</p>
-
-<p>
-掲載情報の正確性・完全性についても保証するものではありません。
-</p>
-
-<h2>第7条（アカウント停止）</h2>
-
-<p>
-本規約違反が認められた場合、運営者はアカウント停止または削除を行うことがあります。
-</p>
-
-<h2>第8条（規約変更）</h2>
-
-<p>
-本規約は予告なく変更される場合があります。
-</p>
-
-<h2>第9条（準拠法）</h2>
-
-<p>
-本規約は日本法に準拠します。
-</p>
-
-<hr style="margin:40px 0">
-
-<h1>プライバシーポリシー</h1>
-
-<p>
-DARKHORSCOREは利用者の個人情報保護に努めます。
-</p>
-
-<h2>1. 取得する情報</h2>
-
-<ul>
-<li>メールアドレス</li>
-<li>ユーザー名</li>
-<li>投稿された予想内容</li>
-<li>アクセスログ</li>
-<li>Cookie等の利用情報</li>
-</ul>
-
-<h2>2. 利用目的</h2>
-
-<ul>
-<li>サービス提供のため</li>
-<li>ユーザー認証のため</li>
-<li>ランキング集計のため</li>
-<li>不正利用防止のため</li>
-<li>サービス改善のため</li>
-</ul>
-
-<h2>3. 第三者提供</h2>
-
-<p>
-法令に基づく場合を除き、個人情報を第三者へ提供することはありません。
-</p>
-
-<h2>4. 外部サービス</h2>
-
-<ul>
-<li>Supabase</li>
-<li>GitHub Pages</li>
-</ul>
-
-<h2>5. Cookieについて</h2>
-
-<p>
-利便性向上のためCookieを利用する場合があります。
-</p>
-
-<h2>6. 改定</h2>
-
-<p>
-本ポリシーは予告なく変更される場合があります。
-</p>
-
-<h2>7. お問い合わせ</h2>
-
-<p>
-お問い合わせは運営者のXアカウントまでお願いいたします。
-</p>
-
-<div class="footer">
-制定日：2026年6月<br>
-DARKHORSCORE運営
+<div class="bottom-nav">
+  <a href="index.html">ホーム</a>
+  <a href="post.html">投票</a>
+  <a href="legal.html">規約</a>
 </div>
-
-</div>
-</div>
-
 </body>
 </html>
