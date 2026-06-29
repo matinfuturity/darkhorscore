@@ -1,118 +1,96 @@
+これをpost.html全文に上書きして。
+ログイン機能なし、レース選択して馬名入れて投票するだけ。
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>投稿 | DARKHORSCORE</title>
+<title>投票 | DARKHORSCORE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
-  --green:#1e7f4f;
-  --brown:#8b5a2b;
+  --bg:#050505;
+  --card:#121212;
+  --line:#242424;
   --gold:#d4af37;
-  --cream:#f7f3ea;
-  --card:#ffffff;
-  --line:#e4dccf;
-  --text:#171717;
-  --sub:#777;
+  --text:#fff;
+  --sub:#999;
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:var(--cream);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:var(--bg);
   color:var(--text);
-  padding-bottom:90px;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  padding-bottom:76px;
 }
-.header{
-  background:linear-gradient(135deg,var(--green),#2f9b64 45%,var(--brown));
-  color:white;
-  padding:28px 18px 22px;
-  text-align:center;
-  border-bottom:1px solid rgba(0,0,0,.08);
+a{
+  color:inherit;
+  text-decoration:none;
 }
-.logo{
-  font-size:28px;
-  font-weight:950;
-  letter-spacing:.5px;
-}
-.sub{
-  color:rgba(255,255,255,.86);
-  font-size:13px;
-  margin-top:6px;
-  font-weight:800;
-}
-.container{
-  padding:16px;
+.app{
   max-width:480px;
   margin:0 auto;
+  min-height:100vh;
+  padding:26px 18px;
+  background:
+    radial-gradient(circle at top right, rgba(212,175,55,.16), transparent 38%),
+    linear-gradient(180deg,#070707 0%,#050505 100%);
+}
+.header{
+  padding:14px 0 26px;
+}
+.logo{
+  font-size:24px;
+  font-weight:950;
+  letter-spacing:1.5px;
+  color:var(--gold);
+}
+.catch{
+  margin-top:10px;
+  color:var(--sub);
+  font-size:14px;
+  line-height:1.7;
+  font-weight:700;
 }
 .card{
-  background:var(--card);
+  background:rgba(255,255,255,.045);
   border:1px solid var(--line);
   border-radius:24px;
   padding:18px;
-  box-shadow:0 8px 22px rgba(50,35,15,.08);
-}
-.login-user{
-  font-size:14px;
-  color:var(--sub);
-  margin-bottom:18px;
-  font-weight:800;
 }
 label{
   display:block;
-  font-weight:950;
   margin-top:18px;
-  color:var(--text);
-}
-input,textarea{
-  width:100%;
-  box-sizing:border-box;
-  padding:15px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  font-size:16px;
-  margin-top:8px;
-  background:#fbfaf7;
-  color:var(--text);
-}
-input::placeholder,
-textarea::placeholder{
-  color:#aaa;
-}
-textarea{
-  min-height:130px;
-  resize:vertical;
-}
-.date-title{
-  margin:18px 0 10px;
-  color:var(--brown);
+  margin-bottom:9px;
+  font-size:14px;
   font-weight:950;
-  font-size:15px;
+}
+.section-label{
+  margin:0 0 12px;
+  font-size:17px;
+  font-weight:950;
 }
 .race-list{
   display:grid;
   gap:10px;
 }
 .race-card{
-  background:#fbfaf7;
+  background:#111;
   border:1px solid var(--line);
-  border-left:5px solid var(--green);
   border-radius:18px;
   padding:15px;
   cursor:pointer;
-  box-shadow:0 5px 15px rgba(50,35,15,.05);
 }
 .race-card.selected{
-  border-color:var(--green);
-  background:rgba(30,127,79,.10);
-  box-shadow:0 0 0 2px rgba(30,127,79,.18);
+  border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(212,175,55,.18);
 }
 .race-title{
-  font-weight:950;
   font-size:16px;
+  font-weight:950;
+  line-height:1.4;
 }
 .race-deadline{
   color:var(--sub);
@@ -122,9 +100,21 @@ textarea{
 }
 .selected-race{
   margin-top:12px;
-  color:var(--green);
+  color:var(--gold);
   font-size:13px;
   font-weight:950;
+}
+input{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  background:#0b0b0b;
+  color:#fff;
+  font-size:16px;
+}
+input::placeholder{
+  color:#777;
 }
 button{
   width:100%;
@@ -132,41 +122,33 @@ button{
   padding:17px;
   border:none;
   border-radius:999px;
-  background:var(--green);
-  color:white;
+  background:var(--gold);
+  color:#050505;
   font-size:17px;
   font-weight:950;
-  box-shadow:0 8px 18px rgba(30,127,79,.22);
 }
 .reset-button{
   margin-top:12px;
-  background:#eee6da;
-  color:#111;
-  border:none;
+  background:#222;
+  color:#fff;
   border-radius:14px;
-  padding:14px;
-  width:100%;
-  font-weight:950;
   box-shadow:none;
 }
 .notice{
   margin-top:16px;
   padding:14px;
   border-radius:16px;
-  background:#f7f0e3;
+  background:rgba(255,255,255,.04);
   border:1px solid var(--line);
-  color:#555;
+  color:var(--sub);
   font-size:13px;
   line-height:1.7;
   font-weight:700;
 }
 .empty{
   color:var(--sub);
-  background:#fbfaf7;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-  font-weight:800;
+  font-size:14px;
+  line-height:1.7;
 }
 .bottom-nav{
   position:fixed;
@@ -175,86 +157,60 @@ button{
   transform:translateX(-50%);
   width:100%;
   max-width:480px;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(12px);
-  border-top:1px solid #ddd3c3;
+  background:rgba(5,5,5,.94);
+  backdrop-filter:blur(14px);
+  border-top:1px solid #222;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  padding:11px 0;
+  padding:12px 0;
+  z-index:999;
 }
 .bottom-nav a{
   text-align:center;
-  text-decoration:none;
-  color:#888;
+  color:#777;
   font-size:12px;
   font-weight:950;
 }
 .bottom-nav a:nth-child(2){
-  color:var(--green);
+  color:var(--gold);
 }
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="logo">DARKHORSCORE</div>
-  <div class="sub">予想を投稿する</div>
-</div>
-<div class="container">
+<div class="app">
+  <div class="header">
+    <div class="logo">DARKHORSCORE</div>
+    <div class="catch">
+      どの馬を買う？<br>
+      レースを選んで、馬名を投票。
+    </div>
+  </div>
   <div class="card">
-    <div class="login-user" id="loginUser">ログイン確認中...</div>
-    <label>対象レース</label>
+    <div class="section-label">対象レース</div>
     <div id="raceList">
       <div class="empty">レースを読み込み中...</div>
     </div>
     <div id="selectedRaceText" class="selected-race">未選択</div>
-    <label>本命馬</label>
+    <label>投票する馬</label>
     <input id="horse" placeholder="例：ソールオリエンス">
-    <label>予想理由</label>
-    <textarea id="reason" placeholder="例：前走内容を評価。距離延長もプラス。"></textarea>
-    <button onclick="submitPick()">投稿する</button>
+    <button onclick="submitPick()">投票する</button>
     <div class="notice">
-      投稿した予想はホーム・マイページに反映されます。
+      投票すると、レースページの人気順に反映されます。
     </div>
   </div>
 </div>
 <div class="bottom-nav">
   <a href="index.html">ホーム</a>
-  <a href="post.html">予想</a>
-  <a id="mypageLink" href="login.html">ログイン</a>
+  <a href="post.html">投票</a>
+  <a href="legal.html">規約</a>
 </div>
 <script>
 const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
 const SUPABASE_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-let currentUser = null;
-let currentProfile = null;
 let races = [];
 let selectedRaceId = "";
 async function init(){
-  const { data } = await supabaseClient.auth.getUser();
-  currentUser = data.user;
-  const navLink = document.getElementById("mypageLink");
-  const loginUser = document.getElementById("loginUser");
-  if(!currentUser){
-    navLink.textContent = "ログイン";
-    navLink.href = "login.html";
-    loginUser.textContent = "予想を投稿するにはログインしてください。";
-    await loadRaces();
-    return;
-  }
-  navLink.textContent = "マイページ";
-  navLink.href = "mypage.html";
-  const { data: profile } = await supabaseClient
-    .from("users")
-    .select("*")
-    .eq("email", currentUser.email)
-    .maybeSingle();
-  currentProfile = profile;
-  if(currentProfile && currentProfile.username){
-    loginUser.textContent = "ログイン中：" + currentProfile.username;
-  }else{
-    loginUser.textContent = "ログイン中：名無しの予想家";
-  }
   await loadRaces();
 }
 async function loadRaces(){
@@ -264,7 +220,7 @@ async function loadRaces(){
     .select("*")
     .order("deadline", { ascending:true });
   if(error){
-    box.innerHTML = '<div class="empty">レースの取得に失敗しました：' + error.message + '</div>';
+    box.innerHTML = `<div class="empty">レースの取得に失敗しました。</div>`;
     return;
   }
   const now = new Date();
@@ -273,37 +229,22 @@ async function loadRaces(){
     return new Date(r.deadline) >= now;
   });
   if(races.length === 0){
-    box.innerHTML = '<div class="empty">対象レースがありません</div>';
+    box.innerHTML = `<div class="empty">対象レースがありません。</div>`;
     return;
   }
-  renderRacesByDate();
+  renderRaces();
 }
-function getDateKey(deadline){
-  if(!deadline) return "日付未設定";
-  const d = new Date(deadline);
-  const month = d.getMonth() + 1;
-  const date = d.getDate();
-  const day = ["日","月","火","水","木","金","土"][d.getDay()];
-  return `${month}/${date}（${day}）`;
-}
-function renderRacesByDate(){
+function renderRaces(){
   selectedRaceId = "";
   document.getElementById("selectedRaceText").textContent = "未選択";
   const box = document.getElementById("raceList");
-  const grouped = {};
-  races.forEach(r => {
-    const key = getDateKey(r.deadline);
-    if(!grouped[key]){
-      grouped[key] = [];
-    }
-    grouped[key].push(r);
-  });
-  box.innerHTML = Object.keys(grouped).map(dateKey => `
-    <div class="date-title">${dateKey}</div>
+  box.innerHTML = `
     <div class="race-list">
-      ${grouped[dateKey].map(r => {
+      ${races.map(r => {
         const deadlineText = r.deadline
-          ? new Date(r.deadline).toLocaleTimeString("ja-JP", {
+          ? new Date(r.deadline).toLocaleString("ja-JP", {
+              month:"numeric",
+              day:"numeric",
               hour:"2-digit",
               minute:"2-digit"
             })
@@ -316,18 +257,16 @@ function renderRacesByDate(){
         `;
       }).join("")}
     </div>
-  `).join("");
+  `;
 }
 function selectRace(id){
   selectedRaceId = String(id);
-  const selectedRace = races.find(r =>
-    String(r.id) === selectedRaceId
-  );
-  if(!selectedRace){
-    return;
-  }
+  const selectedRace = races.find(r => String(r.id) === selectedRaceId);
+  if(!selectedRace) return;
   const deadlineText = selectedRace.deadline
-    ? new Date(selectedRace.deadline).toLocaleTimeString("ja-JP", {
+    ? new Date(selectedRace.deadline).toLocaleString("ja-JP", {
+        month:"numeric",
+        day:"numeric",
         hour:"2-digit",
         minute:"2-digit"
       })
@@ -340,62 +279,48 @@ function selectRace(id){
         <div class="race-title">${selectedRace.racecourse}｜${selectedRace.race}</div>
         <div class="race-deadline">締切 ${deadlineText}</div>
       </div>
-      <button type="button" class="reset-button" onclick="renderRacesByDate()">
+      <button type="button" class="reset-button" onclick="renderRaces()">
         レースを選び直す
       </button>
     </div>
   `;
 }
 async function submitPick(){
-  if(!currentUser){
-    alert("予想を投稿するにはログインが必要です。");
-    location.href = "login.html";
-    return;
-  }
-  const raceId = selectedRaceId;
   const horse = document.getElementById("horse").value.trim();
-  const reason = document.getElementById("reason").value.trim();
-  if(!raceId){
+  if(!selectedRaceId){
     alert("対象レースを選択してください。");
     return;
   }
   if(!horse){
-    alert("本命馬をご入力ください。");
+    alert("馬名を入力してください。");
     return;
   }
-  const selectedRace = races.find(r =>
-    String(r.id) === String(raceId)
-  );
+  const selectedRace = races.find(r => String(r.id) === String(selectedRaceId));
   if(!selectedRace){
     alert("対象レースの取得に失敗しました。");
     return;
   }
-  const username = currentProfile?.username || "名無しの予想家";
   const { error } = await supabaseClient
     .from("picks")
     .insert({
-      user_id: currentUser.id,
-      username: username,
-      race_id: Number(raceId),
+      race_id: selectedRace.id,
       racecourse: selectedRace.racecourse,
       race: selectedRace.race,
-      horse: horse,
-      reason: reason
+      horse: horse
     });
-if(error){
-
-  if(error.message.includes("unique_user_race_pick")){
-    alert("このレースには既に投票済みです。");
+  if(error){
+    alert(error.message);
     return;
   }
-
-  alert(error.message);
-  return;
-}
-  alert("予想を投稿しました。");
-  location.href = "index.html";
+  alert("投票しました。");
+  location.href = "race.html?racecourse=" 
+    + encodeURIComponent(selectedRace.racecourse)
+    + "&race="
+    + encodeURIComponent(selectedRace.race);
 }
 init();
 </script>
 </body>
 </html>
+
+これでusersもログインもreasonも全部消える。
