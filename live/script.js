@@ -1,76 +1,84 @@
-const CSV_URL = "https://docs.google.com/spreadsheets/d/1-DBOLfqd041JAgXdosuHBzpqYWVJ6KoMD5znqK1WtcE/gviz/tq?tqx=out:csv&sheet=DATA";
+const SHEET_API_URL = ""; // ここにGoogle Apps ScriptのWebアプリURLを入れる
+const REFRESH_MS = 10000;
 
-function parseCSV(text) {
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let quote = false;
+const demoData = {
+  date: "6月30日(月)", place: "名古屋", race: "1R", raceName: "テストレース",
+  startTime: "15:30", closeTime: "15:28",
+  safe: "5", safeHorse: "サンライズジパング",
+  longshot: "11", longshotHorse: "サヴァ",
+  jiyo: "2", jiyoHorse: "メイショウテンスイ",
+  memo: "良馬場想定。先行力と内枠を重視。締切直前の馬体重・オッズ変動に注意。"
+};
 
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
-    const next = text[i + 1];
+const $ = (id) => document.getElementById(id);
 
-    if (char === '"' && quote && next === '"') {
-      cell += '"';
-      i++;
-    } else if (char === '"') {
-      quote = !quote;
-    } else if (char === "," && !quote) {
-      row.push(cell);
-      cell = "";
-    } else if ((char === "\n" || char === "\r") && !quote) {
-      if (cell || row.length) {
-        row.push(cell);
-        rows.push(row);
-        row = [];
-        cell = "";
-      }
-    } else {
-      cell += char;
-    }
+function pickValue(row, keys, fallback = "") {
+  for (const key of keys) {
+    if (row && row[key] !== undefined && row[key] !== null && String(row[key]).trim() !== "") return row[key];
   }
+  return fallback;
+}
 
-  if (cell || row.length) {
-    row.push(cell);
-    rows.push(row);
-  }
+function normalize(raw) {
+  const row = Array.isArray(raw) ? raw[0] : raw;
+  return {
+    date: pickValue(row, ["日付", "date"], demoData.date),
+    place: pickValue(row, ["競馬場", "place"], demoData.place),
+    race: pickValue(row, ["レース", "race"], demoData.race),
+    raceName: pickValue(row, ["レース名", "raceName", "name"], demoData.raceName),
+    startTime: pickValue(row, ["発走", "startTime", "start"], demoData.startTime),
+    closeTime: pickValue(row, ["締切", "closeTime", "close"], demoData.closeTime),
+    safe: pickValue(row, ["SAFE", "safe"], demoData.safe),
+    safeHorse: pickValue(row, ["SAFE馬名", "safeHorse", "馬名SAFE", "馬名"], demoData.safeHorse),
+    longshot: pickValue(row, ["LONGSHOT", "longshot"], demoData.longshot),
+    longshotHorse: pickValue(row, ["LONGSHOT馬名", "longshotHorse", "馬名LONGSHOT"], demoData.longshotHorse),
+    jiyo: pickValue(row, ["ジヨ", "jiyo"], demoData.jiyo),
+    jiyoHorse: pickValue(row, ["ジヨ馬名", "jiyoHorse", "馬名ジヨ"], demoData.jiyoHorse),
+    memo: pickValue(row, ["メモ", "memo"], demoData.memo)
+  };
+}
 
-  return rows;
+function setText(id, value) { $(id).textContent = value || "-"; }
+
+function updateView(data) {
+  const board = document.querySelector(".board");
+  board.classList.remove("fade");
+  void board.offsetWidth;
+  board.classList.add("fade");
+
+  setText("date", data.date);
+  setText("place", data.place);
+  setText("race", data.race);
+  setText("raceName", data.raceName);
+  setText("startTime", data.startTime);
+  setText("closeTime", data.closeTime);
+  setText("safeNumber", `◎${data.safe}`);
+  setText("safeHorse", data.safeHorse);
+  setText("longNumber", `◎${data.longshot}`);
+  setText("longHorse", data.longshotHorse);
+  setText("jiyoNumber", `◎${data.jiyo}`);
+  setText("jiyoHorse", data.jiyoHorse);
+  setText("memo", data.memo);
+
+  const now = new Date();
+  setText("updatedAt", `更新 ${now.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })}`);
 }
 
 async function loadData() {
+  if (!SHEET_API_URL) {
+    updateView(demoData);
+    return;
+  }
   try {
-    const res = await fetch(CSV_URL + "&t=" + Date.now());
-    const text = await res.text();
-    const rows = parseCSV(text);
-
-    const header = rows[0].map(h => h.trim());
-    const dataRows = rows.slice(1);
-
-    const statusIndex = header.indexOf("Status");
-    const liveRow = dataRows.find(row => (row[statusIndex] || "").trim() === "LIVE") || dataRows[0];
-
-    const get = (name) => {
-      const index = header.indexOf(name);
-      return index >= 0 ? (liveRow[index] || "") : "";
-    };
-
-    document.getElementById("date").textContent = get("Date");
-    document.getElementById("race").textContent = get("Race");
-    document.getElementById("raceName").textContent = get("RaceName");
-    document.getElementById("start").textContent = get("Start");
-    document.getElementById("close").textContent = get("Close");
-    document.getElementById("safe").textContent = get("SAFE");
-    document.getElementById("safeName").textContent = get("SAFE_NAME");
-    document.getElementById("longshot").textContent = get("LONGSHOT");
-    document.getElementById("longName").textContent = get("LONG_NAME");
-    document.getElementById("jiyo").textContent = get("JIYO");
-    document.getElementById("jiyoName").textContent = get("JIYO_NAME");
-    document.getElementById("memo").textContent = get("MEMO");
-  } catch (e) {
-    document.getElementById("race").textContent = "読み込みエラー";
+    const res = await fetch(`${SHEET_API_URL}?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    updateView(normalize(json));
+  } catch (error) {
+    console.warn("Sheet fetch failed:", error);
+    updateView(demoData);
   }
 }
 
 loadData();
-setInterval(loadData, 10000);
+setInterval(loadData, REFRESH_MS);
