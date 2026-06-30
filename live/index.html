@@ -3,43 +3,48 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DARKHORSCORE LIVE v4</title>
+  <title>DARKHORSCORE LIVE v5</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <main class="stage" id="stage">
-    <div class="desk"></div>
+    <div class="ambient"></div>
     <section class="monitor">
       <div class="bezel">
         <div class="screen">
           <article class="board" id="board">
-            <header class="brand-row">
+            <header class="topbar">
               <div>
-                <p class="kicker">DARKHORSCORE</p>
+                <div class="brand-kicker">DARKHORSCORE</div>
                 <h1>LIVE BOARD</h1>
               </div>
               <div class="live-pill"><span></span> LIVE</div>
             </header>
 
             <section class="race-head">
-              <div class="date-box">
+              <div class="date-block">
                 <span class="label">DATE</span>
                 <strong id="date">6月30日(月)</strong>
               </div>
-              <div class="race-main">
+              <div class="main-race">
                 <span class="label">RACE</span>
-                <strong><span id="course">名古屋</span><span id="raceNo">1R</span></strong>
-                <p id="raceName">テストレース</p>
+                <strong><span id="course">名古屋</span> <span id="race">1R</span></strong>
+                <em id="raceName">テストレース</em>
               </div>
-              <div class="time-box">
-                <div><span>発走</span><strong id="startTime">15:30</strong></div>
-                <div><span>締切</span><strong id="closeTime">15:28</strong></div>
+              <div class="time-card">
+                <span class="label">発走</span>
+                <strong id="startTime">15:30</strong>
+              </div>
+              <div class="time-card deadline">
+                <span class="label">締切</span>
+                <strong id="closeTime">15:28</strong>
               </div>
             </section>
 
-            <section class="status-line">
-              <div class="status" id="statusText">受付中</div>
-              <div class="updated">UPDATED <span id="updatedAt">--:--:--</span></div>
+            <section class="status-row">
+              <div id="status" class="status open">受付中</div>
+              <div class="countdown" id="countdown">締切まで --:--</div>
+              <div class="updated" id="updated">UPDATED --:--:--</div>
             </section>
 
             <section class="picks">
@@ -48,35 +53,33 @@
                 <div class="pick-sub">AI</div>
                 <div class="horse-no" id="safeNo">◎5</div>
                 <div class="horse-name" id="safeHorse">サンライズジパング</div>
-                <p class="pick-memo" id="safeMemo">堅実候補</p>
               </div>
               <div class="pick longshot">
                 <div class="pick-title">LONGSHOT</div>
                 <div class="pick-sub">AI</div>
                 <div class="horse-no" id="longNo">◎11</div>
                 <div class="horse-name" id="longHorse">サヴァ</div>
-                <p class="pick-memo" id="longMemo">穴候補</p>
               </div>
               <div class="pick jiyo">
                 <div class="pick-title">ジヨ</div>
                 <div class="pick-sub">MY PICK</div>
                 <div class="horse-no" id="jiyoNo">◎2</div>
                 <div class="horse-name" id="jiyoHorse">テストホース</div>
-                <p class="pick-memo" id="jiyoMemo">本命</p>
               </div>
             </section>
 
             <section class="memo-area">
-              <h2>MEMO</h2>
-              <p id="memo">良馬場想定。先行有利。内枠の立ち回りに注意。</p>
+              <div class="memo-title">MEMO</div>
+              <p id="memo">良馬場想定。先行有利。内枠注意。</p>
             </section>
           </article>
         </div>
       </div>
       <div class="stand"></div>
-      <div class="base"><span>DARKHORSE</span></div>
+      <div class="base"></div>
     </section>
-    <div class="lamp"></div>
+    <div class="desk-item left"></div>
+    <div class="desk-item right"></div>
   </main>
   <script src="./script.js"></script>
 </body>

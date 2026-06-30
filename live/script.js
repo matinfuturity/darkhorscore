@@ -1,56 +1,68 @@
-const SHEET_API_URL = ""; // Google Apps ScriptのWebアプリURLをここに入れる
-const REFRESH_MS = 15000;
-const demoData = {
-  date:"6月30日(月)", course:"名古屋", race:"1R", raceName:"テストレース", start:"15:30", close:"15:28", status:"受付中",
-  safeNo:"◎5", safeHorse:"サンライズジパング", safeMemo:"堅実候補",
-  longNo:"◎11", longHorse:"サヴァ", longMemo:"穴候補",
-  jiyoNo:"◎2", jiyoHorse:"テストホース", jiyoMemo:"ジヨ本命",
-  memo:"良馬場想定。先行有利。内枠の立ち回りに注意。"
+const SHEET_API_URL = ""; // Google Apps Script のWebアプリURLを入れる
+const REFRESH_MS = 8000;
+const demo = {
+  date:"6月30日(月)", course:"名古屋", race:"1R", raceName:"テストレース",
+  startTime:"15:30", closeTime:"15:28", status:"受付中",
+  safe:"5", safeHorse:"サンライズジパング",
+  longshot:"11", longHorse:"サヴァ",
+  jiyo:"2", jiyoHorse:"テストホース",
+  memo:"良馬場想定。先行有利。内枠注意。"
 };
 const $ = id => document.getElementById(id);
-function fitStage(){
-  const stage = $("stage");
-  const scale = Math.min(window.innerWidth/1920, window.innerHeight/1080);
-  stage.style.transform = `scale(${scale})`;
-  stage.style.marginLeft = `${(window.innerWidth-1920*scale)/2}px`;
-  stage.style.marginTop = `${(window.innerHeight-1080*scale)/2}px`;
-}
 function normalize(raw){
-  if(Array.isArray(raw)) raw = raw[0] || {};
+  const d = Array.isArray(raw) ? raw[0] : (raw?.data || raw || {});
   return {
-    date: raw.date || raw.日付 || demoData.date,
-    course: raw.course || raw.競馬場 || demoData.course,
-    race: raw.race || raw.レース || demoData.race,
-    raceName: raw.raceName || raw.レース名 || demoData.raceName,
-    start: raw.start || raw.発走 || demoData.start,
-    close: raw.close || raw.締切 || demoData.close,
-    status: raw.status || raw.状態 || demoData.status,
-    safeNo: raw.safeNo || raw.SAFE番号 || raw.safe || raw.SAFE || demoData.safeNo,
-    safeHorse: raw.safeHorse || raw.SAFE馬名 || raw.safeHorseName || raw.馬名SAFE || demoData.safeHorse,
-    safeMemo: raw.safeMemo || raw.SAFEメモ || "",
-    longNo: raw.longNo || raw.LONGSHOT番号 || raw.longshot || raw.LONGSHOT || demoData.longNo,
-    longHorse: raw.longHorse || raw.LONGSHOT馬名 || raw.longHorseName || raw.馬名LONGSHOT || demoData.longHorse,
-    longMemo: raw.longMemo || raw.LONGSHOTメモ || "",
-    jiyoNo: raw.jiyoNo || raw.ジヨ番号 || raw.jiyo || raw.ジヨ || demoData.jiyoNo,
-    jiyoHorse: raw.jiyoHorse || raw.ジヨ馬名 || raw.馬名ジヨ || demoData.jiyoHorse,
-    jiyoMemo: raw.jiyoMemo || raw.ジヨメモ || "",
-    memo: raw.memo || raw.メモ || demoData.memo
+    date: d.date || d["日付"] || demo.date,
+    course: d.course || d["競馬場"] || demo.course,
+    race: d.race || d["レース"] || demo.race,
+    raceName: d.raceName || d["レース名"] || demo.raceName,
+    startTime: d.startTime || d["発走"] || demo.startTime,
+    closeTime: d.closeTime || d["締切"] || demo.closeTime,
+    status: d.status || d["状態"] || demo.status,
+    safe: d.safe || d["SAFE"] || demo.safe,
+    safeHorse: d.safeHorse || d["SAFE馬名"] || d["馬名_SAFE"] || d["馬名"] || demo.safeHorse,
+    longshot: d.longshot || d["LONGSHOT"] || demo.longshot,
+    longHorse: d.longHorse || d["LONGSHOT馬名"] || d["馬名_LONGSHOT"] || demo.longHorse,
+    jiyo: d.jiyo || d["ジヨ"] || demo.jiyo,
+    jiyoHorse: d.jiyoHorse || d["ジヨ馬名"] || d["馬名_ジヨ"] || demo.jiyoHorse,
+    memo: d.memo || d["メモ"] || demo.memo
   };
 }
+function setText(id,val){ const el=$(id); if(el) el.textContent = val ?? ""; }
 function render(data){
-  const d = normalize(data);
-  $("date").textContent=d.date; $("course").textContent=d.course; $("raceNo").textContent=d.race; $("raceName").textContent=d.raceName;
-  $("startTime").textContent=d.start; $("closeTime").textContent=d.close; $("statusText").textContent=d.status;
-  $("safeNo").textContent=d.safeNo; $("safeHorse").textContent=d.safeHorse; $("safeMemo").textContent=d.safeMemo;
-  $("longNo").textContent=d.longNo; $("longHorse").textContent=d.longHorse; $("longMemo").textContent=d.longMemo;
-  $("jiyoNo").textContent=d.jiyoNo; $("jiyoHorse").textContent=d.jiyoHorse; $("jiyoMemo").textContent=d.jiyoMemo;
-  $("memo").textContent=d.memo; $("updatedAt").textContent=new Date().toLocaleTimeString("ja-JP");
-  const board=$("board"); board.classList.remove("fade"); void board.offsetWidth; board.classList.add("fade");
+  setText("date",data.date); setText("course",data.course); setText("race",data.race); setText("raceName",data.raceName);
+  setText("startTime",data.startTime); setText("closeTime",data.closeTime);
+  setText("safeNo","◎"+data.safe); setText("safeHorse",data.safeHorse);
+  setText("longNo","◎"+data.longshot); setText("longHorse",data.longHorse);
+  setText("jiyoNo","◎"+data.jiyo); setText("jiyoHorse",data.jiyoHorse);
+  setText("memo",data.memo);
+  const s=$("status"); s.textContent=data.status || calcStatus(data.closeTime); s.classList.toggle("closed", s.textContent.includes("締切") || s.textContent.includes("終了"));
+  s.classList.toggle("open", !s.classList.contains("closed"));
+  setText("updated","UPDATED "+new Date().toLocaleTimeString("ja-JP",{hour12:false}));
+  $("board").classList.remove("flash"); void $("board").offsetWidth; $("board").classList.add("flash");
+  updateCountdown(data.closeTime);
+}
+function calcStatus(closeTime){
+  const mins = minutesUntil(closeTime);
+  return mins !== null && mins < 0 ? "締切" : "受付中";
+}
+function minutesUntil(t){
+  if(!t || !/^\d{1,2}:\d{2}$/.test(t)) return null;
+  const [h,m]=t.split(":").map(Number); const now=new Date(); const target=new Date();
+  target.setHours(h,m,0,0); return Math.floor((target-now)/60000);
+}
+function updateCountdown(closeTime){
+  const el=$("countdown");
+  if(!/^\d{1,2}:\d{2}$/.test(closeTime||"")){ el.textContent="締切まで --:--"; return; }
+  const [h,m]=closeTime.split(":").map(Number); const now=new Date(); const target=new Date(); target.setHours(h,m,0,0);
+  let diff=Math.floor((target-now)/1000);
+  if(diff<=0){ el.textContent="締切済み"; $("status").textContent="締切"; $("status").classList.add("closed"); return; }
+  const mm=String(Math.floor(diff/60)).padStart(2,"0"); const ss=String(diff%60).padStart(2,"0");
+  el.textContent=`締切まで ${mm}:${ss}`;
 }
 async function load(){
-  if(!SHEET_API_URL){ render(demoData); return; }
-  try{ const res=await fetch(`${SHEET_API_URL}?t=${Date.now()}`,{cache:"no-store"}); render(await res.json()); }
-  catch(e){ console.error(e); render(demoData); }
+  if(!SHEET_API_URL){ render(demo); return; }
+  try{ const res=await fetch(SHEET_API_URL+"?t="+Date.now(),{cache:"no-store"}); render(normalize(await res.json())); }
+  catch(e){ console.warn(e); render(demo); }
 }
-window.addEventListener("resize", fitStage);
-fitStage(); load(); setInterval(load, REFRESH_MS);
+load(); setInterval(load, REFRESH_MS); setInterval(()=>updateCountdown($("closeTime").textContent),1000);

@@ -1,12 +1,10 @@
-# DARKHORSCORE LIVE v4 fixed
+# DARKHORSCORE LIVE v5 COMPLETE
 
-/live に以下4ファイルを上書きしてください。
+OBS向け 1920×1080 固定ライブボード。
 
-- index.html
-- style.css
-- script.js
-- README.md
+## 入れるファイル
+`index.html`, `style.css`, `script.js`, `README.md` を `/live` に上書き。
+ZIP本体はアップロードしない。
 
-ZIP本体はアップロードしないでください。
-
-script.js の `SHEET_API_URL` にApps ScriptのURLを入れるとスプレッドシート連携できます。
+## スプレッドシート連携
+`script.js` の先頭にある `SHEET_API_URL` に Google Apps Script のWebアプリURLを入れる。
