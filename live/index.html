@@ -1,119 +1,74 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DARKHORSCORE LIVE</title>
-<style>
-:root{
-  --safe:#185fc0;
-  --long:#158046;
-  --jiyo:#c91d1d;
-  --ink:#101010;
-  --paper:#fbfbf3;
-}
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#100704;color:var(--ink)}
-body{font-family:"Hiragino Sans","Yu Gothic",system-ui,sans-serif}
-.stage{
-  position:absolute;
-  width:1920px;
-  height:1080px;
-  transform-origin:top left;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 78% 18%, rgba(255,190,95,.48), transparent 25%),
-    radial-gradient(circle at 17% 76%, rgba(255,130,45,.20), transparent 28%),
-    linear-gradient(180deg,#211008 0%,#2a1309 45%,#552913 75%,#1b0b06 100%);
-}
-.wall{position:absolute;inset:0 0 31%;background:linear-gradient(90deg,#1a0d08,#29150c 35%,#44220f 68%,#1b0d08);opacity:.95}
-.wall:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 170px)}
-.desk{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,#77431b,#5f3012 42%,#321406);box-shadow:0 -28px 75px rgba(0,0,0,.58) inset}
-.desk:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 3px,transparent 3px 158px),linear-gradient(90deg,rgba(0,0,0,.32),transparent 20%,rgba(255,180,86,.15) 50%,transparent 83%,rgba(0,0,0,.35));mix-blend-mode:soft-light}
-.poster{position:absolute;left:78px;top:190px;width:164px;height:230px;background:#16110d;border:10px solid #0b0907;box-shadow:0 28px 55px rgba(0,0,0,.52)}
-.poster:before{content:"KEIBA";position:absolute;left:20px;bottom:35px;font-weight:900;font-size:34px;color:#d8c09b;letter-spacing:3px}
-.poster:after{content:"";position:absolute;left:38px;top:32px;width:82px;height:72px;border:4px solid #ad9671;border-radius:48% 52% 50% 50%;opacity:.42}
-.lamp{position:absolute;right:78px;top:70px;width:150px;height:330px}
-.lamp .pole{position:absolute;right:65px;top:85px;width:13px;height:255px;background:#050505;border-radius:9px}
-.lamp:before{content:"";position:absolute;right:0;top:0;width:120px;height:92px;background:#050505;border-radius:65px 65px 30px 30px;transform:rotate(-14deg);box-shadow:0 18px 60px rgba(255,184,92,.75)}
-.lamp:after{content:"";position:absolute;right:28px;top:55px;width:78px;height:40px;background:radial-gradient(#fff7d6,#ffb553 58%,transparent 72%);border-radius:50%;filter:blur(3px);transform:rotate(-14deg)}
-.plant{position:absolute;right:18px;bottom:130px;width:92px;height:145px}
-.plant:before{content:"";position:absolute;bottom:0;width:76px;height:50px;background:#080807;border-radius:8px}
-.plant:after{content:"✦ ✦ ✦ ✦ ✦";position:absolute;top:0;left:0;color:#2a6723;font-size:42px;line-height:30px;letter-spacing:-13px;filter:drop-shadow(0 0 6px #4f9a3b)}
-.mug{position:absolute;left:58px;bottom:105px;width:145px;height:128px;background:linear-gradient(135deg,#050505,#2a2927);border-radius:0 0 30px 30px;box-shadow:0 18px 45px rgba(0,0,0,.52)}
-.mug:before{content:"";position:absolute;right:-42px;top:27px;width:58px;height:58px;border:13px solid #151514;border-left:0;border-radius:0 45px 45px 0}
-.mug:after{content:"DARKHORSE";position:absolute;left:22px;bottom:30px;color:#d6bd88;font-weight:800;font-size:17px;letter-spacing:1px}
-.keyboard{position:absolute;left:50%;bottom:58px;transform:translateX(-50%);width:860px;height:122px;background:linear-gradient(#111,#030303);border-radius:18px;box-shadow:0 20px 45px rgba(0,0,0,.58)}
-.keyboard:after{content:"";position:absolute;inset:17px;background:repeating-linear-gradient(90deg,#2a2a2a 0 37px,transparent 37px 48px),repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 18px,transparent 18px 30px);border-radius:10px;opacity:.88}
-.mouse{position:absolute;right:250px;bottom:70px;width:108px;height:72px;background:radial-gradient(circle at 62% 24%,#56514a,#050505 62%);border-radius:55px 55px 45px 45px;box-shadow:0 20px 35px rgba(0,0,0,.6)}
-.monitor{position:absolute;left:50%;top:49%;transform:translate(-50%,-48%);width:1560px;height:850px;background:#050505;border-radius:18px;padding:18px;box-shadow:0 34px 100px rgba(0,0,0,.75),0 0 0 2px #242424}
-.monitor:before{content:"";position:absolute;left:50%;bottom:-178px;transform:translateX(-50%);width:92px;height:178px;background:#050505;border-radius:0 0 26px 26px}
-.monitor:after{content:"";position:absolute;left:50%;bottom:-218px;transform:translateX(-50%);width:365px;height:58px;background:#050505;border-radius:28px 28px 6px 6px}
-.screen{position:relative;width:100%;height:100%;background:var(--paper);overflow:hidden;box-shadow:inset 0 0 42px rgba(0,0,0,.14)}
-.screen:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 0 55%,rgba(0,0,0,.055) 100%),linear-gradient(180deg,rgba(255,255,255,.72),transparent 24%,rgba(0,0,0,.03));pointer-events:none;z-index:20}
-.board{position:absolute;inset:42px 52px 34px;font-family:"Hiragino Maru Gothic ProN","Yu Gothic",sans-serif}
-.brand{position:absolute;left:0;top:0;font-size:25px;letter-spacing:2px;font-weight:650;white-space:nowrap}
-.brand b{color:#c31414;margin-left:16px;font-size:30px}
-.times{position:absolute;right:0;top:-2px;font-size:34px;line-height:1.35;font-weight:800;text-align:left;white-space:nowrap}
-.deadline{color:#c41b1b}
-.header{position:absolute;left:0;right:315px;top:58px;height:74px;display:grid;grid-template-columns:310px 1fr 330px;gap:20px;align-items:end;border-bottom:4px solid #111;padding-bottom:13px}
-.date{font-size:40px;text-align:center;white-space:nowrap;font-weight:650}
-.race{font-size:58px;text-align:center;font-weight:900;letter-spacing:4px;white-space:nowrap;line-height:1}
-.race-name{font-size:38px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:650}
-.picks{position:absolute;left:0;right:0;top:170px;height:405px;display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:4px solid #111}
-.pick{position:relative;text-align:center;padding:12px 24px 0;overflow:hidden}
-.pick:not(:last-child){border-right:3px solid #111}
-.pick-title{font-size:40px;font-weight:900;letter-spacing:3px;display:inline-block;min-width:265px;padding:0 18px 8px;border-bottom:5px solid currentColor;white-space:nowrap;line-height:1.15}
-.safe{color:var(--safe)}.long{color:var(--long)}.jiyo{color:var(--jiyo)}
-.mark{margin-top:46px;font-size:72px;font-weight:950;color:#0b0b0b;letter-spacing:7px;line-height:1;white-space:nowrap}
-.horse{margin-top:32px;font-size:35px;font-weight:750;color:#111;line-height:1.22;min-height:44px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sub{margin-top:24px;font-size:28px;font-weight:900;white-space:nowrap}
-.info-row{position:absolute;left:0;right:0;top:592px;height:38px;font-size:24px;font-weight:900;display:flex;justify-content:space-between;align-items:center}
-.updated{font-size:17px;letter-spacing:2px;color:#555;font-weight:750}
-.memo{position:absolute;left:0;right:0;bottom:0;height:148px;border-top:0;padding:10px 18px 0;font-size:32px;line-height:1.45;font-weight:700;display:grid;grid-template-columns:86px 1fr;gap:18px;overflow:hidden}
-.memo-title{font-size:34px;font-weight:900;white-space:nowrap}
-.memo-body{white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
-.flash{animation:flash .55s ease}@keyframes flash{0%{filter:brightness(1)}50%{filter:brightness(1.12)}100%{filter:brightness(1)}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DARKHORSCORE LIVE</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-<div class="stage" id="stage">
-  <div class="wall"></div><div class="desk"></div><div class="poster"></div><div class="lamp"><div class="pole"></div></div><div class="plant"></div><div class="mug"></div><div class="keyboard"></div><div class="mouse"></div>
-  <main class="monitor"><section class="screen" id="screen"><div class="board">
-    <div class="brand">DARKHORSCORE <b>LIVE</b></div>
-    <div class="times"><div>発走 <span id="start">15:30</span></div><div class="deadline">締切 <span id="deadline">15:28</span></div></div>
-    <div class="header"><div class="date" id="date">6月30日(月)</div><div class="race" id="race">名古屋 11R</div><div class="race-name" id="raceName">テストレース</div></div>
-    <div class="picks">
-      <div class="pick"><div class="pick-title safe">SAFE AI</div><div class="mark">◎<span id="safeNo">5</span></div><div class="horse" id="safeHorse">サンライズジパング</div><div class="sub safe" id="safeMemo">[牡4]</div></div>
-      <div class="pick"><div class="pick-title long">LONGSHOT AI</div><div class="mark">◎<span id="longNo">11</span></div><div class="horse" id="longHorse">サヴァ</div><div class="sub long" id="longMemo">[牡6]</div></div>
-      <div class="pick"><div class="pick-title jiyo">ジヨの◎</div><div class="mark">◎<span id="jiyoNo">2</span></div><div class="horse" id="jiyoHorse">テストホース</div><div class="sub jiyo" id="jiyoMemo">[牡5]</div></div>
-    </div>
-    <div class="info-row"><div id="status">受付中</div><div class="updated" id="updated">UPDATED --:--:--</div></div>
-    <div class="memo"><div class="memo-title">メモ</div><div class="memo-body" id="memo">・良馬場想定　・先行有利の展開　・内枠有利の傾向</div></div>
-  </div></section></main>
-</div>
-<script>
-function fitStage(){
-  const stage=document.getElementById('stage');
-  const scale=Math.min(window.innerWidth/1920,window.innerHeight/1080);
-  stage.style.transform=`scale(${scale})`;
-  stage.style.left=`${(window.innerWidth-1920*scale)/2}px`;
-  stage.style.top=`${(window.innerHeight-1080*scale)/2}px`;
-}
-window.addEventListener('resize',fitStage);
-window.addEventListener('load',fitStage);
+  <div class="fit" id="fit">
+    <main class="canvas">
+      <div class="bg-orb orb-a"></div>
+      <div class="bg-orb orb-b"></div>
+      <header class="topbar">
+        <div>
+          <div class="brand">DARKHORSCORE</div>
+          <div class="subbrand">LIVE PREDICTION BOARD</div>
+        </div>
+        <div class="live-pill"><span></span>LIVE</div>
+      </header>
 
-const SHEET_API_URL='';
-const DEMO={date:'6月30日(月)',place:'名古屋',race:'11R',raceName:'テストレース',start:'15:30',deadline:'15:28',safe:'5',safeHorse:'サンライズジパング',safeMemo:'[牡4]',longshot:'11',longHorse:'サヴァ',longMemo:'[牡6]',jiyo:'2',jiyoHorse:'テストホース',jiyoMemo:'[牡5]',memo:'・良馬場想定　・先行有利の展開　・内枠有利の傾向'};
-const $=id=>document.getElementById(id);
-function normalize(raw){const d=Array.isArray(raw)?raw[0]||{}:raw||{};return{
- date:d.date||d['日付']||DEMO.date,place:d.place||d['競馬場']||DEMO.place,race:d.race||d['レース']||DEMO.race,raceName:d.raceName||d['レース名']||DEMO.raceName,start:d.start||d['発走']||DEMO.start,deadline:d.deadline||d['締切']||DEMO.deadline,
- safe:d.safe||d['SAFE']||DEMO.safe,safeHorse:d.safeHorse||d['SAFE馬名']||d['馬名_SAFE']||DEMO.safeHorse,safeMemo:d.safeMemo||d['SAFEメモ']||DEMO.safeMemo,
- longshot:d.longshot||d['LONGSHOT']||DEMO.longshot,longHorse:d.longHorse||d['LONGSHOT馬名']||d['馬名_LONGSHOT']||DEMO.longHorse,longMemo:d.longMemo||d['LONGSHOTメモ']||DEMO.longMemo,
- jiyo:d.jiyo||d['ジヨ']||DEMO.jiyo,jiyoHorse:d.jiyoHorse||d['ジヨ馬名']||d['馬名_ジヨ']||DEMO.jiyoHorse,jiyoMemo:d.jiyoMemo||d['ジヨメモ']||DEMO.jiyoMemo,memo:d.memo||d['メモ']||DEMO.memo};}
-function render(data){const d=normalize(data);$('date').textContent=d.date;$('race').textContent=`${d.place} ${d.race}`;$('raceName').textContent=d.raceName;$('start').textContent=d.start;$('deadline').textContent=d.deadline;$('safeNo').textContent=d.safe;$('safeHorse').textContent=d.safeHorse;$('safeMemo').textContent=d.safeMemo;$('longNo').textContent=d.longshot;$('longHorse').textContent=d.longHorse;$('longMemo').textContent=d.longMemo;$('jiyoNo').textContent=d.jiyo;$('jiyoHorse').textContent=d.jiyoHorse;$('jiyoMemo').textContent=d.jiyoMemo;$('memo').textContent=d.memo;$('updated').textContent='UPDATED '+new Date().toLocaleTimeString('ja-JP',{hour12:false});$('screen').classList.remove('flash');void $('screen').offsetWidth;$('screen').classList.add('flash');}
-async function load(){if(!SHEET_API_URL){render(DEMO);return}try{const url=SHEET_API_URL+(SHEET_API_URL.includes('?')?'&':'?')+'t='+Date.now();const res=await fetch(url,{cache:'no-store'});render(await res.json())}catch(e){render(DEMO)}}
-fitStage();load();setInterval(load,15000);
-</script>
+      <section class="hero">
+        <div class="race-label">CURRENT RACE</div>
+        <h1 id="race">名古屋 11R</h1>
+      </section>
+
+      <section class="cards">
+        <article class="card safe">
+          <div class="card-head"><span>SAFE AI</span><b>堅実</b></div>
+          <div class="mark">◎<span id="safeNo">5</span></div>
+          <div class="horse" id="safeName">サンライズジパング</div>
+          <div class="stars" id="safeStar">★★★★★</div>
+        </article>
+
+        <article class="card long">
+          <div class="card-head"><span>LONGSHOT</span><b>穴狙い</b></div>
+          <div class="mark">◎<span id="longNo">11</span></div>
+          <div class="horse" id="longName">サヴァ</div>
+          <div class="stars" id="longStar">★★★☆☆</div>
+        </article>
+
+        <article class="card jiyo">
+          <div class="card-head"><span>ジヨの◎</span><b>本命</b></div>
+          <div class="mark">◎<span id="jiyoNo">2</span></div>
+          <div class="horse" id="jiyoName">テストホース</div>
+          <div class="stars" id="jiyoStar">★★★★☆</div>
+        </article>
+      </section>
+
+      <section class="bottom">
+        <div class="memo-box">
+          <div class="label">MEMO</div>
+          <p id="memo">今日は前残り・内枠重視</p>
+        </div>
+        <div class="stats-box">
+          <div class="label">DARKHORSCORE STATS</div>
+          <div class="stats-grid">
+            <div><small>RECENT</small><strong id="history">○ ○ × ○ ○</strong></div>
+            <div><small>ROI</small><strong id="roi">128%</strong></div>
+            <div><small>PROFIT</small><strong id="profit">+214,580円</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Powered by DARKHORSCORE</span>
+        <span id="updated">UPDATED --:--:--</span>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
