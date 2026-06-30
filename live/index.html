@@ -1,67 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DARKHORSCORE LIVE</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>DARKHORSCORE LIVE v4</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <div class="desk">
-    <div class="monitor">
+  <main class="stage" aria-label="DARKHORSCORE LIVE">
+    <div class="desk"></div>
+    <section class="monitor">
+      <div class="monitor-glare"></div>
       <div class="screen">
-        <header class="header">
-          <div id="date">--</div>
-          <div id="race">読み込み中</div>
-          <div id="raceName">--</div>
-          <div class="times">
-            <div>発走 <span id="start">--:--</span></div>
-            <div class="close">締切 <span id="close">--:--</span></div>
-          </div>
-        </header>
+        <div class="board">
+          <div class="clip clip-left"></div>
+          <div class="clip clip-right"></div>
 
-        <div class="topline"></div>
+          <header class="race-header">
+            <div>
+              <p class="eyebrow">DARKHORSCORE LIVE</p>
+              <h1><span id="place">名古屋</span><span id="race">1R</span></h1>
+              <p id="raceName" class="race-name">テストレース</p>
+            </div>
+            <div class="meta">
+              <p id="date">6月30日(月)</p>
+              <p>発走 <strong id="startTime">--:--</strong></p>
+              <p>締切 <strong id="closeTime">--:--</strong></p>
+              <div id="status" class="status open">受付中</div>
+            </div>
+          </header>
 
-        <section class="picks">
-          <div class="pick safe">
-            <h2>SAFE AI</h2>
-            <div class="underline"></div>
-            <div class="mark" id="safe">-</div>
-            <p id="safeName">---</p>
-          </div>
+          <section class="picks">
+            <article class="pick safe">
+              <p class="label">SAFE</p>
+              <p class="sub">AI</p>
+              <div class="line"></div>
+              <p id="safeNumber" class="number">◎5</p>
+              <p id="safeHorse" class="horse">サンライズジパング</p>
+            </article>
 
-          <div class="divider"></div>
+            <article class="pick longshot">
+              <p class="label">LONGSHOT</p>
+              <p class="sub">AI</p>
+              <div class="line"></div>
+              <p id="longNumber" class="number">◎11</p>
+              <p id="longHorse" class="horse">サヴァ</p>
+            </article>
 
-          <div class="pick longshot">
-            <h2>LONGSHOT AI</h2>
-            <div class="underline"></div>
-            <div class="mark" id="longshot">-</div>
-            <p id="longName">---</p>
-          </div>
+            <article class="pick jiyo">
+              <p class="label">ジヨ</p>
+              <p class="sub">MY PICK</p>
+              <div class="line"></div>
+              <p id="jiyoNumber" class="number">◎2</p>
+              <p id="jiyoHorse" class="horse">メイショウテンスイ</p>
+            </article>
+          </section>
 
-          <div class="divider"></div>
-
-          <div class="pick jiyo">
-            <h2>ジヨの◎</h2>
-            <div class="underline"></div>
-            <div class="mark" id="jiyo">-</div>
-            <p id="jiyoName">---</p>
-          </div>
-        </section>
-
-        <section class="memo">
-          <div class="memo-title">メモ</div>
-          <div class="memo-line"></div>
-          <p id="memo">---</p>
-        </section>
+          <section class="note-area">
+            <div>
+              <p class="note-title">MEMO</p>
+              <p id="memo" class="memo">良馬場想定。先行力と内枠を重視。締切直前の馬体重・オッズ変動に注意。</p>
+            </div>
+            <div class="update-box">
+              <span class="live-dot"></span>
+              <span id="updatedAt">更新待ち</span>
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
-
-    <div class="keyboard"></div>
-    <div class="mug">DARKHORSE</div>
-    <div class="lamp"></div>
-  </div>
-
-  <script src="script.js"></script>
+      <div class="stand"></div>
+      <div class="base"><span>DARKHORSE</span></div>
+    </section>
+  </main>
+  <script src="./script.js"></script>
 </body>
 </html>
