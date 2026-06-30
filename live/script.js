@@ -1,84 +1,56 @@
-const SHEET_API_URL = ""; // ここにGoogle Apps ScriptのWebアプリURLを入れる
-const REFRESH_MS = 10000;
-
+const SHEET_API_URL = ""; // Google Apps ScriptのWebアプリURLをここに入れる
+const REFRESH_MS = 15000;
 const demoData = {
-  date: "6月30日(月)", place: "名古屋", race: "1R", raceName: "テストレース",
-  startTime: "15:30", closeTime: "15:28",
-  safe: "5", safeHorse: "サンライズジパング",
-  longshot: "11", longshotHorse: "サヴァ",
-  jiyo: "2", jiyoHorse: "メイショウテンスイ",
-  memo: "良馬場想定。先行力と内枠を重視。締切直前の馬体重・オッズ変動に注意。"
+  date:"6月30日(月)", course:"名古屋", race:"1R", raceName:"テストレース", start:"15:30", close:"15:28", status:"受付中",
+  safeNo:"◎5", safeHorse:"サンライズジパング", safeMemo:"堅実候補",
+  longNo:"◎11", longHorse:"サヴァ", longMemo:"穴候補",
+  jiyoNo:"◎2", jiyoHorse:"テストホース", jiyoMemo:"ジヨ本命",
+  memo:"良馬場想定。先行有利。内枠の立ち回りに注意。"
 };
-
-const $ = (id) => document.getElementById(id);
-
-function pickValue(row, keys, fallback = "") {
-  for (const key of keys) {
-    if (row && row[key] !== undefined && row[key] !== null && String(row[key]).trim() !== "") return row[key];
-  }
-  return fallback;
+const $ = id => document.getElementById(id);
+function fitStage(){
+  const stage = $("stage");
+  const scale = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+  stage.style.transform = `scale(${scale})`;
+  stage.style.marginLeft = `${(window.innerWidth-1920*scale)/2}px`;
+  stage.style.marginTop = `${(window.innerHeight-1080*scale)/2}px`;
 }
-
-function normalize(raw) {
-  const row = Array.isArray(raw) ? raw[0] : raw;
+function normalize(raw){
+  if(Array.isArray(raw)) raw = raw[0] || {};
   return {
-    date: pickValue(row, ["日付", "date"], demoData.date),
-    place: pickValue(row, ["競馬場", "place"], demoData.place),
-    race: pickValue(row, ["レース", "race"], demoData.race),
-    raceName: pickValue(row, ["レース名", "raceName", "name"], demoData.raceName),
-    startTime: pickValue(row, ["発走", "startTime", "start"], demoData.startTime),
-    closeTime: pickValue(row, ["締切", "closeTime", "close"], demoData.closeTime),
-    safe: pickValue(row, ["SAFE", "safe"], demoData.safe),
-    safeHorse: pickValue(row, ["SAFE馬名", "safeHorse", "馬名SAFE", "馬名"], demoData.safeHorse),
-    longshot: pickValue(row, ["LONGSHOT", "longshot"], demoData.longshot),
-    longshotHorse: pickValue(row, ["LONGSHOT馬名", "longshotHorse", "馬名LONGSHOT"], demoData.longshotHorse),
-    jiyo: pickValue(row, ["ジヨ", "jiyo"], demoData.jiyo),
-    jiyoHorse: pickValue(row, ["ジヨ馬名", "jiyoHorse", "馬名ジヨ"], demoData.jiyoHorse),
-    memo: pickValue(row, ["メモ", "memo"], demoData.memo)
+    date: raw.date || raw.日付 || demoData.date,
+    course: raw.course || raw.競馬場 || demoData.course,
+    race: raw.race || raw.レース || demoData.race,
+    raceName: raw.raceName || raw.レース名 || demoData.raceName,
+    start: raw.start || raw.発走 || demoData.start,
+    close: raw.close || raw.締切 || demoData.close,
+    status: raw.status || raw.状態 || demoData.status,
+    safeNo: raw.safeNo || raw.SAFE番号 || raw.safe || raw.SAFE || demoData.safeNo,
+    safeHorse: raw.safeHorse || raw.SAFE馬名 || raw.safeHorseName || raw.馬名SAFE || demoData.safeHorse,
+    safeMemo: raw.safeMemo || raw.SAFEメモ || "",
+    longNo: raw.longNo || raw.LONGSHOT番号 || raw.longshot || raw.LONGSHOT || demoData.longNo,
+    longHorse: raw.longHorse || raw.LONGSHOT馬名 || raw.longHorseName || raw.馬名LONGSHOT || demoData.longHorse,
+    longMemo: raw.longMemo || raw.LONGSHOTメモ || "",
+    jiyoNo: raw.jiyoNo || raw.ジヨ番号 || raw.jiyo || raw.ジヨ || demoData.jiyoNo,
+    jiyoHorse: raw.jiyoHorse || raw.ジヨ馬名 || raw.馬名ジヨ || demoData.jiyoHorse,
+    jiyoMemo: raw.jiyoMemo || raw.ジヨメモ || "",
+    memo: raw.memo || raw.メモ || demoData.memo
   };
 }
-
-function setText(id, value) { $(id).textContent = value || "-"; }
-
-function updateView(data) {
-  const board = document.querySelector(".board");
-  board.classList.remove("fade");
-  void board.offsetWidth;
-  board.classList.add("fade");
-
-  setText("date", data.date);
-  setText("place", data.place);
-  setText("race", data.race);
-  setText("raceName", data.raceName);
-  setText("startTime", data.startTime);
-  setText("closeTime", data.closeTime);
-  setText("safeNumber", `◎${data.safe}`);
-  setText("safeHorse", data.safeHorse);
-  setText("longNumber", `◎${data.longshot}`);
-  setText("longHorse", data.longshotHorse);
-  setText("jiyoNumber", `◎${data.jiyo}`);
-  setText("jiyoHorse", data.jiyoHorse);
-  setText("memo", data.memo);
-
-  const now = new Date();
-  setText("updatedAt", `更新 ${now.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })}`);
+function render(data){
+  const d = normalize(data);
+  $("date").textContent=d.date; $("course").textContent=d.course; $("raceNo").textContent=d.race; $("raceName").textContent=d.raceName;
+  $("startTime").textContent=d.start; $("closeTime").textContent=d.close; $("statusText").textContent=d.status;
+  $("safeNo").textContent=d.safeNo; $("safeHorse").textContent=d.safeHorse; $("safeMemo").textContent=d.safeMemo;
+  $("longNo").textContent=d.longNo; $("longHorse").textContent=d.longHorse; $("longMemo").textContent=d.longMemo;
+  $("jiyoNo").textContent=d.jiyoNo; $("jiyoHorse").textContent=d.jiyoHorse; $("jiyoMemo").textContent=d.jiyoMemo;
+  $("memo").textContent=d.memo; $("updatedAt").textContent=new Date().toLocaleTimeString("ja-JP");
+  const board=$("board"); board.classList.remove("fade"); void board.offsetWidth; board.classList.add("fade");
 }
-
-async function loadData() {
-  if (!SHEET_API_URL) {
-    updateView(demoData);
-    return;
-  }
-  try {
-    const res = await fetch(`${SHEET_API_URL}?t=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    updateView(normalize(json));
-  } catch (error) {
-    console.warn("Sheet fetch failed:", error);
-    updateView(demoData);
-  }
+async function load(){
+  if(!SHEET_API_URL){ render(demoData); return; }
+  try{ const res=await fetch(`${SHEET_API_URL}?t=${Date.now()}`,{cache:"no-store"}); render(await res.json()); }
+  catch(e){ console.error(e); render(demoData); }
 }
-
-loadData();
-setInterval(loadData, REFRESH_MS);
+window.addEventListener("resize", fitStage);
+fitStage(); load(); setInterval(load, REFRESH_MS);
