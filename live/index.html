@@ -7,35 +7,60 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="board">
-    <div class="topbar">
-      <div class="live">● LIVE</div>
-      <div class="clock" id="clock">--:--</div>
+  <div class="desk">
+    <div class="monitor">
+      <div class="screen">
+        <header class="header">
+          <div id="date">--</div>
+          <div id="race">読み込み中</div>
+          <div id="raceName">--</div>
+          <div class="times">
+            <div>発走 <span id="start">--:--</span></div>
+            <div class="close">締切 <span id="close">--:--</span></div>
+          </div>
+        </header>
+
+        <div class="topline"></div>
+
+        <section class="picks">
+          <div class="pick safe">
+            <h2>SAFE AI</h2>
+            <div class="underline"></div>
+            <div class="mark" id="safe">-</div>
+            <p id="safeName">---</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="pick longshot">
+            <h2>LONGSHOT AI</h2>
+            <div class="underline"></div>
+            <div class="mark" id="longshot">-</div>
+            <p id="longName">---</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="pick jiyo">
+            <h2>ジヨの◎</h2>
+            <div class="underline"></div>
+            <div class="mark" id="jiyo">-</div>
+            <p id="jiyoName">---</p>
+          </div>
+        </section>
+
+        <section class="memo">
+          <div class="memo-title">メモ</div>
+          <div class="memo-line"></div>
+          <p id="memo">---</p>
+        </section>
+      </div>
     </div>
 
-    <div class="brand">DARKHORSCORE</div>
-
-    <div class="race" id="race">読み込み中...</div>
-    <div class="time" id="time"></div>
-
-    <section class="pick safe">
-      <div class="label">SAFE AI</div>
-      <div class="horse" id="safe">-</div>
-    </section>
-
-    <section class="pick longshot">
-      <div class="label">LONGSHOT AI</div>
-      <div class="horse" id="longshot">-</div>
-    </section>
-
-    <section class="pick jiyo">
-      <div class="label">ジヨ</div>
-      <div class="horse" id="jiyo">-</div>
-    </section>
-
-    <div class="memo">NAGOYA KEIBA / LIVE BOARD</div>
-    <div class="updated" id="updated">更新 --:--:--</div>
-  </main>
+    <div class="keyboard"></div>
+    <div class="mug">DARKHORSE</div>
+    <div class="lamp"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
