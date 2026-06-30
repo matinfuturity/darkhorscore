@@ -1,73 +1,55 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DARKHORSCORE LIVE</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DARKHORSCORE LIVE</title>
+<style>
+:root{
+  --safe:#175bb8; --long:#168047; --jiyo:#c91d1d; --ink:#111; --paper:#fbfbf5;
+}
+*{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;background:#150b07;overflow:hidden;color:var(--ink)}
+body{font-family:"Hiragino Sans","Yu Gothic",system-ui,sans-serif}
+.stage{position:relative;width:100vw;height:100vh;aspect-ratio:16/9;background:
+ radial-gradient(circle at 72% 20%, rgba(255,185,92,.42), transparent 27%),
+ radial-gradient(circle at 12% 75%, rgba(255,130,50,.22), transparent 24%),
+ linear-gradient(180deg,#20100a 0%,#27130b 45%,#4a2512 74%,#241009 100%);}
+.wall{position:absolute;inset:0 0 31%;background:linear-gradient(90deg,#1a0d08,#2b160d 40%,#43200f 72%,#1b0d08);opacity:.95}.desk{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,#744018,#5f3212 35%,#35170a);box-shadow:0 -24px 65px rgba(0,0,0,.55) inset}.wood{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 3px,transparent 3px 165px),linear-gradient(90deg,rgba(0,0,0,.25),transparent 18%,rgba(255,180,90,.13) 50%,transparent 82%,rgba(0,0,0,.3));mix-blend-mode:soft-light}.lamp{position:absolute;right:88px;top:76px;width:132px;height:310px}.lamp:before{content:"";position:absolute;right:0;top:0;width:112px;height:88px;background:#050505;border-radius:58px 58px 28px 28px;transform:rotate(-13deg);box-shadow:0 18px 55px rgba(255,184,92,.7)}.lamp:after{content:"";position:absolute;right:25px;top:54px;width:74px;height:36px;background:radial-gradient(#fff7d7,#ffb453 55%,transparent 70%);border-radius:50%;filter:blur(3px);transform:rotate(-13deg)}.pole{position:absolute;right:57px;top:78px;width:13px;height:245px;background:#050505;border-radius:9px}.poster{position:absolute;left:78px;top:198px;width:165px;height:230px;background:#16110d;border:10px solid #0b0907;box-shadow:0 28px 55px rgba(0,0,0,.5)}.poster:before{content:"KEIBA";position:absolute;left:22px;bottom:36px;font-weight:900;font-size:34px;color:#d7c2a1;letter-spacing:3px}.poster:after{content:"";position:absolute;left:36px;top:30px;width:85px;height:70px;border:4px solid #a99470;border-radius:45% 55% 50% 50%;opacity:.45}.plant{position:absolute;right:18px;bottom:136px;width:80px;height:140px}.plant:before{content:"";position:absolute;bottom:0;width:70px;height:48px;background:#080807;border-radius:8px}.plant:after{content:"✦ ✦ ✦ ✦ ✦";position:absolute;top:0;left:0;color:#285b22;font-size:38px;line-height:28px;letter-spacing:-12px;filter:drop-shadow(0 0 6px #53923e)}.mug{position:absolute;left:58px;bottom:112px;width:145px;height:128px;background:linear-gradient(135deg,#050505,#2a2927);border-radius:0 0 30px 30px;box-shadow:0 18px 45px rgba(0,0,0,.5)}.mug:before{content:"";position:absolute;right:-42px;top:27px;width:58px;height:58px;border:13px solid #151514;border-left:0;border-radius:0 45px 45px 0}.mug:after{content:"DARKHORSE";position:absolute;left:22px;bottom:30px;color:#d6bd88;font-weight:800;font-size:17px;letter-spacing:1px}.keyboard{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);width:820px;height:126px;background:linear-gradient(#111,#030303);border-radius:18px;box-shadow:0 20px 45px rgba(0,0,0,.55)}.keyboard:after{content:"";position:absolute;inset:18px;background:repeating-linear-gradient(90deg,#2a2a2a 0 38px,transparent 38px 49px),repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 18px,transparent 18px 31px);border-radius:10px;opacity:.9}.mouse{position:absolute;right:250px;bottom:76px;width:108px;height:72px;background:radial-gradient(circle at 62% 24%,#56514a,#050505 62%);border-radius:55px 55px 45px 45px;box-shadow:0 20px 35px rgba(0,0,0,.6)}
+.monitor{position:absolute;left:50%;top:50%;transform:translate(-50%,-48%);width:1510px;height:850px;background:#050505;border-radius:18px;padding:18px;box-shadow:0 32px 95px rgba(0,0,0,.72),0 0 0 2px #222}.monitor:before{content:"";position:absolute;left:50%;bottom:-178px;transform:translateX(-50%);width:92px;height:178px;background:#050505;border-radius:0 0 26px 26px}.monitor:after{content:"";position:absolute;left:50%;bottom:-218px;transform:translateX(-50%);width:360px;height:58px;background:#050505;border-radius:28px 28px 6px 6px}.screen{position:relative;width:100%;height:100%;background:var(--paper);overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,.14)}.screen:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 0 55%,rgba(0,0,0,.06) 100%),linear-gradient(180deg,rgba(255,255,255,.65),transparent 22%,rgba(0,0,0,.03));pointer-events:none}.board{position:absolute;inset:42px 48px 38px;font-family:"Hiragino Maru Gothic ProN","Yu Gothic",sans-serif}.brand{position:absolute;left:0;top:0;font-size:27px;letter-spacing:2px}.brand b{color:#c31414;margin-left:16px;font-size:31px}.times{position:absolute;right:0;top:-3px;font-size:34px;line-height:1.4;text-align:left;font-weight:700}.times .deadline{color:#c41b1b}.topline{position:absolute;left:0;right:0;top:118px;border-top:4px solid #111}.race-row{position:absolute;left:0;right:330px;top:54px;display:grid;grid-template-columns:310px 1fr 310px;align-items:end;gap:28px}.date{font-size:43px;text-align:center}.race{font-size:62px;text-align:center;font-weight:800;letter-spacing:5px}.race-name{font-size:43px;text-align:center}.picks{position:absolute;left:0;right:0;top:166px;bottom:190px;display:grid;grid-template-columns:1fr 1fr 1fr}.pick{position:relative;text-align:center;padding-top:8px}.pick:not(:last-child){border-right:3px solid #111}.pick-title{font-size:48px;font-weight:800;letter-spacing:4px;display:inline-block;padding:0 36px 9px;border-bottom:5px solid currentColor}.safe{color:var(--safe)}.long{color:var(--long)}.jiyo{color:var(--jiyo)}.mark{margin-top:48px;font-size:72px;font-weight:900;color:#0b0b0b;letter-spacing:6px}.horse{margin-top:34px;font-size:38px;font-weight:650;color:#111;line-height:1.2}.sub{margin-top:28px;font-size:30px;font-weight:800}.memo{position:absolute;left:0;right:0;bottom:0;height:166px;border-top:4px solid #111;padding:22px 22px 0;font-size:35px;line-height:1.45;font-weight:650}.memo-title{display:inline-block;margin-right:26px}.memo-body{display:inline}.updated{position:absolute;right:0;bottom:172px;font-size:17px;letter-spacing:2px;color:#555}.status{position:absolute;left:0;bottom:172px;font-size:29px;font-weight:900}.status.live{color:#111}.flash{animation:flash .6s ease}@keyframes flash{0%{filter:brightness(1)}50%{filter:brightness(1.12)}100%{filter:brightness(1)}}
+@media(max-aspect-ratio:16/9){.stage{width:177.777777vh;height:100vh;left:50%;transform:translateX(-50%);position:relative}}@media(min-aspect-ratio:16/9){.stage{width:100vw;height:56.25vw;top:50%;transform:translateY(-50%);position:relative}}
+</style>
 </head>
 <body>
-  <main class="stage" aria-label="DARKHORSCORE LIVE">
-    <img class="desk-bg" src="bg.png" alt="" />
-
-    <section class="board" id="board">
-      <header class="topline">
-        <div class="brand">DARKHORSCORE <span>LIVE</span></div>
-        <div class="timebox">
-          <div>発走 <b id="postTime">15:30</b></div>
-          <div class="deadline">締切 <b id="closeTime">15:28</b></div>
-        </div>
-      </header>
-
-      <section class="race-head">
-        <div id="date">6月30日(月)</div>
-        <div class="main-race"><span id="course">名古屋</span> <span id="raceNo">11R</span></div>
-        <div id="raceName">テストレース</div>
-      </section>
-
-      <div class="line"></div>
-
-      <section class="picks">
-        <article class="pick safe">
-          <h2>SAFE AI</h2>
-          <div class="marker"></div>
-          <div class="number">◎<span id="safeNo">5</span></div>
-          <div class="horse" id="safeHorse">サンライズジパング</div>
-          <div class="sub" id="safeMemo">[ 牡4 ]</div>
-        </article>
-
-        <article class="pick longshot">
-          <h2>LONGSHOT AI</h2>
-          <div class="marker"></div>
-          <div class="number">◎<span id="longNo">11</span></div>
-          <div class="horse" id="longHorse">サヴァ</div>
-          <div class="sub" id="longMemo">[ 牡6 ]</div>
-        </article>
-
-        <article class="pick jiyo">
-          <h2>ジヨの◎</h2>
-          <div class="marker"></div>
-          <div class="number">◎<span id="jiyoNo">2</span></div>
-          <div class="horse" id="jiyoHorse">テストホース</div>
-          <div class="sub" id="jiyoMemo">[ 牡5 ]</div>
-        </article>
-      </section>
-
-      <div class="line bottom"></div>
-
-      <section class="memo-area">
-        <div class="memo-title">メモ</div>
-        <div class="memo-grid" id="memo">
-          <p>・良馬場想定</p>
-          <p>・⑤は安定感抜群</p>
-          <p>・先行有利の展開</p>
-          <p>・⑪は展開ハマれば一発</p>
-          <p>・内枠有利の傾向</p>
-          <p>・②は距離延長がポイント</p>
-        </div>
-      </section>
-    </section>
-  </main>
-  <script src="script.js"></script>
+<div class="stage">
+  <div class="wall"></div><div class="desk"><div class="wood"></div></div><div class="poster"></div><div class="lamp"><div class="pole"></div></div><div class="plant"></div><div class="mug"></div><div class="keyboard"></div><div class="mouse"></div>
+  <main class="monitor"><section class="screen" id="screen"><div class="board">
+    <div class="brand">DARKHORSCORE <b>LIVE</b></div>
+    <div class="times"><div>発走 <span id="start">15:30</span></div><div class="deadline">締切 <span id="deadline">15:28</span></div></div>
+    <div class="race-row"><div class="date" id="date">6月30日(月)</div><div class="race" id="race">名古屋 11R</div><div class="race-name" id="raceName">テストレース</div></div>
+    <div class="topline"></div>
+    <div class="picks">
+      <div class="pick"><div class="pick-title safe">SAFE AI</div><div class="mark">◎<span id="safeNo">5</span></div><div class="horse" id="safeHorse">サンライズジパング</div><div class="sub safe" id="safeMemo">[牡4]</div></div>
+      <div class="pick"><div class="pick-title long">LONGSHOT AI</div><div class="mark">◎<span id="longNo">11</span></div><div class="horse" id="longHorse">サヴァ</div><div class="sub long" id="longMemo">[牡6]</div></div>
+      <div class="pick"><div class="pick-title jiyo">ジヨの◎</div><div class="mark">◎<span id="jiyoNo">2</span></div><div class="horse" id="jiyoHorse">テストホース</div><div class="sub jiyo" id="jiyoMemo">[牡5]</div></div>
+    </div>
+    <div class="status live" id="status">受付中</div><div class="updated" id="updated">UPDATED --:--:--</div>
+    <div class="memo"><span class="memo-title">メモ</span><span class="memo-body" id="memo">・良馬場想定　・先行有利の展開　・内枠有利の傾向</span></div>
+  </div></section></main>
+</div>
+<script>
+const SHEET_API_URL = ''; // Google Apps ScriptのURLを入れる。空ならデモ表示。
+const DEMO = {date:'6月30日(月)', place:'名古屋', race:'11R', raceName:'テストレース', start:'15:30', deadline:'15:28', safe:'5', safeHorse:'サンライズジパング', safeMemo:'[牡4]', longshot:'11', longHorse:'サヴァ', longMemo:'[牡6]', jiyo:'2', jiyoHorse:'テストホース', jiyoMemo:'[牡5]', memo:'・良馬場想定　・先行有利の展開　・内枠有利の傾向'};
+function $(id){return document.getElementById(id)}
+function normalize(raw){const d=Array.isArray(raw)?raw[0]||{}:raw||{};return{
+ date:d.date||d['日付']||DEMO.date, place:d.place||d['競馬場']||DEMO.place, race:d.race||d['レース']||DEMO.race, raceName:d.raceName||d['レース名']||DEMO.raceName,
+ start:d.start||d['発走']||DEMO.start, deadline:d.deadline||d['締切']||DEMO.deadline,
+ safe:d.safe||d['SAFE']||DEMO.safe, safeHorse:d.safeHorse||d['SAFE馬名']||d['馬名_SAFE']||DEMO.safeHorse, safeMemo:d.safeMemo||d['SAFEメモ']||DEMO.safeMemo,
+ longshot:d.longshot||d['LONGSHOT']||DEMO.longshot, longHorse:d.longHorse||d['LONGSHOT馬名']||d['馬名_LONGSHOT']||DEMO.longHorse, longMemo:d.longMemo||d['LONGSHOTメモ']||DEMO.longMemo,
+ jiyo:d.jiyo||d['ジヨ']||DEMO.jiyo, jiyoHorse:d.jiyoHorse||d['ジヨ馬名']||d['馬名_ジヨ']||DEMO.jiyoHorse, jiyoMemo:d.jiyoMemo||d['ジヨメモ']||DEMO.jiyoMemo,
+ memo:d.memo||d['メモ']||DEMO.memo};}
+function render(data){const d=normalize(data);$('date').textContent=d.date;$('race').textContent=`${d.place} ${d.race}`;$('raceName').textContent=d.raceName;$('start').textContent=d.start;$('deadline').textContent=d.deadline;$('safeNo').textContent=d.safe;$('safeHorse').textContent=d.safeHorse;$('safeMemo').textContent=d.safeMemo;$('longNo').textContent=d.longshot;$('longHorse').textContent=d.longHorse;$('longMemo').textContent=d.longMemo;$('jiyoNo').textContent=d.jiyo;$('jiyoHorse').textContent=d.jiyoHorse;$('jiyoMemo').textContent=d.jiyoMemo;$('memo').textContent=d.memo;$('updated').textContent='UPDATED '+new Date().toLocaleTimeString('ja-JP',{hour12:false});$('screen').classList.remove('flash');void $('screen').offsetWidth;$('screen').classList.add('flash')}
+async function load(){if(!SHEET_API_URL){render(DEMO);return}try{const res=await fetch(SHEET_API_URL+'&t='+Date.now(),{cache:'no-store'});render(await res.json())}catch(e){render(DEMO)}}
+load();setInterval(load,15000);
+</script>
 </body>
 </html>
