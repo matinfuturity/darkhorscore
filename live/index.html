@@ -3,84 +3,63 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DARKHORSCORE LIVE v5</title>
+  <title>DARKHORSCORE LIVE v6</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <main class="stage" id="stage">
-    <div class="ambient"></div>
-    <section class="monitor">
-      <div class="bezel">
-        <div class="screen">
-          <article class="board" id="board">
-            <header class="topbar">
-              <div>
-                <div class="brand-kicker">DARKHORSCORE</div>
-                <h1>LIVE BOARD</h1>
-              </div>
-              <div class="live-pill"><span></span> LIVE</div>
-            </header>
+  <main id="stage" class="stage" aria-label="DARKHORSCORE LIVE">
+    <div class="photo-bg"></div>
+    <div class="warm-glow"></div>
 
-            <section class="race-head">
-              <div class="date-block">
-                <span class="label">DATE</span>
-                <strong id="date">6月30日(月)</strong>
-              </div>
-              <div class="main-race">
-                <span class="label">RACE</span>
-                <strong><span id="course">名古屋</span> <span id="race">1R</span></strong>
-                <em id="raceName">テストレース</em>
-              </div>
-              <div class="time-card">
-                <span class="label">発走</span>
-                <strong id="startTime">15:30</strong>
-              </div>
-              <div class="time-card deadline">
-                <span class="label">締切</span>
-                <strong id="closeTime">15:28</strong>
-              </div>
-            </section>
-
-            <section class="status-row">
-              <div id="status" class="status open">受付中</div>
-              <div class="countdown" id="countdown">締切まで --:--</div>
-              <div class="updated" id="updated">UPDATED --:--:--</div>
-            </section>
-
-            <section class="picks">
-              <div class="pick safe">
-                <div class="pick-title">SAFE</div>
-                <div class="pick-sub">AI</div>
-                <div class="horse-no" id="safeNo">◎5</div>
-                <div class="horse-name" id="safeHorse">サンライズジパング</div>
-              </div>
-              <div class="pick longshot">
-                <div class="pick-title">LONGSHOT</div>
-                <div class="pick-sub">AI</div>
-                <div class="horse-no" id="longNo">◎11</div>
-                <div class="horse-name" id="longHorse">サヴァ</div>
-              </div>
-              <div class="pick jiyo">
-                <div class="pick-title">ジヨ</div>
-                <div class="pick-sub">MY PICK</div>
-                <div class="horse-no" id="jiyoNo">◎2</div>
-                <div class="horse-name" id="jiyoHorse">テストホース</div>
-              </div>
-            </section>
-
-            <section class="memo-area">
-              <div class="memo-title">MEMO</div>
-              <p id="memo">良馬場想定。先行有利。内枠注意。</p>
-            </section>
-          </article>
+    <section class="board" aria-label="Live board">
+      <header class="race-header">
+        <div class="race-main">
+          <span id="date">6月22日(日)</span>
+          <span id="venueRace">中京 11R</span>
+          <span id="raceName">プロキオンS</span>
         </div>
-      </div>
-      <div class="stand"></div>
-      <div class="base"></div>
+        <div class="time-box">
+          <div>発走 <span id="postTime">15:35</span></div>
+          <div class="deadline">締切 <span id="closeTime">15:28</span></div>
+        </div>
+      </header>
+
+      <div class="divider"></div>
+
+      <section class="picks" aria-label="Predictions">
+        <article class="pick pick-safe">
+          <h2>SAFE AI</h2>
+          <div class="color-line"></div>
+          <div class="horse-no"><span>◎</span><strong id="safeNo">5</strong></div>
+          <div id="safeHorse" class="horse-name">サンライズジパング</div>
+        </article>
+
+        <article class="pick pick-longshot">
+          <h2>LONGSHOT AI</h2>
+          <div class="color-line"></div>
+          <div class="horse-no"><strong id="longNo">11</strong></div>
+          <div id="longHorse" class="horse-name">サヴァ</div>
+        </article>
+
+        <article class="pick pick-jiyo">
+          <h2>ジヨの◎</h2>
+          <div class="color-line"></div>
+          <div class="horse-no"><strong id="jiyoNo">8</strong></div>
+          <div id="jiyoHorse" class="horse-name">ハギノアレグリアス</div>
+        </article>
+      </section>
+
+      <section class="memo-wrap">
+        <div class="memo-title">メモ</div>
+        <div class="memo-line"></div>
+        <p id="memo">内枠有利の傾向。⑤は安定感抜群。⑪は展開ハマれば一発。</p>
+      </section>
     </section>
-    <div class="desk-item left"></div>
-    <div class="desk-item right"></div>
+
+    <div class="status-pill" id="statusPill">LIVE</div>
+    <div class="updated" id="updated">UPDATED --:--:--</div>
   </main>
+
   <script src="./script.js"></script>
 </body>
 </html>

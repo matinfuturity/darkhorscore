@@ -1,10 +1,19 @@
-# DARKHORSCORE LIVE v5 COMPLETE
+# DARKHORSCORE LIVE v6
 
-OBS向け 1920×1080 固定ライブボード。
+参考画像ベースの「机の上のモニター風」OBS用ライブ画面です。
 
-## 入れるファイル
-`index.html`, `style.css`, `script.js`, `README.md` を `/live` に上書き。
-ZIP本体はアップロードしない。
+## GitHubへ入れるもの
+
+`/live` に以下を上書きしてください。
+
+- index.html
+- style.css
+- script.js
+- README.md
+- assets/desk-monitor.jpg
+
+ZIP本体はアップロードしないでください。
 
 ## スプレッドシート連携
-`script.js` の先頭にある `SHEET_API_URL` に Google Apps Script のWebアプリURLを入れる。
+
+`script.js` の `SHEET_API_URL` に Google Apps Script の WebアプリURLを入れてください。
