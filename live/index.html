@@ -1,65 +1,73 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DARKHORSCORE LIVE v6</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DARKHORSCORE LIVE</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main id="stage" class="stage" aria-label="DARKHORSCORE LIVE">
-    <div class="photo-bg"></div>
-    <div class="warm-glow"></div>
+  <main class="stage" aria-label="DARKHORSCORE LIVE">
+    <img class="desk-bg" src="bg.png" alt="" />
 
-    <section class="board" aria-label="Live board">
-      <header class="race-header">
-        <div class="race-main">
-          <span id="date">6月22日(日)</span>
-          <span id="venueRace">中京 11R</span>
-          <span id="raceName">プロキオンS</span>
-        </div>
-        <div class="time-box">
-          <div>発走 <span id="postTime">15:35</span></div>
-          <div class="deadline">締切 <span id="closeTime">15:28</span></div>
+    <section class="board" id="board">
+      <header class="topline">
+        <div class="brand">DARKHORSCORE <span>LIVE</span></div>
+        <div class="timebox">
+          <div>発走 <b id="postTime">15:30</b></div>
+          <div class="deadline">締切 <b id="closeTime">15:28</b></div>
         </div>
       </header>
 
-      <div class="divider"></div>
+      <section class="race-head">
+        <div id="date">6月30日(月)</div>
+        <div class="main-race"><span id="course">名古屋</span> <span id="raceNo">11R</span></div>
+        <div id="raceName">テストレース</div>
+      </section>
 
-      <section class="picks" aria-label="Predictions">
-        <article class="pick pick-safe">
+      <div class="line"></div>
+
+      <section class="picks">
+        <article class="pick safe">
           <h2>SAFE AI</h2>
-          <div class="color-line"></div>
-          <div class="horse-no"><span>◎</span><strong id="safeNo">5</strong></div>
-          <div id="safeHorse" class="horse-name">サンライズジパング</div>
+          <div class="marker"></div>
+          <div class="number">◎<span id="safeNo">5</span></div>
+          <div class="horse" id="safeHorse">サンライズジパング</div>
+          <div class="sub" id="safeMemo">[ 牡4 ]</div>
         </article>
 
-        <article class="pick pick-longshot">
+        <article class="pick longshot">
           <h2>LONGSHOT AI</h2>
-          <div class="color-line"></div>
-          <div class="horse-no"><strong id="longNo">11</strong></div>
-          <div id="longHorse" class="horse-name">サヴァ</div>
+          <div class="marker"></div>
+          <div class="number">◎<span id="longNo">11</span></div>
+          <div class="horse" id="longHorse">サヴァ</div>
+          <div class="sub" id="longMemo">[ 牡6 ]</div>
         </article>
 
-        <article class="pick pick-jiyo">
+        <article class="pick jiyo">
           <h2>ジヨの◎</h2>
-          <div class="color-line"></div>
-          <div class="horse-no"><strong id="jiyoNo">8</strong></div>
-          <div id="jiyoHorse" class="horse-name">ハギノアレグリアス</div>
+          <div class="marker"></div>
+          <div class="number">◎<span id="jiyoNo">2</span></div>
+          <div class="horse" id="jiyoHorse">テストホース</div>
+          <div class="sub" id="jiyoMemo">[ 牡5 ]</div>
         </article>
       </section>
 
-      <section class="memo-wrap">
+      <div class="line bottom"></div>
+
+      <section class="memo-area">
         <div class="memo-title">メモ</div>
-        <div class="memo-line"></div>
-        <p id="memo">内枠有利の傾向。⑤は安定感抜群。⑪は展開ハマれば一発。</p>
+        <div class="memo-grid" id="memo">
+          <p>・良馬場想定</p>
+          <p>・⑤は安定感抜群</p>
+          <p>・先行有利の展開</p>
+          <p>・⑪は展開ハマれば一発</p>
+          <p>・内枠有利の傾向</p>
+          <p>・②は距離延長がポイント</p>
+        </div>
       </section>
     </section>
-
-    <div class="status-pill" id="statusPill">LIVE</div>
-    <div class="updated" id="updated">UPDATED --:--:--</div>
   </main>
-
-  <script src="./script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

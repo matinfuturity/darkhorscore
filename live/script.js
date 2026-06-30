@@ -1,84 +1,55 @@
-// DARKHORSCORE LIVE v6
-// Google Apps Script の WebアプリURLを入れる。空ならデモ表示。
+// DARKHORSCORE LIVE v8
+// Google Apps ScriptのURLをここに入れる。空ならデモ表示。
 const SHEET_API_URL = "";
-const REFRESH_MS = 15000;
+const REFRESH_MS = 5000;
 
-const demoData = {
-  date: "6月22日(日)",
-  venue: "中京",
-  race: "11R",
-  raceName: "プロキオンS",
-  postTime: "15:35",
-  closeTime: "15:28",
-  status: "LIVE",
-  safeNo: "5",
-  safeHorse: "サンライズジパング",
-  longNo: "11",
-  longHorse: "サヴァ",
-  jiyoNo: "8",
-  jiyoHorse: "ハギノアレグリアス",
-  memo: "内枠有利の傾向。⑤は安定感抜群。⑪は展開ハマれば一発。"
+const demo = {
+  date:"6月30日(月)", course:"名古屋", race:"11R", raceName:"テストレース",
+  postTime:"15:30", closeTime:"15:28",
+  safe:"5", safeHorse:"サンライズジパング", safeMemo:"[ 牡4 ]",
+  longshot:"11", longHorse:"サヴァ", longMemo:"[ 牡6 ]",
+  jiyo:"2", jiyoHorse:"テストホース", jiyoMemo:"[ 牡5 ]",
+  memo:"・良馬場想定\n・⑤は安定感抜群\n・先行有利の展開\n・⑪は展開ハマれば一発\n・内枠有利の傾向\n・②は距離延長がポイント"
 };
 
-const $ = (id) => document.getElementById(id);
-const setText = (id, value) => { if ($(id)) $(id).textContent = value || "-"; };
-
+const $ = (id)=>document.getElementById(id);
+function first(obj, keys, fallback=""){
+  for(const k of keys){ if(obj && obj[k] !== undefined && obj[k] !== null && String(obj[k]).trim() !== "") return obj[k]; }
+  return fallback;
+}
 function normalize(raw){
-  const d = Array.isArray(raw) ? raw[0] : raw;
+  const r = Array.isArray(raw) ? raw[0] : (raw.data || raw.row || raw.current || raw);
   return {
-    date: d["日付"] ?? d.date ?? demoData.date,
-    venue: d["競馬場"] ?? d.venue ?? demoData.venue,
-    race: d["レース"] ?? d.race ?? demoData.race,
-    raceName: d["レース名"] ?? d.raceName ?? demoData.raceName,
-    postTime: d["発走"] ?? d.postTime ?? demoData.postTime,
-    closeTime: d["締切"] ?? d.closeTime ?? demoData.closeTime,
-    status: d.status ?? d["状態"] ?? "LIVE",
-    safeNo: d.safeNo ?? d["SAFE"] ?? d["SAFE馬番"] ?? demoData.safeNo,
-    safeHorse: d.safeHorse ?? d["SAFE馬名"] ?? d["馬名_SAFE"] ?? d["馬名"] ?? demoData.safeHorse,
-    longNo: d.longNo ?? d["LONGSHOT"] ?? d["LONGSHOT馬番"] ?? demoData.longNo,
-    longHorse: d.longHorse ?? d["LONGSHOT馬名"] ?? d["馬名_LONGSHOT"] ?? demoData.longHorse,
-    jiyoNo: d.jiyoNo ?? d["ジヨ"] ?? d["ジヨ馬番"] ?? demoData.jiyoNo,
-    jiyoHorse: d.jiyoHorse ?? d["ジヨ馬名"] ?? d["馬名_ジヨ"] ?? demoData.jiyoHorse,
-    memo: d["メモ"] ?? d.memo ?? demoData.memo
+    date:first(r,["date","日付"],demo.date),
+    course:first(r,["course","競馬場"],demo.course),
+    race:first(r,["race","レース","R"],demo.race),
+    raceName:first(r,["raceName","レース名"],demo.raceName),
+    postTime:first(r,["postTime","発走"],demo.postTime),
+    closeTime:first(r,["closeTime","締切"],demo.closeTime),
+    safe:first(r,["safe","SAFE"],demo.safe),
+    safeHorse:first(r,["safeHorse","SAFE馬名","馬名SAFE","safe_name"],demo.safeHorse),
+    safeMemo:first(r,["safeMemo","SAFEメモ"],demo.safeMemo),
+    longshot:first(r,["longshot","LONGSHOT"],demo.longshot),
+    longHorse:first(r,["longHorse","LONGSHOT馬名","馬名LONGSHOT","longshot_name"],demo.longHorse),
+    longMemo:first(r,["longMemo","LONGSHOTメモ"],demo.longMemo),
+    jiyo:first(r,["jiyo","ジヨ"],demo.jiyo),
+    jiyoHorse:first(r,["jiyoHorse","ジヨ馬名","馬名ジヨ","jiyo_name"],demo.jiyoHorse),
+    jiyoMemo:first(r,["jiyoMemo","ジヨメモ"],demo.jiyoMemo),
+    memo:first(r,["memo","メモ"],demo.memo)
   };
 }
-
 function render(data){
-  setText("date", data.date);
-  setText("venueRace", `${data.venue} ${data.race}`);
-  setText("raceName", data.raceName);
-  setText("postTime", data.postTime);
-  setText("closeTime", data.closeTime);
-  setText("statusPill", data.status || "LIVE");
-  setText("safeNo", stripNo(data.safeNo));
-  setText("safeHorse", data.safeHorse);
-  setText("longNo", stripNo(data.longNo));
-  setText("longHorse", data.longHorse);
-  setText("jiyoNo", stripNo(data.jiyoNo));
-  setText("jiyoHorse", data.jiyoHorse);
-  setText("memo", data.memo);
-  const now = new Date();
-  setText("updated", `UPDATED ${now.toLocaleTimeString("ja-JP",{hour12:false})}`);
-  document.getElementById("stage").classList.remove("flash");
-  requestAnimationFrame(()=>document.getElementById("stage").classList.add("flash"));
+  $("date").textContent=data.date; $("course").textContent=data.course; $("raceNo").textContent=data.race; $("raceName").textContent=data.raceName;
+  $("postTime").textContent=data.postTime; $("closeTime").textContent=data.closeTime;
+  $("safeNo").textContent=data.safe; $("safeHorse").textContent=data.safeHorse; $("safeMemo").textContent=data.safeMemo;
+  $("longNo").textContent=data.longshot; $("longHorse").textContent=data.longHorse; $("longMemo").textContent=data.longMemo;
+  $("jiyoNo").textContent=data.jiyo; $("jiyoHorse").textContent=data.jiyoHorse; $("jiyoMemo").textContent=data.jiyoMemo;
+  $("memo").innerHTML = String(data.memo || "").split(/\n|、|,/).filter(Boolean).slice(0,6).map(x=>`<p>${x.trim().startsWith("・")?x.trim():"・"+x.trim()}</p>`).join("");
+  $("board").classList.remove("updated"); void $("board").offsetWidth; $("board").classList.add("updated");
 }
-
-function stripNo(value){
-  return String(value || "").replace(/[◎○▲△☆★注\s]/g, "").replace(/[①]/g,"1").replace(/[②]/g,"2").replace(/[③]/g,"3").replace(/[④]/g,"4").replace(/[⑤]/g,"5").replace(/[⑥]/g,"6").replace(/[⑦]/g,"7").replace(/[⑧]/g,"8").replace(/[⑨]/g,"9").replace(/[⑩]/g,"10").replace(/[⑪]/g,"11").replace(/[⑫]/g,"12").replace(/[⑬]/g,"13").replace(/[⑭]/g,"14").replace(/[⑮]/g,"15").replace(/[⑯]/g,"16").replace(/[⑰]/g,"17").replace(/[⑱]/g,"18");
-}
-
 async function load(){
-  if(!SHEET_API_URL){ render(demoData); return; }
-  try{
-    const res = await fetch(`${SHEET_API_URL}${SHEET_API_URL.includes('?') ? '&' : '?'}t=${Date.now()}`, {cache:"no-store"});
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    render(normalize(json));
-  }catch(e){
-    console.warn("Sheet fetch failed", e);
-    render(demoData);
-  }
+  if(!SHEET_API_URL){ render(demo); return; }
+  try{ const res = await fetch(SHEET_API_URL + (SHEET_API_URL.includes('?')?'&':'?') + 't=' + Date.now(), {cache:'no-store'}); render(normalize(await res.json())); }
+  catch(e){ console.warn(e); render(demo); }
 }
-
-load();
-setInterval(load, REFRESH_MS);
+load(); setInterval(load, REFRESH_MS);

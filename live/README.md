@@ -1,19 +1,10 @@
-# DARKHORSCORE LIVE v6
+# DARKHORSCORE LIVE v8
 
-参考画像ベースの「机の上のモニター風」OBS用ライブ画面です。
+参考画像風の「机＋モニター＋手書きホワイトボード」版。
 
-## GitHubへ入れるもの
+## 使い方
+1. `index.html`, `style.css`, `script.js`, `bg.png`, `README.md` を `/live` にアップロード
+2. GitHub Pagesで `/live/` を開く
+3. `script.js` の `SHEET_API_URL` にGoogle Apps Script URLを入れる
 
-`/live` に以下を上書きしてください。
-
-- index.html
-- style.css
-- script.js
-- README.md
-- assets/desk-monitor.jpg
-
-ZIP本体はアップロードしないでください。
-
-## スプレッドシート連携
-
-`script.js` の `SHEET_API_URL` に Google Apps Script の WebアプリURLを入れてください。
+OBSはブラウザソース 1920x1080 推奨。
