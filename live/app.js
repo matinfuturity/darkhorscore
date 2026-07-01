@@ -1,4 +1,3 @@
-
 const DEMO = {
   race:'名古屋 11R',
   safe_no:'5', safe_name:'サンライズジパング', safe_star:'★★★★★',
@@ -42,14 +41,29 @@ function render(data){
   $('roi').textContent = val(data,'roi');
   $('profit').textContent = val(data,'profit');
   $('history').textContent = val(data,'history');
-  $('updated').textContent = 'UPDATED ' + new Date().toLocaleTimeString('ja-JP',{hour12:false});
+
+  $('updated').textContent =
+    'UPDATED ' + new Date().toLocaleTimeString('ja-JP', { hour12:false });
+
   $('stage').classList.remove('flash');
   void $('stage').offsetWidth;
   $('stage').classList.add('flash');
 }
 
 function hasSupabaseConfig(){
-  return window.DARKHORSE_SUPABASE_URL && window.DARKHORSE_SUPABASE_ANON_KEY && window.supabase;
+  return window.DARKHORSE_SUPABASE_URL &&
+         window.DARKHORSE_SUPABASE_ANON_KEY &&
+         window.supabase;
+}
+
+function getClient(){
+  if(!supabaseClient){
+    supabaseClient = window.supabase.createClient(
+      window.DARKHORSE_SUPABASE_URL,
+      window.DARKHORSE_SUPABASE_ANON_KEY
+    );
+  }
+  return supabaseClient;
 }
 
 async function fetchLiveBoard(){
@@ -57,37 +71,49 @@ async function fetchLiveBoard(){
     render(DEMO);
     return;
   }
-  if(!supabaseClient){
-    supabaseClient = window.supabase.createClient(
-      window.DARKHORSE_SUPABASE_URL,
-      window.DARKHORSE_SUPABASE_ANON_KEY
-    );
-  }
-  const { data, error } = await supabaseClient
-  .from('live_board')
-  .select('*')
-  .order('id', { ascending: false })
-  .limit(1)
-  .single();
+
+  const rowId = window.DARKHORSE_LIVE_ROW_ID || 1;
+  const client = getClient();
+
+  const { data, error } = await client
+    .from('live_board')
+    .select('*')
+    .eq('id', rowId)
+    .single();
 
   if(error){
     console.warn('Supabase fetch error:', error.message);
     render(DEMO);
     return;
   }
+
   render(data);
 }
 
 function subscribeLiveBoard(){
-  if(!hasSupabaseConfig() || !supabaseClient) return;
+  if(!hasSupabaseConfig()) return;
+
   const rowId = window.DARKHORSE_LIVE_ROW_ID || 1;
-  supabaseClient
-    .channel('darkhorscore-live-board')
-    .on('postgres_changes', { event:'*', schema:'public', table:'live_board', filter:`id=eq.${rowId}` }, (payload) => {
-      render(payload.new || DEMO);
-    })
+  const client = getClient();
+
+  client
+    .channel('darkhorscore-live-board-' + rowId)
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'live_board',
+        filter: `id=eq.${rowId}`
+      },
+      (payload) => {
+        render(payload.new || DEMO);
+      }
+    )
     .subscribe();
 }
+
+window.addEventListener('resize', fitStage);
 
 window.addEventListener('load', async () => {
   fitStage();
