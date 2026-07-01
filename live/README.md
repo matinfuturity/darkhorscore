@@ -1,9 +1,12 @@
-# DARKHORSCORE Whiteboard LIVE v1
+# DARKHORSCORE Whiteboard LIVE v2
 
-GitHubの `live/whiteboard/` にこの中身をアップロードしてください。
+GitHubの `live/whiteboard/` にこの3ファイルを入れてください。
 
-必要：同じフォルダに `supabase-config.js` も置くこと。
-既存の `live/supabase-config.js` をコピーすればOK。
+- index.html
+- style.css
+- app.js
 
-公開URL例：
+重要：`live/supabase-config.js` を使う想定なので、index.htmlでは `../supabase-config.js` を読んでいます。
+
+URL例：
 https://matinfuturity.github.io/darkhorscore/live/whiteboard/

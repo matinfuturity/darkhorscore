@@ -4,62 +4,59 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DARKHORSCORE Whiteboard LIVE</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
   <div class="scene">
-    <div class="wall"></div>
-    <main class="board" id="stage">
-      <div class="tape tape-l"></div>
-      <div class="tape tape-r"></div>
+    <div class="desk-shadow"></div>
+    <main class="board" id="board">
+      <div class="wood-frame"></div>
+      <div class="shine"></div>
+      <div class="smudge smudge-a"></div>
+      <div class="smudge smudge-b"></div>
+      <div class="tape tape-a"></div>
+      <div class="tape tape-b"></div>
       <div class="magnet red"></div>
       <div class="magnet blue"></div>
-      <div class="shine"></div>
-      <header class="board-head">
-        <div>
-          <p class="label">本日の勝負レース</p>
-          <h1 id="race">名古屋 11R</h1>
-        </div>
-        <div class="stamp">LIVE</div>
-      </header>
-      <section class="content">
-        <div class="left">
-          <h2>印</h2>
-          <div class="pick main"><span class="mark">◎</span><span class="no" id="safeNo">5</span><span id="safeName">サンライズジパング</span></div>
-          <div class="pick"><span class="mark">○</span><span class="no" id="longNo">11</span><span id="longName">サヴァ</span></div>
-          <div class="pick"><span class="mark">▲</span><span class="no" id="jiyoNo">2</span><span id="jiyoName">テストホース</span></div>
-          <div class="note">
-            <h2>メモ</h2>
-            <p id="memo">今日は前残り・内枠重視</p>
-          </div>
-        </div>
-        <div class="right">
-          <h2>買い目</h2>
-          <div class="bet-box">
-            <p class="bet-title">ワイド</p>
-            <p id="wideBet">5 - 11 / 2 - 5</p>
-            <p class="bet-title">馬連</p>
-            <p id="umarenBet">5 - 11</p>
-            <p class="bet-title">三連複</p>
-            <p id="sanrenBet">2 - 5 - 11</p>
-          </div>
-          <div class="mini">
-            <span>SAFE <b id="safeRecord">184-96</b></span>
-            <span>LONG <b id="longRecord">62-208</b></span>
-            <span>ジヨ <b id="jiyoRecord">81-39</b></span>
-            <span>ROI <b id="roi">128%</b></span>
-          </div>
+
+      <section class="paper-title">
+        <p>本日の勝負レース</p>
+        <h1 id="race">名古屋 11R</h1>
+        <span class="live-dot">● LIVE</span>
+      </section>
+
+      <section class="picks">
+        <div class="pick main"><b>◎</b><span id="safeNo">5</span><strong id="safeName">サンライズジパング</strong></div>
+        <div class="pick sub"><b>○</b><span id="longNo">11</span><strong id="longName">サヴァ</strong></div>
+        <div class="pick third"><b>▲</b><span id="jiyoNo">2</span><strong id="jiyoName">テストホース</strong></div>
+      </section>
+
+      <section class="ticket">
+        <h2>買い目</h2>
+        <div class="bet-grid">
+          <div><small>ワイド</small><p id="wideBet">5 - 11 / 2 - 5</p></div>
+          <div><small>馬連</small><p id="umarenBet">5 - 11</p></div>
+          <div><small>三連複</small><p id="sanrenBet">2 - 5 - 11</p></div>
         </div>
       </section>
-      <footer>
-        <span>DARKHORSCORE WHITEBOARD</span>
+
+      <section class="memo-area">
+        <h2>メモ</h2>
+        <p id="memo">今日は前残り・内枠重視</p>
+      </section>
+
+      <footer class="board-footer">
+        <span id="records">SAFE 184-96 / LONG 62-208 / ジヨ 81-39 / ROI 128%</span>
         <span id="updated">UPDATED --:--:--</span>
       </footer>
-      <div class="tray"><span></span><span></span><span></span></div>
+
+      <div class="marker marker-black"></div>
+      <div class="marker marker-red"></div>
     </main>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js?v=1"></script>
-  <script src="app.js?v=1"></script>
+  <script src="../supabase-config.js?v=30"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
