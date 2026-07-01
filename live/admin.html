@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>DARKHORSCORE ADMIN</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">DARKHORSCORE</p>
+        <h1>LIVE ADMIN</h1>
+      </div>
+      <a class="live-link" href="./" target="_blank" rel="noopener">LIVE</a>
+    </header>
+
+    <section class="status-card" id="statusCard">
+      <span class="status-dot"></span>
+      <span id="statusText">Supabase接続待機中</span>
+    </section>
+
+    <form id="adminForm" class="form-card">
+      <label class="field full">
+        <span>レース</span>
+        <input id="race" name="race" placeholder="名古屋11R" autocomplete="off" />
+      </label>
+
+      <section class="pick-block safe">
+        <div class="block-head">
+          <span>SAFE AI</span>
+          <select id="safe_star" name="safe_star" aria-label="SAFE自信度">
+            <option>★★★★★</option><option>★★★★☆</option><option>★★★☆☆</option><option>★★☆☆☆</option><option>★☆☆☆☆</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <label class="field small"><span>馬番</span><input id="safe_no" name="safe_no" inputmode="numeric" placeholder="5" /></label>
+          <label class="field"><span>馬名</span><input id="safe_name" name="safe_name" placeholder="サンライズジパング" /></label>
+        </div>
+      </section>
+
+      <section class="pick-block long">
+        <div class="block-head">
+          <span>LONGSHOT</span>
+          <select id="long_star" name="long_star" aria-label="LONGSHOT自信度">
+            <option>★★★☆☆</option><option>★★★★★</option><option>★★★★☆</option><option>★★☆☆☆</option><option>★☆☆☆☆</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <label class="field small"><span>馬番</span><input id="long_no" name="long_no" inputmode="numeric" placeholder="11" /></label>
+          <label class="field"><span>馬名</span><input id="long_name" name="long_name" placeholder="サヴァ" /></label>
+        </div>
+      </section>
+
+      <section class="pick-block jiyo">
+        <div class="block-head">
+          <span>ジヨの◎</span>
+          <select id="jiyo_star" name="jiyo_star" aria-label="ジヨ自信度">
+            <option>★★★★☆</option><option>★★★★★</option><option>★★★☆☆</option><option>★★☆☆☆</option><option>★☆☆☆☆</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <label class="field small"><span>馬番</span><input id="jiyo_no" name="jiyo_no" inputmode="numeric" placeholder="2" /></label>
+          <label class="field"><span>馬名</span><input id="jiyo_name" name="jiyo_name" placeholder="テストホース" /></label>
+        </div>
+      </section>
+
+      <label class="field full">
+        <span>MEMO</span>
+        <textarea id="memo" name="memo" rows="3" placeholder="今日は前残り・内枠重視"></textarea>
+      </label>
+
+      <details class="stats-panel">
+        <summary>通算成績・収支も編集する</summary>
+        <div class="stats-grid">
+          <label class="field"><span>SAFE成績</span><input id="safe_record" name="safe_record" placeholder="184-96" /></label>
+          <label class="field"><span>LONG成績</span><input id="long_record" name="long_record" placeholder="62-208" /></label>
+          <label class="field"><span>ジヨ成績</span><input id="jiyo_record" name="jiyo_record" placeholder="81-39" /></label>
+          <label class="field"><span>ROI</span><input id="roi" name="roi" placeholder="128%" /></label>
+          <label class="field"><span>収支</span><input id="profit" name="profit" placeholder="+214,580円" /></label>
+          <label class="field"><span>直近5</span><input id="history" name="history" placeholder="○○×○○" /></label>
+        </div>
+      </details>
+
+      <button id="saveBtn" class="save-btn" type="submit">保存してLIVE更新</button>
+      <button id="reloadBtn" class="ghost-btn" type="button">現在データを再読込</button>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./admin.js"></script>
+</body>
+</html>
