@@ -62,12 +62,12 @@ async function fetchLiveBoard(){
       window.DARKHORSE_SUPABASE_ANON_KEY
     );
   }
-  const rowId = window.DARKHORSE_LIVE_ROW_ID || 1;
   const { data, error } = await supabaseClient
-    .from('live_board')
-    .select('*')
-    .eq('id', rowId)
-    .single();
+  .from('live_board')
+  .select('*')
+  .order('id', { ascending: false })
+  .limit(1)
+  .single();
 
   if(error){
     console.warn('Supabase fetch error:', error.message);
