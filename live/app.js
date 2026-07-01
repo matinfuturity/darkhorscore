@@ -1,3 +1,4 @@
+alert('app.js 最新版 読み込みOK');
 const DEMO = {
   race:'名古屋 11R',
   safe_no:'5', safe_name:'サンライズジパング', safe_star:'★★★★★',
