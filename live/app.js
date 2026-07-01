@@ -1,4 +1,4 @@
-alert('app.js 最新版 読み込みOK');
+
 const DEMO = {
   race:'名古屋 11R',
   safe_no:'5', safe_name:'サンライズジパング', safe_star:'★★★★★',
@@ -89,10 +89,9 @@ function subscribeLiveBoard(){
     .subscribe();
 }
 
-window.addEventListener('resize', fitStage);
 window.addEventListener('load', async () => {
   fitStage();
   await fetchLiveBoard();
   subscribeLiveBoard();
-  setsetInterval(fetchLiveBoard, 3000);
+  setInterval(fetchLiveBoard, 3000);
 });
