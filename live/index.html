@@ -1,78 +1,112 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DARKHORSCORE ADMIN</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--bg:#07090d;--card:#111722;--line:#263246;--text:#f5f7fb;--muted:#8e9aad;--green:#6dff45;--yellow:#ffd334;--red:#ff4048;--blue:#50c8ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 5%,#183b80 0,#07090d 32%,#050608 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;padding:18px} .wrap{max-width:520px;margin:0 auto}.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.brand{font-size:20px;font-weight:900;letter-spacing:2px}.brand span{color:#ff3138}.live{font-size:13px;color:#ff3138;font-weight:900}.card{background:rgba(17,23,34,.86);border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 18px 50px rgba(0,0,0,.35);backdrop-filter:blur(12px)}label{display:block;font-size:12px;color:var(--muted);font-weight:800;letter-spacing:1.4px;margin:0 0 7px}input,textarea,select{width:100%;background:#070b12;border:1px solid var(--line);border-radius:12px;color:var(--text);padding:13px 12px;font-size:18px;font-weight:800;outline:none}textarea{min-height:92px;resize:vertical;line-height:1.5}.grid2{display:grid;grid-template-columns:88px 1fr;gap:10px}.row{display:grid;grid-template-columns:1fr 120px;gap:10px}.section-title{font-size:15px;font-weight:900;margin-bottom:12px;letter-spacing:1px}.safe{color:var(--green)}.long{color:var(--yellow)}.jiyo{color:var(--red)}button{width:100%;border:0;border-radius:16px;padding:17px 16px;font-size:19px;font-weight:950;letter-spacing:1px;color:#06120a;background:linear-gradient(90deg,#6dff45,#50c8ff);box-shadow:0 10px 30px rgba(80,200,255,.25);margin-top:14px}button:disabled{opacity:.55}.status{margin-top:12px;color:var(--muted);font-size:13px;text-align:center}.small{font-size:12px;color:var(--muted);line-height:1.6}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#070b12;border:1px solid var(--line);color:var(--muted);font-size:11px;font-weight:800;margin-top:8px}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DARKHORSCORE LIVE</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="wrap">
-  <div class="head"><div class="brand">DARKHORSCORE <span>ADMIN</span></div><div class="live">● LIVE UPDATE</div></div>
-  <div class="card small">ここで保存すると <b>live_board の id=1</b> が上書きされます。LIVE画面は同じSupabaseを読んで更新されます。</div>
+  <div class="viewport">
+    <main class="stage" id="stage">
+      <div class="bg-grid"></div>
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
 
-  <form id="form">
-    <div class="card">
-      <label>RACE</label>
-      <input id="race" placeholder="名古屋 11R" />
-    </div>
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">DH</div>
+          <div>
+            <div class="brand-title">DARKHORSCORE</div>
+            <div class="brand-sub">LIVE PREDICTION BOARD</div>
+          </div>
+        </div>
+        <div class="live-pill"><span></span>LIVE</div>
+      </header>
 
-    <div class="card">
-      <div class="section-title safe">SAFE AI</div>
-      <div class="grid2"><div><label>馬番</label><input id="safe_no" inputmode="numeric" /></div><div><label>馬名</label><input id="safe_name" /></div></div>
-      <div style="margin-top:10px"><label>自信度</label><select id="safe_star"><option>★★★★★</option><option>★★★★☆</option><option>★★★☆☆</option><option>★★☆☆☆</option><option>★☆☆☆☆</option></select></div>
-    </div>
+      <section class="race-hero">
+        <div class="race-label">CURRENT RACE</div>
+        <h1 id="race">名古屋 11R</h1>
+      </section>
 
-    <div class="card">
-      <div class="section-title long">LONGSHOT AI</div>
-      <div class="grid2"><div><label>馬番</label><input id="long_no" inputmode="numeric" /></div><div><label>馬名</label><input id="long_name" /></div></div>
-      <div style="margin-top:10px"><label>自信度</label><select id="long_star"><option>★★★★★</option><option>★★★★☆</option><option selected>★★★☆☆</option><option>★★☆☆☆</option><option>★☆☆☆☆</option></select></div>
-    </div>
+      <section class="cards">
+        <article class="pick-card safe-card">
+          <div class="card-glow"></div>
+          <div class="pick-head">
+            <span>SAFE AI</span>
+            <b id="safeStar">★★★★★</b>
+          </div>
+          <div class="pick-no">◎<span id="safeNo">5</span></div>
+          <div class="horse" id="safeName">サンライズジパング</div>
+          <div class="card-type">STABLE PICK</div>
+        </article>
 
-    <div class="card">
-      <div class="section-title jiyo">ジヨの◎</div>
-      <div class="grid2"><div><label>馬番</label><input id="jiyo_no" inputmode="numeric" /></div><div><label>馬名</label><input id="jiyo_name" /></div></div>
-      <div style="margin-top:10px"><label>自信度</label><select id="jiyo_star"><option>★★★★★</option><option selected>★★★★☆</option><option>★★★☆☆</option><option>★★☆☆☆</option><option>★☆☆☆☆</option></select></div>
-    </div>
+        <article class="pick-card long-card">
+          <div class="card-glow"></div>
+          <div class="pick-head">
+            <span>LONGSHOT</span>
+            <b id="longStar">★★★☆☆</b>
+          </div>
+          <div class="pick-no">◎<span id="longNo">11</span></div>
+          <div class="horse" id="longName">サヴァ</div>
+          <div class="card-type">VALUE PICK</div>
+        </article>
 
-    <div class="card">
-      <label>MEMO</label>
-      <textarea id="memo" placeholder="今日は前残り・内枠重視"></textarea>
-    </div>
+        <article class="pick-card jiyo-card">
+          <div class="card-glow"></div>
+          <div class="pick-head">
+            <span>ジヨの◎</span>
+            <b id="jiyoStar">★★★★☆</b>
+          </div>
+          <div class="pick-no">◎<span id="jiyoNo">2</span></div>
+          <div class="horse" id="jiyoName">テストホース</div>
+          <div class="card-type">MY PICK</div>
+        </article>
+      </section>
 
-    <button id="save" type="submit">LIVE画面を更新</button>
-    <div class="status" id="status">読み込み中...</div>
-  </form>
-</div>
+      <section class="bottom-panel">
+        <div class="memo-box">
+          <div class="section-title">MEMO</div>
+          <p id="memo">今日は前残り・内枠重視</p>
+        </div>
 
-<script>
-const SUPABASE_URL = "https://fnhhthhaspogymniuust.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_rYelZ1w934DIkm_1kXJQYw_3dEwb3Ns";
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const fields = ['race','safe_no','safe_name','safe_star','long_no','long_name','long_star','jiyo_no','jiyo_name','jiyo_star','memo'];
-function el(id){return document.getElementById(id)}
-function setStatus(t){el('status').textContent=t}
-async function load(){
-  const {data,error}=await db.from('live_board').select('*').eq('id',1).single();
-  if(error){setStatus('読み込み失敗：RLS設定 or id=1を確認');return}
-  fields.forEach(k=>{ if(el(k)) el(k).value = data?.[k] ?? '' });
-  setStatus('読み込み完了');
-}
-document.getElementById('form').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const btn=el('save'); btn.disabled=true; setStatus('保存中...');
-  const payload={id:1, updated_at:new Date().toISOString()};
-  fields.forEach(k=>payload[k]=el(k).value.trim());
-  const {error}=await db.from('live_board').upsert(payload,{onConflict:'id'});
-  btn.disabled=false;
-  if(error){setStatus('保存失敗：'+error.message);return}
-  setStatus('保存完了！LIVE画面を更新しました');
-});
-load();
-</script>
+        <div class="stats-box">
+          <div class="mini-stat">
+            <span>SAFE</span>
+            <strong id="safeRecord">184-96</strong>
+          </div>
+          <div class="mini-stat">
+            <span>LONG</span>
+            <strong id="longRecord">62-208</strong>
+          </div>
+          <div class="mini-stat">
+            <span>ジヨ</span>
+            <strong id="jiyoRecord">81-39</strong>
+          </div>
+          <div class="mini-stat accent">
+            <span>ROI</span>
+            <strong id="roi">128%</strong>
+          </div>
+          <div class="mini-stat accent">
+            <span>PROFIT</span>
+            <strong id="profit">+214,580円</strong>
+          </div>
+          <div class="history">
+            <span>LAST 5</span>
+            <strong id="history">○ ○ × ○ ○</strong>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span id="updated">UPDATED --:--:--</span>
+        <span>POWERED BY DARKHORSCORE</span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
