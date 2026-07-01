@@ -93,5 +93,5 @@ window.addEventListener('load', async () => {
   fitStage();
   await fetchLiveBoard();
   subscribeLiveBoard();
-  setInterval(fetchLiveBoard, 15000);
+  setsetInterval(fetchLiveBoard, 3000);
 });
